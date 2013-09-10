@@ -1,8 +1,15 @@
 <?php $thispage ="registration";
+$regPage="";
+?>
+
+<?php session_start();
+?>
+
+<?php
 $msg=" ";
 /** Validate captcha */
 
-if (isset($_POST['doctorSubmit'])) 
+if (isset($_POST['patientSubmit'])) 
 {
     if (empty($_SESSION['captcha']) || trim(strtolower($_POST['captcha'])) != $_SESSION['captcha']) {
 		
@@ -78,11 +85,11 @@ if (isset($_POST['ngoSubmit']))
 <script src="scripts/reg_validatorv4.js" type="text/javascript"></script>
 
 <script type="text/javascript">
-		function showdoctorReg()
+		function showpatientReg()
 		{
 			//alert("d");
 			
-				document.getElementById("doctorRegScreen").style.display="block";
+				document.getElementById("patientRegScreen").style.display="block";
 				document.getElementById("NGO").style.display="none";
 			
 			
@@ -90,7 +97,7 @@ if (isset($_POST['ngoSubmit']))
 		function showNGOReg()
 		{
 
-				document.getElementById("doctorRegScreen").style.display="none";
+				document.getElementById("patientRegScreen").style.display="none";
 				document.getElementById("NGO").style.display="block";
 		}	
 	</script>
@@ -102,9 +109,9 @@ if (isset($_POST['ngoSubmit']))
 
 
 
-<div id="doctorRegScreen">
-<form name="doctor" action="<?php echo $_SERVER['PHP_SELF'];?>" method="post"><input
-	type="hidden" name="formName" value="doctorReg" /> 
+<div id="patientRegScreen">
+<form name="patient" action="<?php echo $_SERVER['PHP_SELF'];?>" method="post"><input
+	type="hidden" name="formName" value="patientReg" /> 
 
 
 
@@ -116,23 +123,12 @@ if (isset($_POST['ngoSubmit']))
       <tr>
         <td><label for="firstName">First name*</label></td>
         <td><input name="fname" type="text" id="firstName" value=""/></td>
-        <td><div class="error" id="doctor_fname_errorloc"></div></td>
+        <td><div class="error" id="patient_fname_errorloc"></div></td>
       </tr>
       <tr>
         <td><label for="lastName">Last name*</label></td>
         <td><input name="lname" type="text" id="lastName" value=""/></td>
       </tr>
-	  
-      <tr>
-         <td>
-		    <label for="Speciality">Speciality</label></td>
-         <td><input type="text" name="Speciality">
-         </td>
-      </tr>
-      <tr>
-	   <td><label for="Sub_Speciality">sub_speciality</label></td>
-	   <td><input type="text" name="sub_speciality">
-	  </tr>
      	
       <tr>
         <td>Gender</td>
@@ -146,7 +142,7 @@ if (isset($_POST['ngoSubmit']))
             Female</label>
           <br />
         </p></td>
-        <td><div class="error" id="doctor_fname_errorloc"></div></td>
+        <td><div class="error" id="patient_fname_errorloc"></div></td>
       </tr>
       <td><label>Date of Birth</label></td>
         <td><input name="dob" type="text" id="dob" /></td>
@@ -156,40 +152,20 @@ if (isset($_POST['ngoSubmit']))
 		 <td><input type="text" name="Age"></td>
 	   </tr>
         <tr>
-          <td><label for="occupation">Occupation</label>
-          </td>
-          <td><input type="text" name="occupation" id="occupation" /></td>
-          <td>&nbsp;</td>
-        </tr>
-        <td><label for="doctor_designation">Designation</label></td>
-        <td><input type="text" name="designation" id="doctor_designation" /></td>
         <td>&nbsp;</td>
       </tr>
-      <tr>
-        <td><label for="picture">Picture</label>
-        </td>
-        <td><input type="text" name="picture" id="picture" ><input type="submit" value="browse"></td>
-        <td>&nbsp;</td>
+	  <tr>
+        <td><label for="parent/guardian">parent/guardian*</label></td>
+        <td><input name="pname" type="text" id="parent/guardian" value=""/></td>
+        <td><div class="error" id="patient_pname_errorloc"></div></td>
       </tr>
-      <tr>
-				<td style="vertical-align:top;">
-					<label for="quote">Experience <span class="link"><a href="javascript: void(0)"><font face=verdana,arial,helvetica size=2>[?]</font><span>For featuring your photo and Quote on YouSee website,we request you to write a brief (1-3 lines) quote about your thoughts on volunteering,donations and overall about UC (max 300 characters)</span>
-						</a>
-						</span>
-					</label>
-				</td>
-				<td><span style="vertical-align:top;">
-					<textarea placeholder="Please write a brief (1-3 lines) quote about your thoughts on volunteering,donations or overall about UC" name="featureQuote" id="quote" cols="45" rows="5"></textarea>
-				</span>
-				</td>
-				<td>&nbsp;</td>
-		</tr>
-  </table>
-  </fieldset>
+     
+   </table>
+
   </div>
     <script type="text/javascript">
 
- 	var frmvalidator  = new Validator("doctor");
+ 	var frmvalidator  = new Validator("patient");
 	frmvalidator.EnableFocusOnError(true);
 	frmvalidator.EnableOnPageErrorDisplay();
 	frmvalidator.EnableMsgsTogether();
@@ -201,7 +177,7 @@ if (isset($_POST['ngoSubmit']))
 	
 	
   </script>
-<fieldset style="margin-left:30px;"><legend>Contact Info</legend>	<table border="0">
+ <table border="0">
 			<tr>
 				<td>
 					<label for="phone_number">Phone number*</label>
@@ -211,7 +187,7 @@ if (isset($_POST['ngoSubmit']))
 					name="phno" id="phone_number" value="" />
 				</td>
 				<td>
-					<div class="error" id="doctor_phno_errorloc"></div>
+					<div class="error" id="patient_phno_errorloc"></div>
 				</td>
 			</tr>
 			<tr>
@@ -223,18 +199,18 @@ if (isset($_POST['ngoSubmit']))
 					id="preferred_emailid" />
 				</td>
 				<td>
-					<div class="error" id="doctor_preferredEmail_errorloc"></div>
+					<div class="error" id="patient_preferredEmail_errorloc"></div>
 				</td>
 			</tr>
 			<tr>
 				<td ><label for="password">Password*</label> </td>
                 <td><input type="password" name="password" id="password" value=""/></td>
-                <td ><div class="error" id="doctor_password_errorloc"></div></td>
+                <td ><div class="error" id="patient_password_errorloc"></div></td>
 		</tr>	
         <tr>
                 <td ><label for="password">Retype Password*</label></td>
                 <td><input type="password" name="repassword" id="cpassword" value=""/></td>
-                <td ><div class="error" id="doctor_repassword_errorloc"></div></td>
+                <td ><div class="error" id="patient_repassword_errorloc"></div></td>
 		</tr>	
 
 			<tr>
@@ -245,15 +221,15 @@ if (isset($_POST['ngoSubmit']))
 					<input type="text" name="alternateEmail" id="alternate_emailid" />
 				</td>
 				<td>
-					<div class="error" id="doctor_alternateEmail_errorloc"></div>
+					<div class="error" id="patient_alternateEmail_errorloc"></div>
 				</td>
 			</tr>
 			<tr>
 				<td>
-					<label for="doctor_address">Address</label>
+					<label for="patient_address">Address</label>
 				</td>
 				<td>
-					<input type="text" name="address" id="doctor_address" />
+					<input type="text" name="address" id="patient_address" />
 				</td>
 				<td>&nbsp;</td>
 			</tr>
@@ -268,32 +244,32 @@ if (isset($_POST['ngoSubmit']))
 			</tr>
 			<tr>
 				<td>
-					<label for="doctor_state">State*</label>
+					<label for="patient_state">State*</label>
 				</td>
 				<td>
-					<input type="text" name="state" id="doctor_state" value="" />
+					<input type="text" name="state" id="patient_state" value="" />
 				</td>
 				<td>
-					<div class="error" id="doctor_state_errorloc"></div>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<label for="doctor_country">Country*</label>
-				</td>
-				<td>
-					<input type="text" name="country" value="India" id="doctor_country" />
-				</td>
-				<td>
-					<div class="error" id="doctor_country_errorloc"></div>
+					<div class="error" id="patient_state_errorloc"></div>
 				</td>
 			</tr>
 			<tr>
 				<td>
-					<label for="doctor_pin_code">Pin code</label>
+					<label for="patient_country">Country*</label>
 				</td>
 				<td>
-					<input type="text" name="pincode" id="doctor_pin_code" />
+					<input type="text" name="country" value="India" id="patient_country" />
+				</td>
+				<td>
+					<div class="error" id="patient_country_errorloc"></div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label for="patient_pin_code">Pin code</label>
+				</td>
+				<td>
+					<input type="text" name="pincode" id="patient_pin_code" />
 				</td>
 				<td>&nbsp;</td>
 			</tr>
@@ -318,22 +294,7 @@ if (isset($_POST['ngoSubmit']))
 	frmvalidator.addValidation("password","eqelmnt=cpassword","The confirmed password is not same as your new password");
 	
 		</script>
-</fieldset>
-		
-<fieldset style="margin-left:30px;"><legend>Speciality</legend>	<table border="0">
-	<tr>
-        <td><label for="Speciality">Speciality</label></td>
-        <td><input type="text" name="Speciality" id="Speciality" /></td>
-        <td>&nbsp;</td>
-    </tr>
-	</table>
-</fieldset>
-	  <fieldset style="margin-left:30px;"><legend>Sub_Speciality</legend>	<table border="0">
- <tr>
-        <td><label for="Sub_Speciality">Sub_Speciality</label></td>
-        <td><input type="text" name="Sub_Speciality" id="Sub_Speciality" /></td>
-        <td>&nbsp;</td>
-      </tr>
+ </table>
 	  </table>
 
 </fieldset>
