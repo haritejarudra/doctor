@@ -130,7 +130,7 @@ if (isset($_POST['ngoSubmit']))
          </td>
       </tr>
       <tr>
-	   <td><label for="Sub_Speciality">Sub speciality</label></td>
+	   <td><label for="Sub_Speciality">sub_speciality</label></td>
 	   <td><input type="text" name="sub_speciality">
 	  </tr>
      	
