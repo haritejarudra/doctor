@@ -28,13 +28,6 @@ return $this->_mobile;
 function setMobile($mobile) {
 $this->_mobile=$mobile;
  }
-var $speciality;
-function getSpeciality() {
-return $this->_speciality;
- }
-function setSpeciality($speciality) {
-$this->_speciality=$speciality;
- }
 var $gender;
 function getGender() {
 return $this->_gender;
@@ -49,13 +42,6 @@ return $this->_address;
 function setAddress($address) {
 $this->_address=$address;
  }
-var $city;
-function getCity() {
-return $this->_city;
- }
-function setCity($city) {
-$this->_city=$city;
- }
 var $state;
 function getState() {
 return $this->_state;
@@ -69,20 +55,6 @@ return $this->_country;
  }
 function setCountry($country) {
 $this->_country=$country;
- }
-var $sub_speciality_id;
-function getSub_speciality_id() {
-return $this->_sub_speciality_id;
- }
-function setSub_speciality_id($sub_speciality_id) {
-$this->_sub_speciality_id=$sub_speciality_id;
- }
-var $picture;
-function getPicture() {
-return $this->_picture;
- }
-function setPicture($picture) {
-$this->_picture=$picture;
  }
 var $current_hospital;
 function getCurrent_hospital() {
@@ -118,6 +90,13 @@ return $this->_age;
  }
 function setAge($age) {
 $this->_age=$age;
+ }
+var $city_id;
+function getCity_id() {
+return $this->_city_id;
+ }
+function setCity_id($city_id) {
+$this->_city_id=$city_id;
  }
 }
 ?>

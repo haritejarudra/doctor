@@ -39,7 +39,7 @@ class ScheduleQuery extends Query {
 	}
 	function selectSchedule_id($schedule) {
 		$sql = $this->mkSQL("select * from schedule where schedule_id  = %N",
-				$schedule->getSchedule_id(),
+				$schedule->getSchedule_id()
 			);
 		if (!$this->_query($sql, "Error in selecting from table schedule")) {
 			 return false;
@@ -49,7 +49,7 @@ class ScheduleQuery extends Query {
 	}
 	function selectFrom_date($schedule) {
 		$sql = $this->mkSQL("select * from schedule where from_date  = %N",
-				$schedule->getFrom_date(),
+				$schedule->getFrom_date()
 			);
 		if (!$this->_query($sql, "Error in selecting from table schedule")) {
 			 return false;
@@ -59,7 +59,7 @@ class ScheduleQuery extends Query {
 	}
 	function selectTo_date($schedule) {
 		$sql = $this->mkSQL("select * from schedule where to_date  = %N",
-				$schedule->getTo_date(),
+				$schedule->getTo_date()
 			);
 		if (!$this->_query($sql, "Error in selecting from table schedule")) {
 			 return false;
@@ -69,7 +69,7 @@ class ScheduleQuery extends Query {
 	}
 	function selectFrom_time($schedule) {
 		$sql = $this->mkSQL("select * from schedule where from_time  = %N",
-				$schedule->getFrom_time(),
+				$schedule->getFrom_time()
 			);
 		if (!$this->_query($sql, "Error in selecting from table schedule")) {
 			 return false;
@@ -79,7 +79,7 @@ class ScheduleQuery extends Query {
 	}
 	function selectTo_time($schedule) {
 		$sql = $this->mkSQL("select * from schedule where to_time  = %N",
-				$schedule->getTo_time(),
+				$schedule->getTo_time()
 			);
 		if (!$this->_query($sql, "Error in selecting from table schedule")) {
 			 return false;
@@ -89,7 +89,7 @@ class ScheduleQuery extends Query {
 	}
 	function selectLocation_id($schedule) {
 		$sql = $this->mkSQL("select * from schedule where location_id  = %N",
-				$schedule->getLocation_id(),
+				$schedule->getLocation_id()
 			);
 		if (!$this->_query($sql, "Error in selecting from table schedule")) {
 			 return false;
@@ -99,7 +99,7 @@ class ScheduleQuery extends Query {
 	}
 	function selectDoctor_id($schedule) {
 		$sql = $this->mkSQL("select * from schedule where doctor_id  = %N",
-				$schedule->getDoctor_id(),
+				$schedule->getDoctor_id()
 			);
 		if (!$this->_query($sql, "Error in selecting from table schedule")) {
 			 return false;
@@ -109,7 +109,7 @@ class ScheduleQuery extends Query {
 	}
 	function selectDescription($schedule) {
 		$sql = $this->mkSQL("select * from schedule where description  = %N",
-				$schedule->getDescription(),
+				$schedule->getDescription()
 			);
 		if (!$this->_query($sql, "Error in selecting from table schedule")) {
 			 return false;

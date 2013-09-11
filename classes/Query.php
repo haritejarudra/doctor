@@ -35,17 +35,17 @@ class Query {
                            "Unable to connect to database.",
                            "The MySQL extension is not available"));
       }
-      $link = mysql_connect(OBIB_HOST,OBIB_USERNAME,OBIB_PWD);
+      $link = mysqli_connect(OBIB_HOST,OBIB_USERNAME,OBIB_PWD);
       if (!$link) {
         return array(NULL, new DbError("Connecting to database server...",
                                        "Cannot connect to database server.",
-                                       mysql_error()));
+                                       mysqli_error()));
       }
-      $rc = mysql_select_db(OBIB_DATABASE, $link);
+      $rc = mysqli_select_db(OBIB_DATABASE, $link);
       if (!$rc) {
         return array(NULL, new DbError("Selecting database...",
                                        "Cannot select database.",
-                                       mysql_error($link)));
+                                       mysqli_error($link)));
       }
     }
     return array($link, NULL);
@@ -88,9 +88,9 @@ class Query {
     if (!$this->_link) {
       Fatal::internalError('Tried to make database query before connection.');
     }
-    $r = mysql_query($sql, $this->_link);
+    $r = mysqli_query($sql, $this->_link);
     if ($r === false) {
-      Fatal::dbError($sql, 'Database query failed', mysql_error());
+      Fatal::dbError($sql, 'Database query failed', mysqli_error());
     }
     return $r;
   }
@@ -99,7 +99,7 @@ class Query {
    * might be something like PEAR::DB's sequences.
    */
   function getInsertID() {
-    return mysql_insert_id($this->_link);
+    return mysqli_insert_id($this->_link);
   }
   
   /* Locking functions
@@ -223,10 +223,10 @@ class Query {
           $SQL .= $this->_numstr($arg);
           break;
         case 'Q':
-          $SQL .= "'".mysql_real_escape_string($arg, $this->_link)."'";
+          $SQL .= "'".mysqli_real_escape_string($arg, $this->_link)."'";
           break;
         case 'q':
-          $SQL .= mysql_real_escape_string($arg, $this->_link);
+          $SQL .= mysqli_real_escape_string($arg, $this->_link);
           break;
         default:
           Fatal::internalError('Bad mkSQL() format string.');
@@ -278,7 +278,7 @@ class Query {
       return $r;
     } else {
       $rows = array();
-      while($row = mysql_fetch_assoc($r)) {
+      while($row = mysqli_fetch_assoc($r)) {
         $rows[] = $row;
       }
       return $rows;
@@ -327,10 +327,10 @@ class DbIter extends Iter {
     $this->results = $results;
   }
   function count() {
-    return mysql_num_rows($this->results);
+    return mysqli_num_rows($this->results);
   }
   function next() {
-    $r = mysql_fetch_assoc($this->results);
+    $r = mysqli_fetch_assoc($this->results);
     if ($r === false) {
       return NULL;
     }
@@ -350,7 +350,7 @@ class DbOld {
     return $this->id;
   }
   function numRows() {
-    return mysql_num_rows($this->results);
+    return mysqli_num_rows($this->results);
   }
   function fetchRow($arrayType=OBIB_ASSOC) {
     if (is_bool($this->results)) {
@@ -361,16 +361,16 @@ class DbOld {
         return mysql_fetch_row($this->results);
         break;
       case OBIB_BOTH:
-        return mysql_fetch_array($this->results, MYSQL_BOTH);
+        return mysqli_fetch_array($this->results, MYSQL_BOTH);
         break;
       case OBIB_ASSOC:
       default:
-        return mysql_fetch_assoc($this->results);
+        return mysqli_fetch_assoc($this->results);
     }
     return false;
   }
   function resetResult() {
-    mysql_data_seek($this->results, 0);
+    mysqli_data_seek($this->results, 0);
   }
 }
 
