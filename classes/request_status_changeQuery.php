@@ -109,25 +109,25 @@ class Request_status_changeQuery extends Query {
 	}
 	function deleteStatus_Change_id($request_status_change) {
 		$sql = $this->mkSQL("delete from request_status_change where Status_Change_id  = %N",
-				$request_status_change->getStatus_Change_id(),
+				$request_status_change->getStatus_Change_id()
 			);
 		$ret = $this->_query($sql,"Delete using column Status_Change_id failed on request_status_change table");
 	}
 	function deleteStatus_from($request_status_change) {
 		$sql = $this->mkSQL("delete from request_status_change where Status_from  = %N",
-				$request_status_change->getStatus_from(),
+				$request_status_change->getStatus_from()
 			);
 		$ret = $this->_query($sql,"Delete using column Status_from failed on request_status_change table");
 	}
 	function deleteStatus_to($request_status_change) {
 		$sql = $this->mkSQL("delete from request_status_change where Status_to  = %N",
-				$request_status_change->getStatus_to(),
+				$request_status_change->getStatus_to()
 			);
 		$ret = $this->_query($sql,"Delete using column Status_to failed on request_status_change table");
 	}
 	function deleteActor($request_status_change) {
 		$sql = $this->mkSQL("delete from request_status_change where Actor  = %N",
-				$request_status_change->getActor(),
+				$request_status_change->getActor()
 			);
 		$ret = $this->_query($sql,"Delete using column Actor failed on request_status_change table");
 	}

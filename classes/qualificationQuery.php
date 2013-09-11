@@ -109,25 +109,25 @@ class QualificationQuery extends Query {
 	}
 	function deleteQualification_id($qualification) {
 		$sql = $this->mkSQL("delete from qualification where qualification_id  = %N",
-				$qualification->getQualification_id(),
+				$qualification->getQualification_id()
 			);
 		$ret = $this->_query($sql,"Delete using column qualification_id failed on qualification table");
 	}
 	function deleteDegree($qualification) {
 		$sql = $this->mkSQL("delete from qualification where degree  = %N",
-				$qualification->getDegree(),
+				$qualification->getDegree()
 			);
 		$ret = $this->_query($sql,"Delete using column degree failed on qualification table");
 	}
 	function deleteYear($qualification) {
 		$sql = $this->mkSQL("delete from qualification where year  = %N",
-				$qualification->getYear(),
+				$qualification->getYear()
 			);
 		$ret = $this->_query($sql,"Delete using column year failed on qualification table");
 	}
 	function deleteUniversity($qualification) {
 		$sql = $this->mkSQL("delete from qualification where university  = %N",
-				$qualification->getUniversity(),
+				$qualification->getUniversity()
 			);
 		$ret = $this->_query($sql,"Delete using column university failed on qualification table");
 	}

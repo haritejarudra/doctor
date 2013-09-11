@@ -73,13 +73,13 @@ class SpecialityQuery extends Query {
 	}
 	function deleteSpeciality_id($speciality) {
 		$sql = $this->mkSQL("delete from speciality where speciality_id  = %N",
-				$speciality->getSpeciality_id(),
+				$speciality->getSpeciality_id()
 			);
 		$ret = $this->_query($sql,"Delete using column speciality_id failed on speciality table");
 	}
 	function deleteSpeciality($speciality) {
 		$sql = $this->mkSQL("delete from speciality where speciality  = %N",
-				$speciality->getSpeciality(),
+				$speciality->getSpeciality()
 			);
 		$ret = $this->_query($sql,"Delete using column speciality failed on speciality table");
 	}

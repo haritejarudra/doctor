@@ -159,7 +159,7 @@ class DBUtility {
 						$classdetails.="\t"."function delete". ucfirst($updatecolname)."("."$".$modelclassname.") {"."\n";
 						$classdetails.="\t"."\t".'$sql = $this->mkSQL("delete from '.$modelclassname;
 						$classdetails.=' where '.$updatecolname."  = %N".'",'."\n"."\t"."\t"."\t"."\t";
-						$classdetails.= '$'.$modelclassname.'->get'.ucfirst($updatecolname).'(),'."\n";
+						$classdetails.= '$'.$modelclassname.'->get'.ucfirst($updatecolname).'()'."\n";
 						$classdetails.="\t"."\t"."\t".');'."\n";	
 						$classdetails.="\t"."\t".'$ret = $this->_query($sql,"Delete using column '.$updatecolname;
 						$classdetails.=' failed on '.$modelclassname.' table");'."\n";

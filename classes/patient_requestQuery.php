@@ -145,37 +145,37 @@ class Patient_requestQuery extends Query {
 	}
 	function deleteRequest_id($patient_request) {
 		$sql = $this->mkSQL("delete from patient_request where request_id  = %N",
-				$patient_request->getRequest_id(),
+				$patient_request->getRequest_id()
 			);
 		$ret = $this->_query($sql,"Delete using column request_id failed on patient_request table");
 	}
 	function deletePatient_id($patient_request) {
 		$sql = $this->mkSQL("delete from patient_request where patient_id  = %N",
-				$patient_request->getPatient_id(),
+				$patient_request->getPatient_id()
 			);
 		$ret = $this->_query($sql,"Delete using column patient_id failed on patient_request table");
 	}
 	function deleteSchedule_id($patient_request) {
 		$sql = $this->mkSQL("delete from patient_request where schedule_id  = %N",
-				$patient_request->getSchedule_id(),
+				$patient_request->getSchedule_id()
 			);
 		$ret = $this->_query($sql,"Delete using column schedule_id failed on patient_request table");
 	}
 	function deleteProblem_history($patient_request) {
 		$sql = $this->mkSQL("delete from patient_request where problem_history  = %N",
-				$patient_request->getProblem_history(),
+				$patient_request->getProblem_history()
 			);
 		$ret = $this->_query($sql,"Delete using column problem_history failed on patient_request table");
 	}
 	function deleteActual_date_of_consultation($patient_request) {
 		$sql = $this->mkSQL("delete from patient_request where actual_date_of_consultation  = %N",
-				$patient_request->getActual_date_of_consultation(),
+				$patient_request->getActual_date_of_consultation()
 			);
 		$ret = $this->_query($sql,"Delete using column actual_date_of_consultation failed on patient_request table");
 	}
 	function deleteTime_of_consultation($patient_request) {
 		$sql = $this->mkSQL("delete from patient_request where time_of_consultation  = %N",
-				$patient_request->getTime_of_consultation(),
+				$patient_request->getTime_of_consultation()
 			);
 		$ret = $this->_query($sql,"Delete using column time_of_consultation failed on patient_request table");
 	}
