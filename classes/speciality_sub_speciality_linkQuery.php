@@ -91,19 +91,19 @@ class Speciality_sub_speciality_linkQuery extends Query {
 	}
 	function deleteSpeciality_sub_speciality_link_id($speciality_sub_speciality_link) {
 		$sql = $this->mkSQL("delete from speciality_sub_speciality_link where speciality_sub_speciality_link_id  = %N",
-				$speciality_sub_speciality_link->getSpeciality_sub_speciality_link_id(),
+				$speciality_sub_speciality_link->getSpeciality_sub_speciality_link_id()
 			);
 		$ret = $this->_query($sql,"Delete using column speciality_sub_speciality_link_id failed on speciality_sub_speciality_link table");
 	}
 	function deleteSub_speciality_id($speciality_sub_speciality_link) {
 		$sql = $this->mkSQL("delete from speciality_sub_speciality_link where sub_speciality_id  = %N",
-				$speciality_sub_speciality_link->getSub_speciality_id(),
+				$speciality_sub_speciality_link->getSub_speciality_id()
 			);
 		$ret = $this->_query($sql,"Delete using column sub_speciality_id failed on speciality_sub_speciality_link table");
 	}
 	function deleteSpeciality_id($speciality_sub_speciality_link) {
 		$sql = $this->mkSQL("delete from speciality_sub_speciality_link where speciality_id  = %N",
-				$speciality_sub_speciality_link->getSpeciality_id(),
+				$speciality_sub_speciality_link->getSpeciality_id()
 			);
 		$ret = $this->_query($sql,"Delete using column speciality_id failed on speciality_sub_speciality_link table");
 	}

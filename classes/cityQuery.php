@@ -109,25 +109,25 @@ class CityQuery extends Query {
 	}
 	function deleteCity_id($city) {
 		$sql = $this->mkSQL("delete from city where city_id  = %N",
-				$city->getCity_id(),
+				$city->getCity_id()
 			);
 		$ret = $this->_query($sql,"Delete using column city_id failed on city table");
 	}
 	function deleteLat($city) {
 		$sql = $this->mkSQL("delete from city where lat  = %N",
-				$city->getLat(),
+				$city->getLat()
 			);
 		$ret = $this->_query($sql,"Delete using column lat failed on city table");
 	}
 	function deleteLong($city) {
 		$sql = $this->mkSQL("delete from city where long  = %N",
-				$city->getLong(),
+				$city->getLong()
 			);
 		$ret = $this->_query($sql,"Delete using column long failed on city table");
 	}
 	function deleteCity($city) {
 		$sql = $this->mkSQL("delete from city where city  = %N",
-				$city->getCity(),
+				$city->getCity()
 			);
 		$ret = $this->_query($sql,"Delete using column city failed on city table");
 	}

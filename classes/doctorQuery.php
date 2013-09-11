@@ -289,85 +289,85 @@ class DoctorQuery extends Query {
 	}
 	function deleteDoctor_id($doctor) {
 		$sql = $this->mkSQL("delete from doctor where doctor_id  = %N",
-				$doctor->getDoctor_id(),
+				$doctor->getDoctor_id()
 			);
 		$ret = $this->_query($sql,"Delete using column doctor_id failed on doctor table");
 	}
 	function deleteFirst_name($doctor) {
 		$sql = $this->mkSQL("delete from doctor where first_name  = %N",
-				$doctor->getFirst_name(),
+				$doctor->getFirst_name()
 			);
 		$ret = $this->_query($sql,"Delete using column first_name failed on doctor table");
 	}
 	function deleteLast_name($doctor) {
 		$sql = $this->mkSQL("delete from doctor where last_name  = %N",
-				$doctor->getLast_name(),
+				$doctor->getLast_name()
 			);
 		$ret = $this->_query($sql,"Delete using column last_name failed on doctor table");
 	}
 	function deleteMobile($doctor) {
 		$sql = $this->mkSQL("delete from doctor where mobile  = %N",
-				$doctor->getMobile(),
+				$doctor->getMobile()
 			);
 		$ret = $this->_query($sql,"Delete using column mobile failed on doctor table");
 	}
 	function deleteGender($doctor) {
 		$sql = $this->mkSQL("delete from doctor where gender  = %N",
-				$doctor->getGender(),
+				$doctor->getGender()
 			);
 		$ret = $this->_query($sql,"Delete using column gender failed on doctor table");
 	}
 	function deleteAddress($doctor) {
 		$sql = $this->mkSQL("delete from doctor where address  = %N",
-				$doctor->getAddress(),
+				$doctor->getAddress()
 			);
 		$ret = $this->_query($sql,"Delete using column address failed on doctor table");
 	}
 	function deleteState($doctor) {
 		$sql = $this->mkSQL("delete from doctor where state  = %N",
-				$doctor->getState(),
+				$doctor->getState()
 			);
 		$ret = $this->_query($sql,"Delete using column state failed on doctor table");
 	}
 	function deleteCountry($doctor) {
 		$sql = $this->mkSQL("delete from doctor where country  = %N",
-				$doctor->getCountry(),
+				$doctor->getCountry()
 			);
 		$ret = $this->_query($sql,"Delete using column country failed on doctor table");
 	}
 	function deleteCurrent_hospital($doctor) {
 		$sql = $this->mkSQL("delete from doctor where current_hospital  = %N",
-				$doctor->getCurrent_hospital(),
+				$doctor->getCurrent_hospital()
 			);
 		$ret = $this->_query($sql,"Delete using column current_hospital failed on doctor table");
 	}
 	function deleteExperience($doctor) {
 		$sql = $this->mkSQL("delete from doctor where experience  = %N",
-				$doctor->getExperience(),
+				$doctor->getExperience()
 			);
 		$ret = $this->_query($sql,"Delete using column experience failed on doctor table");
 	}
 	function deleteQualification_id($doctor) {
 		$sql = $this->mkSQL("delete from doctor where qualification_id  = %N",
-				$doctor->getQualification_id(),
+				$doctor->getQualification_id()
 			);
 		$ret = $this->_query($sql,"Delete using column qualification_id failed on doctor table");
 	}
 	function deleteDate_of_birth($doctor) {
 		$sql = $this->mkSQL("delete from doctor where date_of_birth  = %N",
-				$doctor->getDate_of_birth(),
+				$doctor->getDate_of_birth()
 			);
 		$ret = $this->_query($sql,"Delete using column date_of_birth failed on doctor table");
 	}
 	function deleteAge($doctor) {
 		$sql = $this->mkSQL("delete from doctor where age  = %N",
-				$doctor->getAge(),
+				$doctor->getAge()
 			);
 		$ret = $this->_query($sql,"Delete using column age failed on doctor table");
 	}
 	function deleteCity_id($doctor) {
 		$sql = $this->mkSQL("delete from doctor where city_id  = %N",
-				$doctor->getCity_id(),
+				$doctor->getCity_id()
 			);
 		$ret = $this->_query($sql,"Delete using column city_id failed on doctor table");
 	}

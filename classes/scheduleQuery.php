@@ -181,49 +181,49 @@ class ScheduleQuery extends Query {
 	}
 	function deleteSchedule_id($schedule) {
 		$sql = $this->mkSQL("delete from schedule where schedule_id  = %N",
-				$schedule->getSchedule_id(),
+				$schedule->getSchedule_id()
 			);
 		$ret = $this->_query($sql,"Delete using column schedule_id failed on schedule table");
 	}
 	function deleteFrom_date($schedule) {
 		$sql = $this->mkSQL("delete from schedule where from_date  = %N",
-				$schedule->getFrom_date(),
+				$schedule->getFrom_date()
 			);
 		$ret = $this->_query($sql,"Delete using column from_date failed on schedule table");
 	}
 	function deleteTo_date($schedule) {
 		$sql = $this->mkSQL("delete from schedule where to_date  = %N",
-				$schedule->getTo_date(),
+				$schedule->getTo_date()
 			);
 		$ret = $this->_query($sql,"Delete using column to_date failed on schedule table");
 	}
 	function deleteFrom_time($schedule) {
 		$sql = $this->mkSQL("delete from schedule where from_time  = %N",
-				$schedule->getFrom_time(),
+				$schedule->getFrom_time()
 			);
 		$ret = $this->_query($sql,"Delete using column from_time failed on schedule table");
 	}
 	function deleteTo_time($schedule) {
 		$sql = $this->mkSQL("delete from schedule where to_time  = %N",
-				$schedule->getTo_time(),
+				$schedule->getTo_time()
 			);
 		$ret = $this->_query($sql,"Delete using column to_time failed on schedule table");
 	}
 	function deleteLocation_id($schedule) {
 		$sql = $this->mkSQL("delete from schedule where location_id  = %N",
-				$schedule->getLocation_id(),
+				$schedule->getLocation_id()
 			);
 		$ret = $this->_query($sql,"Delete using column location_id failed on schedule table");
 	}
 	function deleteDoctor_id($schedule) {
 		$sql = $this->mkSQL("delete from schedule where doctor_id  = %N",
-				$schedule->getDoctor_id(),
+				$schedule->getDoctor_id()
 			);
 		$ret = $this->_query($sql,"Delete using column doctor_id failed on schedule table");
 	}
 	function deleteDescription($schedule) {
 		$sql = $this->mkSQL("delete from schedule where description  = %N",
-				$schedule->getDescription(),
+				$schedule->getDescription()
 			);
 		$ret = $this->_query($sql,"Delete using column description failed on schedule table");
 	}

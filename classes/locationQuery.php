@@ -127,31 +127,31 @@ class LocationQuery extends Query {
 	}
 	function deleteLocation_id($location) {
 		$sql = $this->mkSQL("delete from location where location_id  = %N",
-				$location->getLocation_id(),
+				$location->getLocation_id()
 			);
 		$ret = $this->_query($sql,"Delete using column location_id failed on location table");
 	}
 	function deleteLat($location) {
 		$sql = $this->mkSQL("delete from location where lat  = %N",
-				$location->getLat(),
+				$location->getLat()
 			);
 		$ret = $this->_query($sql,"Delete using column lat failed on location table");
 	}
 	function deleteLong($location) {
 		$sql = $this->mkSQL("delete from location where long  = %N",
-				$location->getLong(),
+				$location->getLong()
 			);
 		$ret = $this->_query($sql,"Delete using column long failed on location table");
 	}
 	function deleteCity_id($location) {
 		$sql = $this->mkSQL("delete from location where city_id  = %N",
-				$location->getCity_id(),
+				$location->getCity_id()
 			);
 		$ret = $this->_query($sql,"Delete using column city_id failed on location table");
 	}
 	function deleteLocation($location) {
 		$sql = $this->mkSQL("delete from location where location  = %N",
-				$location->getLocation(),
+				$location->getLocation()
 			);
 		$ret = $this->_query($sql,"Delete using column location failed on location table");
 	}
