@@ -33,7 +33,7 @@ class SpecialityQuery extends Query {
 	}
 	function selectSpeciality_id($speciality) {
 		$sql = $this->mkSQL("select * from speciality where speciality_id  = %N",
-				$speciality->getSpeciality_id(),
+				$speciality->getSpeciality_id()
 			);
 		if (!$this->_query($sql, "Error in selecting from table speciality")) {
 			 return false;
@@ -43,7 +43,7 @@ class SpecialityQuery extends Query {
 	}
 	function selectSpeciality($speciality) {
 		$sql = $this->mkSQL("select * from speciality where speciality  = %N",
-				$speciality->getSpeciality(),
+				$speciality->getSpeciality()
 			);
 		if (!$this->_query($sql, "Error in selecting from table speciality")) {
 			 return false;

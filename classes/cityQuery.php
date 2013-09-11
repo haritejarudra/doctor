@@ -35,7 +35,7 @@ class CityQuery extends Query {
 	}
 	function selectCity_id($city) {
 		$sql = $this->mkSQL("select * from city where city_id  = %N",
-				$city->getCity_id(),
+				$city->getCity_id()
 			);
 		if (!$this->_query($sql, "Error in selecting from table city")) {
 			 return false;
@@ -45,7 +45,7 @@ class CityQuery extends Query {
 	}
 	function selectLat($city) {
 		$sql = $this->mkSQL("select * from city where lat  = %N",
-				$city->getLat(),
+				$city->getLat()
 			);
 		if (!$this->_query($sql, "Error in selecting from table city")) {
 			 return false;
@@ -55,7 +55,7 @@ class CityQuery extends Query {
 	}
 	function selectLong($city) {
 		$sql = $this->mkSQL("select * from city where long  = %N",
-				$city->getLong(),
+				$city->getLong()
 			);
 		if (!$this->_query($sql, "Error in selecting from table city")) {
 			 return false;
@@ -65,7 +65,7 @@ class CityQuery extends Query {
 	}
 	function selectCity($city) {
 		$sql = $this->mkSQL("select * from city where city  = %N",
-				$city->getCity(),
+				$city->getCity()
 			);
 		if (!$this->_query($sql, "Error in selecting from table city")) {
 			 return false;

@@ -37,7 +37,7 @@ class Patient_requestQuery extends Query {
 	}
 	function selectRequest_id($patient_request) {
 		$sql = $this->mkSQL("select * from patient_request where request_id  = %N",
-				$patient_request->getRequest_id(),
+				$patient_request->getRequest_id()
 			);
 		if (!$this->_query($sql, "Error in selecting from table patient_request")) {
 			 return false;
@@ -47,7 +47,7 @@ class Patient_requestQuery extends Query {
 	}
 	function selectPatient_id($patient_request) {
 		$sql = $this->mkSQL("select * from patient_request where patient_id  = %N",
-				$patient_request->getPatient_id(),
+				$patient_request->getPatient_id()
 			);
 		if (!$this->_query($sql, "Error in selecting from table patient_request")) {
 			 return false;
@@ -57,7 +57,7 @@ class Patient_requestQuery extends Query {
 	}
 	function selectSchedule_id($patient_request) {
 		$sql = $this->mkSQL("select * from patient_request where schedule_id  = %N",
-				$patient_request->getSchedule_id(),
+				$patient_request->getSchedule_id()
 			);
 		if (!$this->_query($sql, "Error in selecting from table patient_request")) {
 			 return false;
@@ -67,7 +67,7 @@ class Patient_requestQuery extends Query {
 	}
 	function selectProblem_history($patient_request) {
 		$sql = $this->mkSQL("select * from patient_request where problem_history  = %N",
-				$patient_request->getProblem_history(),
+				$patient_request->getProblem_history()
 			);
 		if (!$this->_query($sql, "Error in selecting from table patient_request")) {
 			 return false;
@@ -77,7 +77,7 @@ class Patient_requestQuery extends Query {
 	}
 	function selectActual_date_of_consultation($patient_request) {
 		$sql = $this->mkSQL("select * from patient_request where actual_date_of_consultation  = %N",
-				$patient_request->getActual_date_of_consultation(),
+				$patient_request->getActual_date_of_consultation()
 			);
 		if (!$this->_query($sql, "Error in selecting from table patient_request")) {
 			 return false;
@@ -87,7 +87,7 @@ class Patient_requestQuery extends Query {
 	}
 	function selectTime_of_consultation($patient_request) {
 		$sql = $this->mkSQL("select * from patient_request where time_of_consultation  = %N",
-				$patient_request->getTime_of_consultation(),
+				$patient_request->getTime_of_consultation()
 			);
 		if (!$this->_query($sql, "Error in selecting from table patient_request")) {
 			 return false;
