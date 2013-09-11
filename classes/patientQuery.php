@@ -41,7 +41,7 @@ class PatientQuery extends Query {
 	}
 	function selectPatient_id($patient) {
 		$sql = $this->mkSQL("select * from patient where patient_id  = %N",
-				$patient->getPatient_id(),
+				$patient->getPatient_id()
 			);
 		if (!$this->_query($sql, "Error in selecting from table patient")) {
 			 return false;
@@ -51,7 +51,7 @@ class PatientQuery extends Query {
 	}
 	function selectFirst_name($patient) {
 		$sql = $this->mkSQL("select * from patient where first_name  = %N",
-				$patient->getFirst_name(),
+				$patient->getFirst_name()
 			);
 		if (!$this->_query($sql, "Error in selecting from table patient")) {
 			 return false;
@@ -61,7 +61,7 @@ class PatientQuery extends Query {
 	}
 	function selectLast_name($patient) {
 		$sql = $this->mkSQL("select * from patient where last_name  = %N",
-				$patient->getLast_name(),
+				$patient->getLast_name()
 			);
 		if (!$this->_query($sql, "Error in selecting from table patient")) {
 			 return false;
@@ -71,7 +71,7 @@ class PatientQuery extends Query {
 	}
 	function selectEmail($patient) {
 		$sql = $this->mkSQL("select * from patient where email  = %N",
-				$patient->getEmail(),
+				$patient->getEmail()
 			);
 		if (!$this->_query($sql, "Error in selecting from table patient")) {
 			 return false;
@@ -81,7 +81,7 @@ class PatientQuery extends Query {
 	}
 	function selectMobile($patient) {
 		$sql = $this->mkSQL("select * from patient where mobile  = %N",
-				$patient->getMobile(),
+				$patient->getMobile()
 			);
 		if (!$this->_query($sql, "Error in selecting from table patient")) {
 			 return false;
@@ -91,7 +91,7 @@ class PatientQuery extends Query {
 	}
 	function selectGender($patient) {
 		$sql = $this->mkSQL("select * from patient where gender  = %N",
-				$patient->getGender(),
+				$patient->getGender()
 			);
 		if (!$this->_query($sql, "Error in selecting from table patient")) {
 			 return false;
@@ -101,7 +101,7 @@ class PatientQuery extends Query {
 	}
 	function selectAge($patient) {
 		$sql = $this->mkSQL("select * from patient where age  = %N",
-				$patient->getAge(),
+				$patient->getAge()
 			);
 		if (!$this->_query($sql, "Error in selecting from table patient")) {
 			 return false;
@@ -111,7 +111,7 @@ class PatientQuery extends Query {
 	}
 	function selectDate_of_birth($patient) {
 		$sql = $this->mkSQL("select * from patient where date_of_birth  = %N",
-				$patient->getDate_of_birth(),
+				$patient->getDate_of_birth()
 			);
 		if (!$this->_query($sql, "Error in selecting from table patient")) {
 			 return false;
@@ -121,7 +121,7 @@ class PatientQuery extends Query {
 	}
 	function selectAddress($patient) {
 		$sql = $this->mkSQL("select * from patient where address  = %N",
-				$patient->getAddress(),
+				$patient->getAddress()
 			);
 		if (!$this->_query($sql, "Error in selecting from table patient")) {
 			 return false;
@@ -131,7 +131,7 @@ class PatientQuery extends Query {
 	}
 	function selectParent_guardian($patient) {
 		$sql = $this->mkSQL("select * from patient where parent_guardian  = %N",
-				$patient->getParent_guardian(),
+				$patient->getParent_guardian()
 			);
 		if (!$this->_query($sql, "Error in selecting from table patient")) {
 			 return false;

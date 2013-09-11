@@ -12,7 +12,7 @@ class DBUtility {
 				$classdetails = '<?php '."\n";
 				$classdetails .= 'class '.ucfirst($classname).' {'."\n";
 			} else if (isset($classname) && ($classname != '')) {
-				if (preg_match('/ENGINE=InnoDB DEFAULT CHARSET=latin1/',$lines[$i]) > 0){
+				if (preg_match('/ENGINE=InnoDB DEFAULT/',$lines[$i]) > 0){
 					$classdetails .= '}'."\n".'?>';	
 					file_put_contents('/var/www/yousee.in/doctor/classes/'.$classname.'.php',$classdetails);
 					$classname='';
@@ -72,7 +72,7 @@ class DBUtility {
 				$classdetails .= "\t".'}'."\n";	
 			
 			} else if (isset($classname) && ($classname != '')) {
-				if (preg_match('/ENGINE=InnoDB DEFAULT CHARSET=latin1/',$lines[$i]) > 0){
+				if (preg_match('/ENGINE=InnoDB DEFAULT/',$lines[$i]) > 0){
 					//function makeobject
 					$classdetails .= "\t".'function mkObj($array)' .' {'."\n";
 					$classdetails .= "\t"."\t".'$obj = new '.ucfirst($modelclassname).'();'."\n";
@@ -97,7 +97,7 @@ class DBUtility {
 						$classdetails.="\t"."function select". ucfirst($selectcolname)."("."$".$modelclassname.") {"."\n";
 						$classdetails.="\t"."\t".'$sql = $this->mkSQL("select * from '.$modelclassname;
 						$classdetails.=' where '.$selectcolname."  = %N".'",'."\n"."\t"."\t"."\t"."\t";
-						$classdetails.= '$'.$modelclassname.'->get'.ucfirst($selectcolname).'(),'."\n";
+						$classdetails.= '$'.$modelclassname.'->get'.ucfirst($selectcolname).'()'."\n";
 						$classdetails.="\t"."\t"."\t".');'."\n";	
 						$classdetails.="\t"."\t".'if (!$this->_query($sql, "Error in selecting from table '.$modelclassname.'")) {'."\n";
 						$classdetails.="\t"."\t"."\t".' return false;'."\n";

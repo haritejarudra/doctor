@@ -35,7 +35,7 @@ class QualificationQuery extends Query {
 	}
 	function selectQualification_id($qualification) {
 		$sql = $this->mkSQL("select * from qualification where qualification_id  = %N",
-				$qualification->getQualification_id(),
+				$qualification->getQualification_id()
 			);
 		if (!$this->_query($sql, "Error in selecting from table qualification")) {
 			 return false;
@@ -45,7 +45,7 @@ class QualificationQuery extends Query {
 	}
 	function selectDegree($qualification) {
 		$sql = $this->mkSQL("select * from qualification where degree  = %N",
-				$qualification->getDegree(),
+				$qualification->getDegree()
 			);
 		if (!$this->_query($sql, "Error in selecting from table qualification")) {
 			 return false;
@@ -55,7 +55,7 @@ class QualificationQuery extends Query {
 	}
 	function selectYear($qualification) {
 		$sql = $this->mkSQL("select * from qualification where year  = %N",
-				$qualification->getYear(),
+				$qualification->getYear()
 			);
 		if (!$this->_query($sql, "Error in selecting from table qualification")) {
 			 return false;
@@ -65,7 +65,7 @@ class QualificationQuery extends Query {
 	}
 	function selectUniversity($qualification) {
 		$sql = $this->mkSQL("select * from qualification where university  = %N",
-				$qualification->getUniversity(),
+				$qualification->getUniversity()
 			);
 		if (!$this->_query($sql, "Error in selecting from table qualification")) {
 			 return false;
