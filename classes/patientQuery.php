@@ -217,61 +217,61 @@ class PatientQuery extends Query {
 	}
 	function deletePatient_id($patient) {
 		$sql = $this->mkSQL("delete from patient where patient_id  = %N",
-				$patient->getPatient_id(),
+				$patient->getPatient_id()
 			);
 		$ret = $this->_query($sql,"Delete using column patient_id failed on patient table");
 	}
 	function deleteFirst_name($patient) {
 		$sql = $this->mkSQL("delete from patient where first_name  = %N",
-				$patient->getFirst_name(),
+				$patient->getFirst_name()
 			);
 		$ret = $this->_query($sql,"Delete using column first_name failed on patient table");
 	}
 	function deleteLast_name($patient) {
 		$sql = $this->mkSQL("delete from patient where last_name  = %N",
-				$patient->getLast_name(),
+				$patient->getLast_name()
 			);
 		$ret = $this->_query($sql,"Delete using column last_name failed on patient table");
 	}
 	function deleteEmail($patient) {
 		$sql = $this->mkSQL("delete from patient where email  = %N",
-				$patient->getEmail(),
+				$patient->getEmail()
 			);
 		$ret = $this->_query($sql,"Delete using column email failed on patient table");
 	}
 	function deleteMobile($patient) {
 		$sql = $this->mkSQL("delete from patient where mobile  = %N",
-				$patient->getMobile(),
+				$patient->getMobile()
 			);
 		$ret = $this->_query($sql,"Delete using column mobile failed on patient table");
 	}
 	function deleteGender($patient) {
 		$sql = $this->mkSQL("delete from patient where gender  = %N",
-				$patient->getGender(),
+				$patient->getGender()
 			);
 		$ret = $this->_query($sql,"Delete using column gender failed on patient table");
 	}
 	function deleteAge($patient) {
 		$sql = $this->mkSQL("delete from patient where age  = %N",
-				$patient->getAge(),
+				$patient->getAge()
 			);
 		$ret = $this->_query($sql,"Delete using column age failed on patient table");
 	}
 	function deleteDate_of_birth($patient) {
 		$sql = $this->mkSQL("delete from patient where date_of_birth  = %N",
-				$patient->getDate_of_birth(),
+				$patient->getDate_of_birth()
 			);
 		$ret = $this->_query($sql,"Delete using column date_of_birth failed on patient table");
 	}
 	function deleteAddress($patient) {
 		$sql = $this->mkSQL("delete from patient where address  = %N",
-				$patient->getAddress(),
+				$patient->getAddress()
 			);
 		$ret = $this->_query($sql,"Delete using column address failed on patient table");
 	}
 	function deleteParent_guardian($patient) {
 		$sql = $this->mkSQL("delete from patient where parent_guardian  = %N",
-				$patient->getParent_guardian(),
+				$patient->getParent_guardian()
 			);
 		$ret = $this->_query($sql,"Delete using column parent_guardian failed on patient table");
 	}
