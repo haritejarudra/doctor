@@ -18,6 +18,14 @@ $chosencity = '';
 $chosenlocationid='';
 $searchlocation = '';
 $speciality = '';
+$subspeciality = '';
+
+//condition 1 - city is clicked on cities map to get a map of all locations in the city having a Peoples Doctor Clinic and list of clinics in the table
+//condition 2 - location is clicked on locations map  OR (location is selected from search bar PLUS any of Speciality and Sub Speciality conditions)
+//condition 3 - city is selected from search bar without choosing location  PLUS any of Speciality and Sub Speciality conditions
+//condition 4 - Submit is clicked without choosing any parameters
+
+
 
 if (isset ( $_GET ['page'] ) && $_GET ['page'] != '') {
 	
