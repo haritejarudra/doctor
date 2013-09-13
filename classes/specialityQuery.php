@@ -30,6 +30,10 @@ class SpecialityQuery extends Query {
 		$this->_rowCount = $this->_conn->numRows();
 		return true;
 	}
+	function getSpecialities (){
+		$sql = $this->mkSQL("select * from speciality");
+		return array_map(array($this, '_mkObj'), $this->exec($sql));
+	}
 	function selectSpeciality_id($speciality) {
 		$sql = $this->mkSQL("select * from speciality where speciality_id  = %N",
 				$speciality->getSpeciality_id()

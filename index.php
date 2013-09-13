@@ -2,10 +2,10 @@
 session_start();
 $thispage="more";
 require_once ("shared/global_constants.php");
-require_once ("classes/CityQuery.php");
-require_once ("classes/City.php");
-require_once ("classes/SpecialityQuery.php");
-require_once ("classes/Speciality.php");
+require_once ("classes/cityQuery.php");
+require_once ("classes/city.php");
+require_once ("classes/specialityQuery.php");
+require_once ("classes/speciality.php");
 
 $cityq = new CityQuery ();
 $cities = $cityq->getCities ();
@@ -19,6 +19,7 @@ $chosenlocationid='';
 $searchlocation = '';
 $speciality = '';
 $subspeciality = '';
+$condition=4;
 
 //condition 1 - city is clicked on cities map to get a map of all locations in the city having a Peoples Doctor Clinic and list of clinics in the table
 //condition 2 - location is clicked on locations map  OR (location is selected from search bar PLUS any of Speciality and Sub Speciality conditions)
@@ -146,7 +147,7 @@ div#searchAllConditionsDisplayed, div#searchConditionsDisplayed {
 						<span class="tooltip">
 						 <a> <?php echo "Start a People's Library";?>
 						<span>
-						To start a People's Library in your community, you can contact us at<br />Email : contact@yousee.in<br />Phone : +91-8008-884422 </span></a>
+						To be a People's Doctor, you can contact us at<br />Email : contact@yousee.in<br />Phone : +91-8008-884422 </span></a>
 						</span>
 						</div>
 					</td>
@@ -156,11 +157,9 @@ div#searchAllConditionsDisplayed, div#searchConditionsDisplayed {
 							?>
 						<div align="justify">
 							 <br> 
-							 <font style="font-size:15px;color:#369;font-weight:bold;font-family:Trebuchet MS;">People's Library</font>
-							 <p style="color:#666;font-size:12px;font-family:Trebuchet MS;"><b>People's Library</b> is an attempt to bring libraries closer to people and in the process bring the community together. The way it works is as follows.
-							 Donated books have been selected by volunteers to start a library at a location of their choice; residents of the community can borrow books from these libraries at specified times scheduled by the volunteer librarian.
-							 Books are tracked by the librarian using an open source online library management system customized by UC volunteers.<br /><br />
-							 <font style='color:#666;font-weight:normal;font-size:12px;'>To browse books in the Library click on any of the locations shown in the map below or use the search bar on the left for advanced search.
+							 <font style="font-size:15px;color:#369;font-weight:bold;font-family:Trebuchet MS;">People's Doctor</font>
+							 <p style="color:#666;font-size:12px;font-family:Trebuchet MS;"><b>People's Doctor</b> is an attempt to bring the best medical consulting services absolutely free. Doctors who wish to give some of their time towards free medical service can get registered with the exchange and schedule a free clinic based on their convenience of time and place. Patients can request to attend these clinics by registering with the exchange and searching for relevant consulting sessions. The search is map-based along with specifications for a particular speciality and sub speciality.<br /><br />
+							 <font style='color:#666;font-weight:normal;font-size:12px;'>To browse for free Peoples Doctor Clinics click on a city or location on the map or use the search bar on the left hand side to look for particular speciality or sub speciality at a chosen city or location.
 							</font><br><br> 
 						</div>
 						<div id="mapLocations">
@@ -173,11 +172,9 @@ div#searchAllConditionsDisplayed, div#searchConditionsDisplayed {
 							?>
 						<div align="justify">
 							 <br> 
-							 <font style="font-size:15px;color:#369;font-weight:bold;font-family:Trebuchet MS;">People's Library</font>
-							 <p style="color:#666;font-size:12px;font-family:Trebuchet MS;"><b>People's Library</b> is an attempt to bring libraries closer to people and in the process bring the community together. The way it works is as follows.
-							 Donated books have been selected by volunteers to start a library at a location of their choice; residents of the community can borrow books from these libraries at specified times scheduled by the volunteer librarian.
-							 Books are tracked by the librarian using an open source online library management system customized by UC volunteers.<br /><br />
-							 <font style='color:#666;font-weight:normal;font-size:12px;'>Click on any of the cities shown in the map below to get a list of Library locations and a listing of books in that city. You can also use the search bar on the left for advanced search.
+							 <font style="font-size:15px;color:#369;font-weight:bold;font-family:Trebuchet MS;">People's Doctor</font>
+							 <p style="color:#666;font-size:12px;font-family:Trebuchet MS;"><b>People's Doctor</b> is an attempt to bring the best medical consulting services absolutely free. Doctors who wish to give some of their time towards free medical service can get registered with the exchange and schedule a free clinic based on their convenience of time and place. Patients can request to attend these clinics by registering with the exchange and searching for relevant consulting sessions. The search is map-based along with specifications for a particular speciality and sub speciality.<br /><br />
+							 <font style='color:#666;font-weight:normal;font-size:12px;'>To browse for free Peoples Doctor Clinics click on a city or location on the map or use the search bar on the left hand side to look for particular speciality or sub speciality at a chosen city or location.
 							</font><br><br> 
 						</div>
 							<div id="mapCitiesWithDoctors">

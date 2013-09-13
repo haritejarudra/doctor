@@ -15,10 +15,10 @@ class Query {
   function Query() {
 
     $e = $this->connect_e();
-
     if ($e) {
       Fatal::dbError($e->sql, $e->msg, $e->dberror);
     }
+	
   }
   function connect_e() {
     list($this->_link, $e) = Query::_connect_e();
@@ -47,6 +47,7 @@ class Query {
                                        "Cannot select database.",
                                        mysqli_error($link)));
       }
+
     }
     return array($link, NULL);
   }
@@ -88,7 +89,7 @@ class Query {
     if (!$this->_link) {
       Fatal::internalError('Tried to make database query before connection.');
     }
-    $r = mysqli_query($sql, $this->_link);
+    $r = mysqli_query($this->_link,$sql);
     if ($r === false) {
       Fatal::dbError($sql, 'Database query failed', mysqli_error());
     }
@@ -223,7 +224,7 @@ class Query {
           $SQL .= $this->_numstr($arg);
           break;
         case 'Q':
-          $SQL .= "'".mysqli_real_escape_string($arg, $this->_link)."'";
+          $SQL .= "'".mysqli_real_escape_string($this->_link,$arg)."'";
           break;
         case 'q':
           $SQL .= mysqli_real_escape_string($arg, $this->_link);

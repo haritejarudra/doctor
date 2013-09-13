@@ -20,8 +20,6 @@ function displaySubSpecialityDiv() {
 				$('#sub_speciality_div').load('get_sub_specialities.php?speciality=' + selectedSpecName);
 			} else 
 				{document.getElementById("sub_speciality_div").style.display="none"; }
-
-
    }
 </script>
 <form method="post" name="search_doctor" action="index.php" >
@@ -32,13 +30,13 @@ function displaySubSpecialityDiv() {
 	</div>
 	<div id="speciality_div">
 		<p><b><font color="red">Choose Speciality</font></b></p>
-		<select name="speciality" id="speciality" style="width:140px; onchange="displaySupSpecialityDiv();" >
+		<select name="speciality" id="speciality" style="width:140px;" onchange="displaySubSpecialityDiv();" >
 			<option value='' select="selected">--ALL--</option>
 			<?php
-				foreach($specialities as $code=>$description)
+				foreach($specialities as $nextspec)
 				{
-					$id=$code;
-					$data=$description;
+					$id=$nextspec->getSpeciality_id();
+					$data=$nextspec->getSpeciality();
 					echo '<option value="'.$data.'" name="'.$data.'">'.$data.'</option>';
 				}
 			?>
@@ -49,10 +47,10 @@ function displaySubSpecialityDiv() {
 		<select name="subspeciality" id="subspeciality" style="width:140px;" >
 			<option value='' select="selected">--ALL--</option>
 			<?php
-				foreach($subspecialities as $subcode=>$subdescription)
+				foreach($subspecialities as $nextsub)
 				{
-					$id=$subcode;
-					$data=$subdescription;
+					$id=$nextsub->getSub_speciality_id();
+					$data=$nextsub->getSpeciality();
 					echo '<option value="'.$data.'" name="'.$data.'">'.$data.'</option>';
 				}
 			?>

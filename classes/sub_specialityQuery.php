@@ -30,6 +30,10 @@ class Sub_specialityQuery extends Query {
 		$this->_rowCount = $this->_conn->numRows();
 		return true;
 	}
+	function getSubSpecialitiesFor($speciality){
+		$sql = $this->mkSQL("select * from sub_speciality where sub_speciality_id IN(select sub_speciality_id from speciality_sub_speciality_link where speciality_id IN (select speciality_id from speciality where speciality=%Q))",$speciality);
+		return array_map(array($this, '_mkObj'), $this->exec($sql));
+	}
 	function selectSub_speciality_id($sub_speciality) {
 		$sql = $this->mkSQL("select * from sub_speciality where sub_speciality_id  = %N",
 				$sub_speciality->getSub_speciality_id()
