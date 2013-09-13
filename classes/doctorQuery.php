@@ -5,8 +5,6 @@ class DoctorQuery extends Query {
 	var $_rowCount = 0;
 	function DoctorQuery () {
 		$this->Query();
-		$this->_loc = new Localize(OBIB_LOCALE,"classes")
-	}
 	function getRowCount() {
 		return $this->_rowCount;
 	}
@@ -15,9 +13,9 @@ class DoctorQuery extends Query {
 		if ($array == false) {
 			return false;
 		}
-		return $this->_mkObj($array)
+		return $this->_mkObj($array);
 	}
-	function mkObj($array) {
+	function _mkObj($array) {
 		$obj = new Doctor();
 		$obj->setDoctor_id($array["doctor_id"]);
 		$obj->setFirst_name($array["first_name"]);
@@ -184,189 +182,189 @@ class DoctorQuery extends Query {
 		return true;
 	}
 	function insert($doctor) {
-		$sql = $this->mkSQL("insert into doctor values (%Q, %Q, %Q, %Q, %Q, %Q, %Q, %Q, %Q, %Q, %Q, %Q, %Q, %Q)",
-				$doctor->getDoctor_id(),$doctor->getFirst_name(),$doctor->getLast_name(),$doctor->getMobile(),$doctor->getGender(),$doctor->getAddress(),$doctor->getState(),$doctor->getCountry(),$doctor->getCurrent_hospital(),$doctor->getExperience(),$doctor->getQualification_id(),$doctor->getDate_of_birth(),$doctor->getAge(),$doctor->getCity_id())
+		$sql = $this->mkSQL("insert into doctor values (%N, %Q, %Q, %Q, %Q, %Q, %Q, %Q, %Q, %Q, %N, %Q, %N, %N)",
+				$doctor->getDoctor_id(),$doctor->getFirst_name(),$doctor->getLast_name(),$doctor->getMobile(),$doctor->getGender(),$doctor->getAddress(),$doctor->getState(),$doctor->getCountry(),$doctor->getCurrent_hospital(),$doctor->getExperience(),$doctor->getQualification_id(),$doctor->getDate_of_birth(),$doctor->getAge(),$doctor->getCity_id()
 			);
 		$ret = $this->_query($sql,"Insert failed on doctor table");
 	}
 	function updateDoctor_id($doctor) {
 		$sql = $this->mkSQL("update doctor
-				set first_name = %Q, last_name = %Q, mobile = %Q, gender = %Q, address = %Q, state = %Q, country = %Q, current_hospital = %Q, experience = %Q, qualification_id = %Q, date_of_birth = %Q, age = %Q, city_id = %Q where doctor_id  = %N",
+				set first_name = %Q, last_name = %Q, mobile = %Q, gender = %Q, address = %Q, state = %Q, country = %Q, current_hospital = %Q, experience = %Q, qualification_id = %N, date_of_birth = %Q, age = %N, city_id = %N where doctor_id = %N ",
 				$doctor->getFirst_name(),$doctor->getLast_name(),$doctor->getMobile(),$doctor->getGender(),$doctor->getAddress(),$doctor->getState(),$doctor->getCountry(),$doctor->getCurrent_hospital(),$doctor->getExperience(),$doctor->getQualification_id(),$doctor->getDate_of_birth(),$doctor->getAge(),$doctor->getCity_id(),$doctor->get(),$doctor->getDoctor_id()
 			);
 		$ret = $this->_query($sql,"Update using column doctor_id failed on doctor table");
 	}
 	function updateFirst_name($doctor) {
 		$sql = $this->mkSQL("update doctor
-				set doctor_id = %Q, last_name = %Q, mobile = %Q, gender = %Q, address = %Q, state = %Q, country = %Q, current_hospital = %Q, experience = %Q, qualification_id = %Q, date_of_birth = %Q, age = %Q, city_id = %Q where first_name  = %N",
+				set doctor_id = %N, last_name = %Q, mobile = %Q, gender = %Q, address = %Q, state = %Q, country = %Q, current_hospital = %Q, experience = %Q, qualification_id = %N, date_of_birth = %Q, age = %N, city_id = %N where first_name = %Q ",
 				$doctor->getDoctor_id(),$doctor->getLast_name(),$doctor->getMobile(),$doctor->getGender(),$doctor->getAddress(),$doctor->getState(),$doctor->getCountry(),$doctor->getCurrent_hospital(),$doctor->getExperience(),$doctor->getQualification_id(),$doctor->getDate_of_birth(),$doctor->getAge(),$doctor->getCity_id(),$doctor->get(),$doctor->getFirst_name()
 			);
 		$ret = $this->_query($sql,"Update using column first_name failed on doctor table");
 	}
 	function updateLast_name($doctor) {
 		$sql = $this->mkSQL("update doctor
-				set doctor_id = %Q, first_name = %Q, mobile = %Q, gender = %Q, address = %Q, state = %Q, country = %Q, current_hospital = %Q, experience = %Q, qualification_id = %Q, date_of_birth = %Q, age = %Q, city_id = %Q where last_name  = %N",
+				set doctor_id = %N, first_name = %Q, mobile = %Q, gender = %Q, address = %Q, state = %Q, country = %Q, current_hospital = %Q, experience = %Q, qualification_id = %N, date_of_birth = %Q, age = %N, city_id = %N where last_name = %Q ",
 				$doctor->getDoctor_id(),$doctor->getFirst_name(),$doctor->getMobile(),$doctor->getGender(),$doctor->getAddress(),$doctor->getState(),$doctor->getCountry(),$doctor->getCurrent_hospital(),$doctor->getExperience(),$doctor->getQualification_id(),$doctor->getDate_of_birth(),$doctor->getAge(),$doctor->getCity_id(),$doctor->get(),$doctor->getLast_name()
 			);
 		$ret = $this->_query($sql,"Update using column last_name failed on doctor table");
 	}
 	function updateMobile($doctor) {
 		$sql = $this->mkSQL("update doctor
-				set doctor_id = %Q, first_name = %Q, last_name = %Q, gender = %Q, address = %Q, state = %Q, country = %Q, current_hospital = %Q, experience = %Q, qualification_id = %Q, date_of_birth = %Q, age = %Q, city_id = %Q where mobile  = %N",
+				set doctor_id = %N, first_name = %Q, last_name = %Q, gender = %Q, address = %Q, state = %Q, country = %Q, current_hospital = %Q, experience = %Q, qualification_id = %N, date_of_birth = %Q, age = %N, city_id = %N where mobile = %Q ",
 				$doctor->getDoctor_id(),$doctor->getFirst_name(),$doctor->getLast_name(),$doctor->getGender(),$doctor->getAddress(),$doctor->getState(),$doctor->getCountry(),$doctor->getCurrent_hospital(),$doctor->getExperience(),$doctor->getQualification_id(),$doctor->getDate_of_birth(),$doctor->getAge(),$doctor->getCity_id(),$doctor->get(),$doctor->getMobile()
 			);
 		$ret = $this->_query($sql,"Update using column mobile failed on doctor table");
 	}
 	function updateGender($doctor) {
 		$sql = $this->mkSQL("update doctor
-				set doctor_id = %Q, first_name = %Q, last_name = %Q, mobile = %Q, address = %Q, state = %Q, country = %Q, current_hospital = %Q, experience = %Q, qualification_id = %Q, date_of_birth = %Q, age = %Q, city_id = %Q where gender  = %N",
+				set doctor_id = %N, first_name = %Q, last_name = %Q, mobile = %Q, address = %Q, state = %Q, country = %Q, current_hospital = %Q, experience = %Q, qualification_id = %N, date_of_birth = %Q, age = %N, city_id = %N where gender = %Q ",
 				$doctor->getDoctor_id(),$doctor->getFirst_name(),$doctor->getLast_name(),$doctor->getMobile(),$doctor->getAddress(),$doctor->getState(),$doctor->getCountry(),$doctor->getCurrent_hospital(),$doctor->getExperience(),$doctor->getQualification_id(),$doctor->getDate_of_birth(),$doctor->getAge(),$doctor->getCity_id(),$doctor->get(),$doctor->getGender()
 			);
 		$ret = $this->_query($sql,"Update using column gender failed on doctor table");
 	}
 	function updateAddress($doctor) {
 		$sql = $this->mkSQL("update doctor
-				set doctor_id = %Q, first_name = %Q, last_name = %Q, mobile = %Q, gender = %Q, state = %Q, country = %Q, current_hospital = %Q, experience = %Q, qualification_id = %Q, date_of_birth = %Q, age = %Q, city_id = %Q where address  = %N",
+				set doctor_id = %N, first_name = %Q, last_name = %Q, mobile = %Q, gender = %Q, state = %Q, country = %Q, current_hospital = %Q, experience = %Q, qualification_id = %N, date_of_birth = %Q, age = %N, city_id = %N where address = %Q ",
 				$doctor->getDoctor_id(),$doctor->getFirst_name(),$doctor->getLast_name(),$doctor->getMobile(),$doctor->getGender(),$doctor->getState(),$doctor->getCountry(),$doctor->getCurrent_hospital(),$doctor->getExperience(),$doctor->getQualification_id(),$doctor->getDate_of_birth(),$doctor->getAge(),$doctor->getCity_id(),$doctor->get(),$doctor->getAddress()
 			);
 		$ret = $this->_query($sql,"Update using column address failed on doctor table");
 	}
 	function updateState($doctor) {
 		$sql = $this->mkSQL("update doctor
-				set doctor_id = %Q, first_name = %Q, last_name = %Q, mobile = %Q, gender = %Q, address = %Q, country = %Q, current_hospital = %Q, experience = %Q, qualification_id = %Q, date_of_birth = %Q, age = %Q, city_id = %Q where state  = %N",
+				set doctor_id = %N, first_name = %Q, last_name = %Q, mobile = %Q, gender = %Q, address = %Q, country = %Q, current_hospital = %Q, experience = %Q, qualification_id = %N, date_of_birth = %Q, age = %N, city_id = %N where state = %Q ",
 				$doctor->getDoctor_id(),$doctor->getFirst_name(),$doctor->getLast_name(),$doctor->getMobile(),$doctor->getGender(),$doctor->getAddress(),$doctor->getCountry(),$doctor->getCurrent_hospital(),$doctor->getExperience(),$doctor->getQualification_id(),$doctor->getDate_of_birth(),$doctor->getAge(),$doctor->getCity_id(),$doctor->get(),$doctor->getState()
 			);
 		$ret = $this->_query($sql,"Update using column state failed on doctor table");
 	}
 	function updateCountry($doctor) {
 		$sql = $this->mkSQL("update doctor
-				set doctor_id = %Q, first_name = %Q, last_name = %Q, mobile = %Q, gender = %Q, address = %Q, state = %Q, current_hospital = %Q, experience = %Q, qualification_id = %Q, date_of_birth = %Q, age = %Q, city_id = %Q where country  = %N",
+				set doctor_id = %N, first_name = %Q, last_name = %Q, mobile = %Q, gender = %Q, address = %Q, state = %Q, current_hospital = %Q, experience = %Q, qualification_id = %N, date_of_birth = %Q, age = %N, city_id = %N where country = %Q ",
 				$doctor->getDoctor_id(),$doctor->getFirst_name(),$doctor->getLast_name(),$doctor->getMobile(),$doctor->getGender(),$doctor->getAddress(),$doctor->getState(),$doctor->getCurrent_hospital(),$doctor->getExperience(),$doctor->getQualification_id(),$doctor->getDate_of_birth(),$doctor->getAge(),$doctor->getCity_id(),$doctor->get(),$doctor->getCountry()
 			);
 		$ret = $this->_query($sql,"Update using column country failed on doctor table");
 	}
 	function updateCurrent_hospital($doctor) {
 		$sql = $this->mkSQL("update doctor
-				set doctor_id = %Q, first_name = %Q, last_name = %Q, mobile = %Q, gender = %Q, address = %Q, state = %Q, country = %Q, experience = %Q, qualification_id = %Q, date_of_birth = %Q, age = %Q, city_id = %Q where current_hospital  = %N",
+				set doctor_id = %N, first_name = %Q, last_name = %Q, mobile = %Q, gender = %Q, address = %Q, state = %Q, country = %Q, experience = %Q, qualification_id = %N, date_of_birth = %Q, age = %N, city_id = %N where current_hospital = %Q ",
 				$doctor->getDoctor_id(),$doctor->getFirst_name(),$doctor->getLast_name(),$doctor->getMobile(),$doctor->getGender(),$doctor->getAddress(),$doctor->getState(),$doctor->getCountry(),$doctor->getExperience(),$doctor->getQualification_id(),$doctor->getDate_of_birth(),$doctor->getAge(),$doctor->getCity_id(),$doctor->get(),$doctor->getCurrent_hospital()
 			);
 		$ret = $this->_query($sql,"Update using column current_hospital failed on doctor table");
 	}
 	function updateExperience($doctor) {
 		$sql = $this->mkSQL("update doctor
-				set doctor_id = %Q, first_name = %Q, last_name = %Q, mobile = %Q, gender = %Q, address = %Q, state = %Q, country = %Q, current_hospital = %Q, qualification_id = %Q, date_of_birth = %Q, age = %Q, city_id = %Q where experience  = %N",
+				set doctor_id = %N, first_name = %Q, last_name = %Q, mobile = %Q, gender = %Q, address = %Q, state = %Q, country = %Q, current_hospital = %Q, qualification_id = %N, date_of_birth = %Q, age = %N, city_id = %N where experience = %Q ",
 				$doctor->getDoctor_id(),$doctor->getFirst_name(),$doctor->getLast_name(),$doctor->getMobile(),$doctor->getGender(),$doctor->getAddress(),$doctor->getState(),$doctor->getCountry(),$doctor->getCurrent_hospital(),$doctor->getQualification_id(),$doctor->getDate_of_birth(),$doctor->getAge(),$doctor->getCity_id(),$doctor->get(),$doctor->getExperience()
 			);
 		$ret = $this->_query($sql,"Update using column experience failed on doctor table");
 	}
 	function updateQualification_id($doctor) {
 		$sql = $this->mkSQL("update doctor
-				set doctor_id = %Q, first_name = %Q, last_name = %Q, mobile = %Q, gender = %Q, address = %Q, state = %Q, country = %Q, current_hospital = %Q, experience = %Q, date_of_birth = %Q, age = %Q, city_id = %Q where qualification_id  = %N",
+				set doctor_id = %N, first_name = %Q, last_name = %Q, mobile = %Q, gender = %Q, address = %Q, state = %Q, country = %Q, current_hospital = %Q, experience = %Q, date_of_birth = %Q, age = %N, city_id = %N where qualification_id = %N ",
 				$doctor->getDoctor_id(),$doctor->getFirst_name(),$doctor->getLast_name(),$doctor->getMobile(),$doctor->getGender(),$doctor->getAddress(),$doctor->getState(),$doctor->getCountry(),$doctor->getCurrent_hospital(),$doctor->getExperience(),$doctor->getDate_of_birth(),$doctor->getAge(),$doctor->getCity_id(),$doctor->get(),$doctor->getQualification_id()
 			);
 		$ret = $this->_query($sql,"Update using column qualification_id failed on doctor table");
 	}
 	function updateDate_of_birth($doctor) {
 		$sql = $this->mkSQL("update doctor
-				set doctor_id = %Q, first_name = %Q, last_name = %Q, mobile = %Q, gender = %Q, address = %Q, state = %Q, country = %Q, current_hospital = %Q, experience = %Q, qualification_id = %Q, age = %Q, city_id = %Q where date_of_birth  = %N",
+				set doctor_id = %N, first_name = %Q, last_name = %Q, mobile = %Q, gender = %Q, address = %Q, state = %Q, country = %Q, current_hospital = %Q, experience = %Q, qualification_id = %N, age = %N, city_id = %N where date_of_birth = %Q ",
 				$doctor->getDoctor_id(),$doctor->getFirst_name(),$doctor->getLast_name(),$doctor->getMobile(),$doctor->getGender(),$doctor->getAddress(),$doctor->getState(),$doctor->getCountry(),$doctor->getCurrent_hospital(),$doctor->getExperience(),$doctor->getQualification_id(),$doctor->getAge(),$doctor->getCity_id(),$doctor->get(),$doctor->getDate_of_birth()
 			);
 		$ret = $this->_query($sql,"Update using column date_of_birth failed on doctor table");
 	}
 	function updateAge($doctor) {
 		$sql = $this->mkSQL("update doctor
-				set doctor_id = %Q, first_name = %Q, last_name = %Q, mobile = %Q, gender = %Q, address = %Q, state = %Q, country = %Q, current_hospital = %Q, experience = %Q, qualification_id = %Q, date_of_birth = %Q, city_id = %Q where age  = %N",
+				set doctor_id = %N, first_name = %Q, last_name = %Q, mobile = %Q, gender = %Q, address = %Q, state = %Q, country = %Q, current_hospital = %Q, experience = %Q, qualification_id = %N, date_of_birth = %Q, city_id = %N where age = %N ",
 				$doctor->getDoctor_id(),$doctor->getFirst_name(),$doctor->getLast_name(),$doctor->getMobile(),$doctor->getGender(),$doctor->getAddress(),$doctor->getState(),$doctor->getCountry(),$doctor->getCurrent_hospital(),$doctor->getExperience(),$doctor->getQualification_id(),$doctor->getDate_of_birth(),$doctor->getCity_id(),$doctor->get(),$doctor->getAge()
 			);
 		$ret = $this->_query($sql,"Update using column age failed on doctor table");
 	}
 	function updateCity_id($doctor) {
 		$sql = $this->mkSQL("update doctor
-				set doctor_id = %Q, first_name = %Q, last_name = %Q, mobile = %Q, gender = %Q, address = %Q, state = %Q, country = %Q, current_hospital = %Q, experience = %Q, qualification_id = %Q, date_of_birth = %Q, age = %Q where city_id  = %N",
+				set doctor_id = %N, first_name = %Q, last_name = %Q, mobile = %Q, gender = %Q, address = %Q, state = %Q, country = %Q, current_hospital = %Q, experience = %Q, qualification_id = %N, date_of_birth = %Q, age = %N where city_id = %N ",
 				$doctor->getDoctor_id(),$doctor->getFirst_name(),$doctor->getLast_name(),$doctor->getMobile(),$doctor->getGender(),$doctor->getAddress(),$doctor->getState(),$doctor->getCountry(),$doctor->getCurrent_hospital(),$doctor->getExperience(),$doctor->getQualification_id(),$doctor->getDate_of_birth(),$doctor->getAge(),$doctor->get(),$doctor->getCity_id()
 			);
 		$ret = $this->_query($sql,"Update using column city_id failed on doctor table");
 	}
 	function deleteDoctor_id($doctor) {
-		$sql = $this->mkSQL("delete from doctor where doctor_id  = %N",
+		$sql = $this->mkSQL("delete from doctor where doctor_id = %Q ",
 				$doctor->getDoctor_id()
 			);
 		$ret = $this->_query($sql,"Delete using column doctor_id failed on doctor table");
 	}
 	function deleteFirst_name($doctor) {
-		$sql = $this->mkSQL("delete from doctor where first_name  = %N",
+		$sql = $this->mkSQL("delete from doctor where first_name = %Q ",
 				$doctor->getFirst_name()
 			);
 		$ret = $this->_query($sql,"Delete using column first_name failed on doctor table");
 	}
 	function deleteLast_name($doctor) {
-		$sql = $this->mkSQL("delete from doctor where last_name  = %N",
+		$sql = $this->mkSQL("delete from doctor where last_name = %Q ",
 				$doctor->getLast_name()
 			);
 		$ret = $this->_query($sql,"Delete using column last_name failed on doctor table");
 	}
 	function deleteMobile($doctor) {
-		$sql = $this->mkSQL("delete from doctor where mobile  = %N",
+		$sql = $this->mkSQL("delete from doctor where mobile = %Q ",
 				$doctor->getMobile()
 			);
 		$ret = $this->_query($sql,"Delete using column mobile failed on doctor table");
 	}
 	function deleteGender($doctor) {
-		$sql = $this->mkSQL("delete from doctor where gender  = %N",
+		$sql = $this->mkSQL("delete from doctor where gender = %Q ",
 				$doctor->getGender()
 			);
 		$ret = $this->_query($sql,"Delete using column gender failed on doctor table");
 	}
 	function deleteAddress($doctor) {
-		$sql = $this->mkSQL("delete from doctor where address  = %N",
+		$sql = $this->mkSQL("delete from doctor where address = %Q ",
 				$doctor->getAddress()
 			);
 		$ret = $this->_query($sql,"Delete using column address failed on doctor table");
 	}
 	function deleteState($doctor) {
-		$sql = $this->mkSQL("delete from doctor where state  = %N",
+		$sql = $this->mkSQL("delete from doctor where state = %Q ",
 				$doctor->getState()
 			);
 		$ret = $this->_query($sql,"Delete using column state failed on doctor table");
 	}
 	function deleteCountry($doctor) {
-		$sql = $this->mkSQL("delete from doctor where country  = %N",
+		$sql = $this->mkSQL("delete from doctor where country = %Q ",
 				$doctor->getCountry()
 			);
 		$ret = $this->_query($sql,"Delete using column country failed on doctor table");
 	}
 	function deleteCurrent_hospital($doctor) {
-		$sql = $this->mkSQL("delete from doctor where current_hospital  = %N",
+		$sql = $this->mkSQL("delete from doctor where current_hospital = %Q ",
 				$doctor->getCurrent_hospital()
 			);
 		$ret = $this->_query($sql,"Delete using column current_hospital failed on doctor table");
 	}
 	function deleteExperience($doctor) {
-		$sql = $this->mkSQL("delete from doctor where experience  = %N",
+		$sql = $this->mkSQL("delete from doctor where experience = %Q ",
 				$doctor->getExperience()
 			);
 		$ret = $this->_query($sql,"Delete using column experience failed on doctor table");
 	}
 	function deleteQualification_id($doctor) {
-		$sql = $this->mkSQL("delete from doctor where qualification_id  = %N",
+		$sql = $this->mkSQL("delete from doctor where qualification_id = %Q ",
 				$doctor->getQualification_id()
 			);
 		$ret = $this->_query($sql,"Delete using column qualification_id failed on doctor table");
 	}
 	function deleteDate_of_birth($doctor) {
-		$sql = $this->mkSQL("delete from doctor where date_of_birth  = %N",
+		$sql = $this->mkSQL("delete from doctor where date_of_birth = %Q ",
 				$doctor->getDate_of_birth()
 			);
 		$ret = $this->_query($sql,"Delete using column date_of_birth failed on doctor table");
 	}
 	function deleteAge($doctor) {
-		$sql = $this->mkSQL("delete from doctor where age  = %N",
+		$sql = $this->mkSQL("delete from doctor where age = %Q ",
 				$doctor->getAge()
 			);
 		$ret = $this->_query($sql,"Delete using column age failed on doctor table");
 	}
 	function deleteCity_id($doctor) {
-		$sql = $this->mkSQL("delete from doctor where city_id  = %N",
+		$sql = $this->mkSQL("delete from doctor where city_id = %Q ",
 				$doctor->getCity_id()
 			);
 		$ret = $this->_query($sql,"Delete using column city_id failed on doctor table");
