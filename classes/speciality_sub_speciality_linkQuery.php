@@ -5,6 +5,7 @@ class Speciality_sub_speciality_linkQuery extends Query {
 	var $_rowCount = 0;
 	function Speciality_sub_speciality_linkQuery () {
 		$this->Query();
+	}
 	function getRowCount() {
 		return $this->_rowCount;
 	}

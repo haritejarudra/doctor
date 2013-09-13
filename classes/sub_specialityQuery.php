@@ -5,6 +5,7 @@ class Sub_specialityQuery extends Query {
 	var $_rowCount = 0;
 	function Sub_specialityQuery () {
 		$this->Query();
+	}
 	function getRowCount() {
 		return $this->_rowCount;
 	}

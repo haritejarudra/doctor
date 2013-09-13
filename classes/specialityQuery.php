@@ -5,6 +5,7 @@ class SpecialityQuery extends Query {
 	var $_rowCount = 0;
 	function SpecialityQuery () {
 		$this->Query();
+	}
 	function getRowCount() {
 		return $this->_rowCount;
 	}

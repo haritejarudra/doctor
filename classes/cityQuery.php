@@ -5,6 +5,7 @@ class CityQuery extends Query {
 	var $_rowCount = 0;
 	function CityQuery () {
 		$this->Query();
+	}
 	function getRowCount() {
 		return $this->_rowCount;
 	}
