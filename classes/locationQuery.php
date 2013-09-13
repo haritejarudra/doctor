@@ -5,8 +5,6 @@ class LocationQuery extends Query {
 	var $_rowCount = 0;
 	function LocationQuery () {
 		$this->Query();
-		$this->_loc = new Localize(OBIB_LOCALE,"classes")
-	}
 	function getRowCount() {
 		return $this->_rowCount;
 	}
@@ -15,9 +13,9 @@ class LocationQuery extends Query {
 		if ($array == false) {
 			return false;
 		}
-		return $this->_mkObj($array)
+		return $this->_mkObj($array);
 	}
-	function mkObj($array) {
+	function _mkObj($array) {
 		$obj = new Location();
 		$obj->setLocation_id($array["location_id"]);
 		$obj->setLat($array["lat"]);
@@ -85,72 +83,72 @@ class LocationQuery extends Query {
 		return true;
 	}
 	function insert($location) {
-		$sql = $this->mkSQL("insert into location values (%Q, %Q, %Q, %Q, %Q)",
-				$location->getLocation_id(),$location->getLat(),$location->getLong(),$location->getCity_id(),$location->getLocation())
+		$sql = $this->mkSQL("insert into location values (%N, %N, %N, %N, %Q)",
+				$location->getLocation_id(),$location->getLat(),$location->getLong(),$location->getCity_id(),$location->getLocation()
 			);
 		$ret = $this->_query($sql,"Insert failed on location table");
 	}
 	function updateLocation_id($location) {
 		$sql = $this->mkSQL("update location
-				set lat = %Q, long = %Q, city_id = %Q, location = %Q where location_id  = %N",
+				set lat = %N, long = %N, city_id = %N, location = %Q where location_id = %N ",
 				$location->getLat(),$location->getLong(),$location->getCity_id(),$location->getLocation(),$location->get(),$location->getLocation_id()
 			);
 		$ret = $this->_query($sql,"Update using column location_id failed on location table");
 	}
 	function updateLat($location) {
 		$sql = $this->mkSQL("update location
-				set location_id = %Q, long = %Q, city_id = %Q, location = %Q where lat  = %N",
+				set location_id = %N, long = %N, city_id = %N, location = %Q where lat = %N ",
 				$location->getLocation_id(),$location->getLong(),$location->getCity_id(),$location->getLocation(),$location->get(),$location->getLat()
 			);
 		$ret = $this->_query($sql,"Update using column lat failed on location table");
 	}
 	function updateLong($location) {
 		$sql = $this->mkSQL("update location
-				set location_id = %Q, lat = %Q, city_id = %Q, location = %Q where long  = %N",
+				set location_id = %N, lat = %N, city_id = %N, location = %Q where long = %N ",
 				$location->getLocation_id(),$location->getLat(),$location->getCity_id(),$location->getLocation(),$location->get(),$location->getLong()
 			);
 		$ret = $this->_query($sql,"Update using column long failed on location table");
 	}
 	function updateCity_id($location) {
 		$sql = $this->mkSQL("update location
-				set location_id = %Q, lat = %Q, long = %Q, location = %Q where city_id  = %N",
+				set location_id = %N, lat = %N, long = %N, location = %Q where city_id = %N ",
 				$location->getLocation_id(),$location->getLat(),$location->getLong(),$location->getLocation(),$location->get(),$location->getCity_id()
 			);
 		$ret = $this->_query($sql,"Update using column city_id failed on location table");
 	}
 	function updateLocation($location) {
 		$sql = $this->mkSQL("update location
-				set location_id = %Q, lat = %Q, long = %Q, city_id = %Q where location  = %N",
+				set location_id = %N, lat = %N, long = %N, city_id = %N where location = %Q ",
 				$location->getLocation_id(),$location->getLat(),$location->getLong(),$location->getCity_id(),$location->get(),$location->getLocation()
 			);
 		$ret = $this->_query($sql,"Update using column location failed on location table");
 	}
 	function deleteLocation_id($location) {
-		$sql = $this->mkSQL("delete from location where location_id  = %N",
+		$sql = $this->mkSQL("delete from location where location_id = %Q ",
 				$location->getLocation_id()
 			);
 		$ret = $this->_query($sql,"Delete using column location_id failed on location table");
 	}
 	function deleteLat($location) {
-		$sql = $this->mkSQL("delete from location where lat  = %N",
+		$sql = $this->mkSQL("delete from location where lat = %Q ",
 				$location->getLat()
 			);
 		$ret = $this->_query($sql,"Delete using column lat failed on location table");
 	}
 	function deleteLong($location) {
-		$sql = $this->mkSQL("delete from location where long  = %N",
+		$sql = $this->mkSQL("delete from location where long = %Q ",
 				$location->getLong()
 			);
 		$ret = $this->_query($sql,"Delete using column long failed on location table");
 	}
 	function deleteCity_id($location) {
-		$sql = $this->mkSQL("delete from location where city_id  = %N",
+		$sql = $this->mkSQL("delete from location where city_id = %Q ",
 				$location->getCity_id()
 			);
 		$ret = $this->_query($sql,"Delete using column city_id failed on location table");
 	}
 	function deleteLocation($location) {
-		$sql = $this->mkSQL("delete from location where location  = %N",
+		$sql = $this->mkSQL("delete from location where location = %Q ",
 				$location->getLocation()
 			);
 		$ret = $this->_query($sql,"Delete using column location failed on location table");

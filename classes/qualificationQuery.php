@@ -5,8 +5,6 @@ class QualificationQuery extends Query {
 	var $_rowCount = 0;
 	function QualificationQuery () {
 		$this->Query();
-		$this->_loc = new Localize(OBIB_LOCALE,"classes")
-	}
 	function getRowCount() {
 		return $this->_rowCount;
 	}
@@ -15,9 +13,9 @@ class QualificationQuery extends Query {
 		if ($array == false) {
 			return false;
 		}
-		return $this->_mkObj($array)
+		return $this->_mkObj($array);
 	}
-	function mkObj($array) {
+	function _mkObj($array) {
 		$obj = new Qualification();
 		$obj->setQualification_id($array["qualification_id"]);
 		$obj->setDegree($array["degree"]);
@@ -74,59 +72,59 @@ class QualificationQuery extends Query {
 		return true;
 	}
 	function insert($qualification) {
-		$sql = $this->mkSQL("insert into qualification values (%Q, %Q, %Q, %Q)",
-				$qualification->getQualification_id(),$qualification->getDegree(),$qualification->getYear(),$qualification->getUniversity())
+		$sql = $this->mkSQL("insert into qualification values (%N, %Q, %N, %Q)",
+				$qualification->getQualification_id(),$qualification->getDegree(),$qualification->getYear(),$qualification->getUniversity()
 			);
 		$ret = $this->_query($sql,"Insert failed on qualification table");
 	}
 	function updateQualification_id($qualification) {
 		$sql = $this->mkSQL("update qualification
-				set degree = %Q, year = %Q, university = %Q where qualification_id  = %N",
+				set degree = %Q, year = %N, university = %Q where qualification_id = %N ",
 				$qualification->getDegree(),$qualification->getYear(),$qualification->getUniversity(),$qualification->get(),$qualification->getQualification_id()
 			);
 		$ret = $this->_query($sql,"Update using column qualification_id failed on qualification table");
 	}
 	function updateDegree($qualification) {
 		$sql = $this->mkSQL("update qualification
-				set qualification_id = %Q, year = %Q, university = %Q where degree  = %N",
+				set qualification_id = %N, year = %N, university = %Q where degree = %Q ",
 				$qualification->getQualification_id(),$qualification->getYear(),$qualification->getUniversity(),$qualification->get(),$qualification->getDegree()
 			);
 		$ret = $this->_query($sql,"Update using column degree failed on qualification table");
 	}
 	function updateYear($qualification) {
 		$sql = $this->mkSQL("update qualification
-				set qualification_id = %Q, degree = %Q, university = %Q where year  = %N",
+				set qualification_id = %N, degree = %Q, university = %Q where year = %N ",
 				$qualification->getQualification_id(),$qualification->getDegree(),$qualification->getUniversity(),$qualification->get(),$qualification->getYear()
 			);
 		$ret = $this->_query($sql,"Update using column year failed on qualification table");
 	}
 	function updateUniversity($qualification) {
 		$sql = $this->mkSQL("update qualification
-				set qualification_id = %Q, degree = %Q, year = %Q where university  = %N",
+				set qualification_id = %N, degree = %Q, year = %N where university = %Q ",
 				$qualification->getQualification_id(),$qualification->getDegree(),$qualification->getYear(),$qualification->get(),$qualification->getUniversity()
 			);
 		$ret = $this->_query($sql,"Update using column university failed on qualification table");
 	}
 	function deleteQualification_id($qualification) {
-		$sql = $this->mkSQL("delete from qualification where qualification_id  = %N",
+		$sql = $this->mkSQL("delete from qualification where qualification_id = %Q ",
 				$qualification->getQualification_id()
 			);
 		$ret = $this->_query($sql,"Delete using column qualification_id failed on qualification table");
 	}
 	function deleteDegree($qualification) {
-		$sql = $this->mkSQL("delete from qualification where degree  = %N",
+		$sql = $this->mkSQL("delete from qualification where degree = %Q ",
 				$qualification->getDegree()
 			);
 		$ret = $this->_query($sql,"Delete using column degree failed on qualification table");
 	}
 	function deleteYear($qualification) {
-		$sql = $this->mkSQL("delete from qualification where year  = %N",
+		$sql = $this->mkSQL("delete from qualification where year = %Q ",
 				$qualification->getYear()
 			);
 		$ret = $this->_query($sql,"Delete using column year failed on qualification table");
 	}
 	function deleteUniversity($qualification) {
-		$sql = $this->mkSQL("delete from qualification where university  = %N",
+		$sql = $this->mkSQL("delete from qualification where university = %Q ",
 				$qualification->getUniversity()
 			);
 		$ret = $this->_query($sql,"Delete using column university failed on qualification table");

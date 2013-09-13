@@ -59,7 +59,6 @@ class DBUtility {
 				$classdetails .= "\t".'var $_rowCount = 0;'."\n";
 				//constructor of the class
 				$classdetails .= "\t".'function '. ucfirst($classname) .' () {'."\n"."\t"."\t".'$this->Query();'."\n";
-				$classdetails .= "\t"."\t".'$this->_loc = new Localize(OBIB_LOCALE,"classes")'."\n"."\t".'}'."\n";
 				//function rowcount
 				$classdetails .= "\t".'function getRowCount() {'. "\n"."\t"."\t".'return $this->_rowCount;'."\n"; 					$classdetails .= "\t".'}'."\n";	
 				//fetch a row of data into the Object
@@ -68,13 +67,13 @@ class DBUtility {
 				$classdetails .= "\t"."\t".'if ($array == false) {'."\n";
 				$classdetails .= "\t"."\t"."\t".'return false;'."\n";
 				$classdetails .= "\t"."\t".'}'."\n";
-				$classdetails .= "\t"."\t".'return $this->_mkObj($array)'."\n";
+				$classdetails .= "\t"."\t".'return $this->_mkObj($array);'."\n";
 				$classdetails .= "\t".'}'."\n";	
 			
 			} else if (isset($classname) && ($classname != '')) {
 				if (preg_match('/ENGINE=InnoDB DEFAULT/',$lines[$i]) > 0){
 					//function makeobject
-					$classdetails .= "\t".'function mkObj($array)' .' {'."\n";
+					$classdetails .= "\t".'function _mkObj($array)' .' {'."\n";
 					$classdetails .= "\t"."\t".'$obj = new '.ucfirst($modelclassname).'();'."\n";
 					foreach ($colnames as $colname) {
 						//echo "\t"."\t".'$obj->set'.ucfirst($colname).'($array["'.$colname.'"]'.');'."\n".'<br>';
@@ -110,8 +109,9 @@ class DBUtility {
 					$classdetails.="\t"."function insert("."$".$modelclassname.") {"."\n";
 					$classdetails.="\t"."\t".'$sql = $this->mkSQL("insert into '.$modelclassname.' values (';
 					foreach ($coltypes as $coltype) {
-						if ( 	(strpos($coltype,'int') != false) || (strpos($coltype,'dec') != false) || 
-							(strpos($coltype,'float') != false) || (strpos($coltype,'double') != false)	) {
+						echo $coltype." ".strpos($coltype,'varchar') ."<br>";
+						if ( 	(preg_match('/int/',$coltype) == 1) || (preg_match('/dec/',$coltype) == 1) || 
+							(preg_match('/float/',$coltype) == 1) || (preg_match('/double/',$coltype) == 1) ) {
 							$classdetails.="%N, ";
 						} else {
 							$classdetails.="%Q, ";
@@ -121,7 +121,7 @@ class DBUtility {
 					foreach ($colnames as $colname) {
 						$classdetails .= '$'.$modelclassname.'->get'.ucfirst($colname).'(),';
 					}
-					$classdetails=substr($classdetails,0,-1).')'."\n";	
+					$classdetails=substr($classdetails,0,-1)."\n";	
 					$classdetails.="\t"."\t"."\t".');'."\n";	
 					$classdetails.="\t"."\t".'$ret = $this->_query($sql,"Insert failed on '.$modelclassname.' table");'."\n";
 					$classdetails .= "\t".'}'."\n";
@@ -131,18 +131,28 @@ class DBUtility {
 						$classdetails.="\t"."\t".'$sql = $this->mkSQL("update '.$modelclassname."\n";
 						$classdetails.="\t"."\t"."\t"."\t"."set ";
 						$k=0;
+						$updatecoltype='';
 						foreach ($coltypes as $coltype) {
 							if ($colnames[$k] != $updatecolname )	{
-								if ( 	(strpos($coltype,'int') != false) || (strpos($coltype,'dec') != false) || 
-									(strpos($coltype,'float') != false) || (strpos($coltype,'double') != false)	) {
+								if (  	(preg_match("/int/",$coltype) == 1) || (preg_match("/dec/",$coltype) == 1) || 
+									(preg_match("/float/",$coltype) == 1) || (preg_match("/double/",$coltype) == 1) ) {
 									$classdetails.=$colnames[$k]." = "."%N, ";
 								} else {
 									$classdetails.=$colnames[$k]." = "."%Q, ";
 								}
+							} else {
+								$updatecoltype = $coltype;
 							}
 							$k++;
 						}
-						$classdetails=substr($classdetails,0,-2).' where '.$updatecolname."  = %N".'",'."\n"."\t"."\t"."\t"."\t";
+						$classdetails=substr($classdetails,0,-2).' where '.$updatecolname;
+						if (  	(preg_match("/int/",$updatecoltype) == 1) || (preg_match("/dec/",$updatecoltype) == 1) || 
+							(preg_match("/float/",$updatecoltype) == 1) || (preg_match("/double/",$updatecoltype) == 1) ) {
+							$classdetails.=" = %N ";
+						} else {
+							$classdetails.=" = %Q ";
+						}
+						$classdetails.='",'."\n"."\t"."\t"."\t"."\t";
 						for ($k=0;$k<=sizeof($colnames);$k++) {
 							if ($colnames[$k] != $updatecolname)
 								$classdetails .= '$'.$modelclassname.'->get'.ucfirst($colnames[$k]).'(),';
@@ -155,15 +165,23 @@ class DBUtility {
 						$classdetails .= "\t".'}'."\n";
 					}
 					//functions for delete
-					foreach ($colnames as $updatecolname)	{
-						$classdetails.="\t"."function delete". ucfirst($updatecolname)."("."$".$modelclassname.") {"."\n";
-						$classdetails.="\t"."\t".'$sql = $this->mkSQL("delete from '.$modelclassname;
-						$classdetails.=' where '.$updatecolname."  = %N".'",'."\n"."\t"."\t"."\t"."\t";
-						$classdetails.= '$'.$modelclassname.'->get'.ucfirst($updatecolname).'()'."\n";
+					$k=0;
+					foreach ($colnames as $deletecolname)	{
+						$classdetails.="\t"."function delete". ucfirst($deletecolname)."("."$".$modelclassname.") {"."\n";
+						$classdetails.="\t"."\t".'$sql = $this->mkSQL("delete from '.$modelclassname.' where '.$deletecolname;
+						if (  	(preg_match("/int/",$coltype[$k]) == 1) || (preg_match("/dec/",$coltype[$k]) == 1) || 
+							(preg_match("/float/",$coltype[$k]) == 1) || (preg_match("/double/",$coltype[$k]) == 1) ) {
+							$classdetails.=" = %N ";
+						} else {
+							$classdetails.=" = %Q ";
+						}
+						$classdetails.='",'."\n"."\t"."\t"."\t"."\t";
+						$classdetails.= '$'.$modelclassname.'->get'.ucfirst($deletecolname).'()'."\n";
 						$classdetails.="\t"."\t"."\t".');'."\n";	
-						$classdetails.="\t"."\t".'$ret = $this->_query($sql,"Delete using column '.$updatecolname;
+						$classdetails.="\t"."\t".'$ret = $this->_query($sql,"Delete using column '.$deletecolname;
 						$classdetails.=' failed on '.$modelclassname.' table");'."\n";
 						$classdetails.= "\t".'}'."\n";
+						$k++;
 					}
 					//end of the class	
 					$classdetails .= '}'."\n".'?>';	
