@@ -9,22 +9,22 @@
 				$points="";
 				foreach($cities as $city) {
 				$points.="['";
-				$points.=$city->getCityName();
+				$points.=$city->getCity();
 				$points.="',";
-				$points.=$city->getLatitude();
+				$points.=$city->getLat();
 				$points.=",";
-				$points.=$city->getLongitude();
+				$points.=$city->getLong();
 				$points.=",";
 				$points.="5";
 				$points.=",";
 				$points.="'index.php?chosencity=";
-				$points.=$city->getCityName();
+				$points.=$city->getCity();
 				$points.="&lat=";
-				$points.=$city->getLatitude();
+				$points.=$city->getLat();
 				$points.="&long=";
-				$points.=$city->getLongitude();
+				$points.=$city->getLong();
 				$points.="',";
-				$points.=$city->getCityid();
+				$points.=$city->getCity_id();
 				$points.="],";
 				}
 				$points=substr($points,0,-1);

@@ -32,6 +32,11 @@ class CityQuery extends Query {
 		$this->_rowCount = $this->_conn->numRows();
 		return true;
 	}
+	function getCities(){
+		$sql = $this->mkSQL("select * from city where city_id IN (select distinct city_id from location)");
+		return array_map(array($this, '_mkObj'), $this->exec($sql));
+	}
+  
 	function selectCity_id($city) {
 		$sql = $this->mkSQL("select * from city where city_id  = %N",
 				$city->getCity_id()
