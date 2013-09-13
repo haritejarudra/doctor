@@ -41,7 +41,7 @@ class Query {
                                        "Cannot connect to database server.",
                                        mysqli_error()));
       }
-      $rc = mysqli_select_db(OBIB_DATABASE, $link);
+      $rc = mysqli_select_db($link,OBIB_DATABASE);
       if (!$rc) {
         return array(NULL, new DbError("Selecting database...",
                                        "Cannot select database.",

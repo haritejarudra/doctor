@@ -5,6 +5,7 @@ class LocationQuery extends Query {
 	var $_rowCount = 0;
 	function LocationQuery () {
 		$this->Query();
+	}
 	function getRowCount() {
 		return $this->_rowCount;
 	}

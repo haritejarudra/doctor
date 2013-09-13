@@ -58,7 +58,7 @@ class DBUtility {
 				//declaring the variables
 				$classdetails .= "\t".'var $_rowCount = 0;'."\n";
 				//constructor of the class
-				$classdetails .= "\t".'function '. ucfirst($classname) .' () {'."\n"."\t"."\t".'$this->Query();'."\n";
+				$classdetails .= "\t".'function '. ucfirst($classname) .' () {'."\n"."\t"."\t".'$this->Query();'."\n"."\t}"."\n";
 				//function rowcount
 				$classdetails .= "\t".'function getRowCount() {'. "\n"."\t"."\t".'return $this->_rowCount;'."\n"; 					$classdetails .= "\t".'}'."\n";	
 				//fetch a row of data into the Object
