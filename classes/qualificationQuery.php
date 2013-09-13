@@ -5,6 +5,7 @@ class QualificationQuery extends Query {
 	var $_rowCount = 0;
 	function QualificationQuery () {
 		$this->Query();
+	}
 	function getRowCount() {
 		return $this->_rowCount;
 	}

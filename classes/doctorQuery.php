@@ -5,6 +5,7 @@ class DoctorQuery extends Query {
 	var $_rowCount = 0;
 	function DoctorQuery () {
 		$this->Query();
+	}
 	function getRowCount() {
 		return $this->_rowCount;
 	}

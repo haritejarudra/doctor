@@ -5,6 +5,7 @@ class ScheduleQuery extends Query {
 	var $_rowCount = 0;
 	function ScheduleQuery () {
 		$this->Query();
+	}
 	function getRowCount() {
 		return $this->_rowCount;
 	}

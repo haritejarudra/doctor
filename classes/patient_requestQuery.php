@@ -5,6 +5,7 @@ class Patient_requestQuery extends Query {
 	var $_rowCount = 0;
 	function Patient_requestQuery () {
 		$this->Query();
+	}
 	function getRowCount() {
 		return $this->_rowCount;
 	}

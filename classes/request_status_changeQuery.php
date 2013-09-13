@@ -5,6 +5,7 @@ class Request_status_changeQuery extends Query {
 	var $_rowCount = 0;
 	function Request_status_changeQuery () {
 		$this->Query();
+	}
 	function getRowCount() {
 		return $this->_rowCount;
 	}
