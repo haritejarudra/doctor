@@ -18,8 +18,7 @@ class ScheduleQuery extends Query {
 	}
 
 	/********************************************************************************
-	 *  this query returns title, author, category, checked out status for all copies
-	*  present in the given location, city, for a given author, title, category
+	*  this query returns schedule details for a given doctor at a location
 	*
 	* @param string city
 	* &param
@@ -27,33 +26,51 @@ class ScheduleQuery extends Query {
 	* @access public
 	********************************************************************************
 	*/
-	function getSchedulesByCriteria($speciality, $subspeciality, $chosencity, $chosenlocationid, $last,$count) {
-		$sqlstring  = "select concat(b.first_name,' ',b.last_name) as doctor, concat(e.speciality,' ',f.speciality) as speciality,";
-		$sqlstring .= " a.description as clinic, g.city as city, c.location as location";
-		$sqlstring .= " from schedule a, doctor b, location c, city g, speciality_sub_speciality_link d, speciality e, sub_speciality f";
-		$sqlstring .= " where a.doctor_id = b.doctor_id and a.location_id = c.location_id and c.city_id = g.city_id";
-		$sqlstring .= " and b.speciality_Sub_Speciality_link_id = d.speciality_Sub_Speciality_link_id";
-		$sqlstring .= " and d.speciality_id = e.speciality_id and d.sub_speciality_id = f.sub_speciality_id";
+	function getSchedulesByCriteria($doctorid, $chosenlocationid) {
+		$sqlstring  = "select a.description as clinic, a.from_date as 'Date From', a.to_date as 'Date To', a.from_time as From, a.to_time as To ";
+		$sqlstring .= " from doctor a, schedule b";
+		$sqlstring .= " where a.doctor_id = " . $doctorid . " and a.doctor_id = b.doctor_id";
+		$sqlstring .= " and b.location_id = " . $chosenlocationid;
+
+		return $this->exec($sqlstring);
+	}
+
+	/********************************************************************************
+	*  this query returns all doctors who have a free clinic at a given location
+	*
+	* @param string city
+	* &param
+	* @return Copy returns copy or false, if error occurs
+	* @access public
+	********************************************************************************
+	*/
+	function getDoctorsByCriteria($speciality, $subspeciality, $chosencity, $chosenlocationid, $last,$count) {
+		$sqlstring  = "select a.doctor_id, concat(a.first_name, ' ', a.last_name) as doctor, d.speciality as Speciality, e.speciality as 'Sub Speciality'";
+		$sqlstring .= " from doctor a, schedule b, speciality_sub_speciality_link c, speciality d, sub_speciality e, location f, city g";
+		$sqlstring .= " where a.doctor_id = b.doctor_id and a.speciality_Sub_Speciality_link_id = c.speciality_Sub_Speciality_link_id";
+		$sqlstring .= " and c.speciality_id = d.speciality_id and c.sub_speciality_id = e.sub_speciality_id";
+		$sqlstring .= " and b.location_id = f.location_id and f.city_id = g.city_id";
 
 		if ( !(empty($speciality)) && (strlen($speciality) > 0) )
-			$sqlstring .= " and e.speciality = '" . $speciality . "'";
+			$sqlstring .= " and d.speciality = '" . $speciality . "'";
 
 		if ( !(empty($subspeciality)) && (strlen($subspeciality) > 0) )
-			$sqlstring .= " and f.speciality = '" . $subspeciality . "'";
+			$sqlstring .= " and e.speciality = '" . $subspeciality . "'";
 
 		if ( !(empty($city)) && (strlen($city) > 0) )
 			$sqlstring .= " and g.city = '". $city . "'";
 
 		if ( !(empty($location)) && (strlen($location) > 0) )
-			$sqlstring .= " and c.location_id = ". $location;
+			$sqlstring .= " and f.location_id = ". $location;
 		
+		$sqlstring .= " group by doctor_id, doctor, Speciality, 'Sub Speciality'";
 		$sqlstring .= " limit  ". $last. ",". $count;
 
 		return $this->exec($sqlstring);
 	}
 
 	/********************************************************************************
-	*  this query returns count of books found for given criteria
+	*  this query returns count of doctors found for given criteria
 	*
 	* @param string city
 	* &param
@@ -61,25 +78,25 @@ class ScheduleQuery extends Query {
 	* @access public
 	********************************************************************************
 	*/
-	function getCountOfSchedulesByCriteria($speciality, $subspeciality, $chosencity, $chosenlocationid) {
+	function getCountOfDoctorsByCriteria($speciality, $subspeciality, $chosencity, $chosenlocationid) {
 
 		$sqlstring  = "select count(*) as numberofrecords ";
-		$sqlstring .= " from schedule a, doctor b, location c, city g, speciality_sub_speciality_link d, speciality e, sub_speciality f";
-		$sqlstring .= " where a.doctor_id = b.doctor_id and a.location_id = c.location_id and c.city_id = g.city_id";
-		$sqlstring .= " and b.speciality_Sub_Speciality_link_id = d.speciality_Sub_Speciality_link_id";
-		$sqlstring .= " and d.speciality_id = e.speciality_id and d.sub_speciality_id = f.sub_speciality_id";
+		$sqlstring .= " FROM doctor a, schedule b, speciality_sub_speciality_link c, speciality d, sub_speciality e, location f, city g";
+		$sqlstring .= " WHERE a.doctor_id = b.doctor_id";
+		$sqlstring .= " AND a.speciality_Sub_Speciality_link_id = c.speciality_Sub_Speciality_link_id AND c.speciality_id = d.speciality_id";
+		$sqlstring .= " and c.sub_speciality_id = e.sub_speciality_id and  b.location_id = f.location_id AND f.city_id = g.city_id";
 
 		if ( !(empty($speciality)) && (strlen($speciality) > 0) )
-			$sqlstring .= " and e.speciality = '" . $speciality . "'";
+			$sqlstring .= " and d.speciality = '" . $speciality . "'";
 
 		if ( !(empty($subspeciality)) && (strlen($subspeciality) > 0) )
-			$sqlstring .= " and f.speciality = '" . $subspeciality . "'";
+			$sqlstring .= " and e.speciality = '" . $subspeciality . "'";
 
 		if ( !(empty($city)) && (strlen($city) > 0) )
 			$sqlstring .= " and g.city = '". $city . "'";
 
 		if ( !(empty($location)) && (strlen($location) > 0) )
-			$sqlstring .= " and c.location_id = ". $location;
+			$sqlstring .= " and f.location_id = ". $location;
 		
 		$result=$this->exec($sqlstring);
 		
