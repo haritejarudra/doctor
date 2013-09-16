@@ -7,11 +7,11 @@ require_once ("classes/city.php");
 require_once ("classes/specialityQuery.php");
 require_once ("classes/speciality.php");
 
-$cityq = new CityQuery ();
-$cities = $cityq->getCities ();
+$cityq = new cityQuery();
+$cities = $cityq->getCities();
 
-$specq = new SpecialityQuery ();
-$specialities = $specq->getSpecialities ();
+$specq = new specialityQuery();
+$specialities = $specq->getSpecialities();
 
 // initialize these variables
 $chosencity = '';
@@ -19,10 +19,9 @@ $chosenlocationid='';
 $searchlocation = '';
 $speciality = '';
 $subspeciality = '';
-$condition=4;
 
-//condition 1 - city is clicked on cities map to get a map of all locations in the city having a Peoples Doctor Clinic and list of clinics in the table
-//condition 2 - location is clicked on locations map  OR (location is selected from search bar PLUS any of Speciality and Sub Speciality conditions)
+//condition 1 - city is clicked on cities map OR locations is clicked on locations map 
+//condition 2 - location is selected from search bar PLUS any of Speciality and Sub Speciality conditions
 //condition 3 - city is selected from search bar without choosing location  PLUS any of Speciality and Sub Speciality conditions
 //condition 4 - Submit is clicked without choosing any parameters
 
@@ -38,6 +37,7 @@ if (isset ( $_GET ['page'] ) && $_GET ['page'] != '') {
 	} else if ($condition == 2) {
 		
 		$speciality = $_GET ['speciality'];
+		$subspeciality = $_GET ['subspeciality'];
 		$chosencity = $_GET ['chosencity'];
 		$lat = $_GET ['lat'];
 		$long = $_GET ['long'];
@@ -48,6 +48,7 @@ if (isset ( $_GET ['page'] ) && $_GET ['page'] != '') {
 	} else if ($condition == 3) {
 		
 		$speciality = $_GET ['speciality'];
+		$subspeciality = $_GET ['subspeciality'];
 		$chosencity = $_GET ['chosencity'];
 		$lat = $_GET ['lat'];
 		$long = $_GET ['long'];
@@ -55,11 +56,13 @@ if (isset ( $_GET ['page'] ) && $_GET ['page'] != '') {
 	} else if ($condition == 4) {
 		
 		$speciality = $_GET ['speciality'];
+		$subspeciality = $_GET ['subspeciality'];
 	}
 
 } else if ((isset ( $_POST ['Submit'] ))) {
 
 	$speciality = $_POST ['speciality'];
+	$subspeciality = $_GET ['subspeciality'];
 	
 	$citydetails = explode ( ",", $_POST ['city'] );
 	
@@ -70,11 +73,11 @@ if (isset ( $_GET ['page'] ) && $_GET ['page'] != '') {
 			$condition = 2;
 		} else
 			$condition = 3;
-		$chosencity = $citydetails [0];
-		$lat = $citydetails [1];
-		$_GET ['lat'] = $lat;
-		$long = $citydetails [2];
-		$_GET ['long'] = $long;
+			$chosencity = $citydetails [0];
+			$lat = $citydetails [1];
+			$_GET ['lat'] = $lat;
+			$long = $citydetails [2];
+			$_GET ['long'] = $long;
 	} else {
 		$condition = 4;
 	}

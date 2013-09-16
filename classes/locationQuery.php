@@ -25,6 +25,20 @@ class LocationQuery extends Query {
 		$obj->setLocation($array["location"]);
 		return $obj;
 	}
+	function getLocationsForCity($city) {
+		$sql = $this->mkSQL("select * from location where city_id in (select city_id from city where city = %Q)",$city);
+		return array_map(array($this, '_mkObj'), $this->exec($sql));
+	}
+	function getLocationsInTheSameCityAs($locationid) {
+		$sql = $this->mkSQL("select * from location where city_id = (select city_id from location where location_id = %N) ", $locationid);
+		return array_map(array($this, '_mkObj'), $this->exec($sql));
+	}
+	function getCityOfLocation($chosenlocationid)
+	{
+		$sql = $this->mkSQL("select city from location where locationid= %Q",$chosenlocationid);
+		$result= $this->exec($sql);
+		return $result[0]['city'];
+	}
 	function selectAll($last,$count) {
 		$sql = $this->mkSQL("select * from location limit %N, %N",$last, $count);
 		if (!$this->_query($sql, "Error in selecting from table location")) {

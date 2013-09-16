@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Sep 11, 2013 at 05:14 PM
+-- Generation Time: Sep 16, 2013 at 08:28 AM
 -- Server version: 5.5.31-0ubuntu0.13.04.1
 -- PHP Version: 5.4.9-4ubuntu2
 
@@ -27,12 +27,20 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE IF NOT EXISTS `city` (
-  `city_id` int(10) NOT NULL,
-  `lat` int(10) NOT NULL,
-  `long` int(10) NOT NULL,
+  `city_id` int(10) NOT NULL AUTO_INCREMENT,
+  `lat` decimal(10,6) NOT NULL,
+  `long` decimal(10,6) NOT NULL,
   `city` varchar(50) NOT NULL,
   PRIMARY KEY (`city_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `city`
+--
+
+INSERT INTO `city` (`city_id`, `lat`, `long`, `city`) VALUES
+(1, 17.366000, 78.476000, 'Hyderabad'),
+(2, 12.966700, 77.566700, 'Bangalore');
 
 -- --------------------------------------------------------
 
@@ -41,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `city` (
 --
 
 CREATE TABLE IF NOT EXISTS `doctor` (
-  `doctor_id` int(7) NOT NULL,
+  `doctor_id` int(7) NOT NULL AUTO_INCREMENT,
   `first_name` varchar(50) NOT NULL,
   `last_name` varchar(50) NOT NULL,
   `mobile` varchar(20) NOT NULL,
@@ -55,10 +63,20 @@ CREATE TABLE IF NOT EXISTS `doctor` (
   `date_of_birth` date NOT NULL,
   `age` int(3) NOT NULL,
   `city_id` int(11) DEFAULT NULL,
+  `speciality_Sub_Speciality_link_id` int(10) DEFAULT NULL,
   PRIMARY KEY (`doctor_id`),
   KEY `qualification_id` (`qualification_id`),
-  KEY `city_id` (`city_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `city_id` (`city_id`),
+  KEY `speciality_Sub_Speciality_link_id` (`speciality_Sub_Speciality_link_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `doctor`
+--
+
+INSERT INTO `doctor` (`doctor_id`, `first_name`, `last_name`, `mobile`, `gender`, `address`, `state`, `country`, `current_hospital`, `experience`, `qualification_id`, `date_of_birth`, `age`, `city_id`, `speciality_Sub_Speciality_link_id`) VALUES
+(1, 'Rahul', 'Abraham', '9632578410', 'm', 'Padmarao Nagar,Secunderabad,Andhra Pradesh,500020, Walker town, Padmarao Nagar, Secunderabad, AP', 'AP', 'INDIA', 'Gandhi Medical', '5', 1, '0000-00-00', 19, 1, 7),
+(2, 'Sudha', 'Nakala', '1478523690', 'f', 'Padmarao Nagar,Secunderabad,Andhra Pradesh,500020, Walker town, Padmarao Nagar, Bangalore, AP', 'AP', 'INDIA', 'xxx-Medical college', '15', 2, '0000-00-00', 21, 2, 19);
 
 -- --------------------------------------------------------
 
@@ -67,14 +85,22 @@ CREATE TABLE IF NOT EXISTS `doctor` (
 --
 
 CREATE TABLE IF NOT EXISTS `location` (
-  `location_id` int(10) NOT NULL,
-  `lat` int(10) NOT NULL,
-  `long` int(10) NOT NULL,
+  `location_id` int(10) NOT NULL AUTO_INCREMENT,
+  `lat` decimal(10,6) NOT NULL,
+  `long` decimal(10,6) NOT NULL,
   `city_id` int(10) NOT NULL,
   `location` varchar(50) NOT NULL,
   PRIMARY KEY (`location_id`),
   KEY `city_id` (`city_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `location`
+--
+
+INSERT INTO `location` (`location_id`, `lat`, `long`, `city_id`, `location`) VALUES
+(2, 17.424438, 78.504285, 1, 'Gandhi Hospital, Padmarao Nagar, Secunderabad'),
+(3, 12.938398, 77.746890, 2, 'Varthur Government Hospital, State Highway 35, Var');
 
 -- --------------------------------------------------------
 
@@ -83,7 +109,7 @@ CREATE TABLE IF NOT EXISTS `location` (
 --
 
 CREATE TABLE IF NOT EXISTS `patient` (
-  `patient_id` int(10) NOT NULL,
+  `patient_id` int(10) NOT NULL AUTO_INCREMENT,
   `first_name` varchar(50) NOT NULL,
   `last_name` varchar(50) NOT NULL,
   `email` varchar(100) NOT NULL,
@@ -94,7 +120,7 @@ CREATE TABLE IF NOT EXISTS `patient` (
   `address` varchar(200) NOT NULL,
   `parent_guardian` varchar(100) NOT NULL,
   PRIMARY KEY (`patient_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -103,7 +129,7 @@ CREATE TABLE IF NOT EXISTS `patient` (
 --
 
 CREATE TABLE IF NOT EXISTS `patient_request` (
-  `request_id` int(10) NOT NULL,
+  `request_id` int(10) NOT NULL AUTO_INCREMENT,
   `patient_id` int(10) NOT NULL,
   `schedule_id` int(10) NOT NULL,
   `problem_history` varchar(500) NOT NULL,
@@ -112,7 +138,7 @@ CREATE TABLE IF NOT EXISTS `patient_request` (
   PRIMARY KEY (`request_id`),
   KEY `schedule_id` (`schedule_id`),
   KEY `patient_id` (`patient_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -121,12 +147,20 @@ CREATE TABLE IF NOT EXISTS `patient_request` (
 --
 
 CREATE TABLE IF NOT EXISTS `qualification` (
-  `qualification_id` int(10) NOT NULL,
+  `qualification_id` int(10) NOT NULL AUTO_INCREMENT,
   `degree` varchar(50) NOT NULL,
   `year` int(4) NOT NULL,
   `university` varchar(20) NOT NULL,
   PRIMARY KEY (`qualification_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `qualification`
+--
+
+INSERT INTO `qualification` (`qualification_id`, `degree`, `year`, `university`) VALUES
+(1, 'M.B.B.S', 2012, 'J.N.T.U'),
+(2, 'M.B.B.S', 2013, 'O.U');
 
 -- --------------------------------------------------------
 
@@ -135,12 +169,12 @@ CREATE TABLE IF NOT EXISTS `qualification` (
 --
 
 CREATE TABLE IF NOT EXISTS `request_status_change` (
-  `Status_Change_id` int(10) NOT NULL,
+  `Status_Change_id` int(10) NOT NULL AUTO_INCREMENT,
   `Status_from` varchar(20) NOT NULL,
   `Status_to` varchar(20) NOT NULL,
   `Actor` varchar(20) NOT NULL,
   PRIMARY KEY (`Status_Change_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -149,7 +183,7 @@ CREATE TABLE IF NOT EXISTS `request_status_change` (
 --
 
 CREATE TABLE IF NOT EXISTS `schedule` (
-  `schedule_id` int(11) NOT NULL,
+  `schedule_id` int(11) NOT NULL AUTO_INCREMENT,
   `from_date` date NOT NULL,
   `to_date` date NOT NULL,
   `from_time` time NOT NULL,
@@ -160,7 +194,14 @@ CREATE TABLE IF NOT EXISTS `schedule` (
   PRIMARY KEY (`schedule_id`),
   KEY `doctor_id` (`doctor_id`),
   KEY `location_id` (`location_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `schedule`
+--
+
+INSERT INTO `schedule` (`schedule_id`, `from_date`, `to_date`, `from_time`, `to_time`, `location_id`, `doctor_id`, `description`) VALUES
+(2, '2013-09-01', '2013-09-01', '17:00:00', '19:00:00', 2, 1, 'Pediatric consulting below 5 years');
 
 -- --------------------------------------------------------
 
@@ -169,10 +210,28 @@ CREATE TABLE IF NOT EXISTS `schedule` (
 --
 
 CREATE TABLE IF NOT EXISTS `speciality` (
-  `speciality_id` int(10) NOT NULL,
+  `speciality_id` int(10) NOT NULL AUTO_INCREMENT,
   `speciality` varchar(200) NOT NULL,
   PRIMARY KEY (`speciality_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
+
+--
+-- Dumping data for table `speciality`
+--
+
+INSERT INTO `speciality` (`speciality_id`, `speciality`) VALUES
+(1, 'Pediatrics'),
+(2, 'Cardiology'),
+(3, 'Neurology'),
+(4, 'Anatomy'),
+(5, 'Anesthesia'),
+(6, 'Bio-Chemistry'),
+(7, 'Dermatology'),
+(8, 'Dental'),
+(9, 'Endocrinology'),
+(10, 'ENT'),
+(11, 'Gastroentrology'),
+(12, 'General Surgery');
 
 -- --------------------------------------------------------
 
@@ -181,13 +240,53 @@ CREATE TABLE IF NOT EXISTS `speciality` (
 --
 
 CREATE TABLE IF NOT EXISTS `speciality_sub_speciality_link` (
-  `speciality_sub_speciality_link_id` int(10) NOT NULL,
+  `speciality_sub_speciality_link_id` int(10) NOT NULL AUTO_INCREMENT,
   `sub_speciality_id` int(10) NOT NULL,
   `speciality_id` int(10) NOT NULL,
   PRIMARY KEY (`speciality_sub_speciality_link_id`),
   KEY `speciality_id` (`speciality_id`),
   KEY `sub_speciality_id` (`sub_speciality_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=36 ;
+
+--
+-- Dumping data for table `speciality_sub_speciality_link`
+--
+
+INSERT INTO `speciality_sub_speciality_link` (`speciality_sub_speciality_link_id`, `sub_speciality_id`, `speciality_id`) VALUES
+(1, 2, 1),
+(2, 1, 4),
+(3, 6, 1),
+(4, 6, 2),
+(5, 1, 2),
+(6, 1, 2),
+(7, 3, 2),
+(8, 4, 3),
+(9, 6, 3),
+(11, 9, 3),
+(12, 1, 4),
+(13, 9, 4),
+(14, 2, 5),
+(15, 4, 5),
+(16, 6, 5),
+(17, 3, 6),
+(18, 7, 6),
+(19, 6, 7),
+(20, 9, 7),
+(21, 7, 8),
+(22, 1, 8),
+(23, 2, 8),
+(24, 9, 9),
+(25, 7, 9),
+(26, 1, 9),
+(27, 6, 10),
+(28, 2, 10),
+(29, 3, 10),
+(30, 4, 11),
+(31, 2, 11),
+(32, 1, 11),
+(33, 1, 12),
+(34, 3, 12),
+(35, 4, 12);
 
 -- --------------------------------------------------------
 
@@ -196,10 +295,23 @@ CREATE TABLE IF NOT EXISTS `speciality_sub_speciality_link` (
 --
 
 CREATE TABLE IF NOT EXISTS `sub_speciality` (
-  `sub_speciality_id` int(10) NOT NULL,
+  `sub_speciality_id` int(10) NOT NULL AUTO_INCREMENT,
   `speciality` varchar(200) NOT NULL,
   PRIMARY KEY (`sub_speciality_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+
+--
+-- Dumping data for table `sub_speciality`
+--
+
+INSERT INTO `sub_speciality` (`sub_speciality_id`, `speciality`) VALUES
+(1, 'Cardiology'),
+(2, 'Cardiotheracic Surgery'),
+(3, 'Nephrology'),
+(4, 'Urology'),
+(6, 'Neonatology'),
+(7, 'Neurology'),
+(9, 'Neurosurgery');
 
 --
 -- Constraints for dumped tables
@@ -210,7 +322,8 @@ CREATE TABLE IF NOT EXISTS `sub_speciality` (
 --
 ALTER TABLE `doctor`
   ADD CONSTRAINT `doctor_ibfk_1` FOREIGN KEY (`qualification_id`) REFERENCES `qualification` (`qualification_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `doctor_ibfk_2` FOREIGN KEY (`city_id`) REFERENCES `city` (`city_id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `doctor_ibfk_2` FOREIGN KEY (`city_id`) REFERENCES `city` (`city_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `doctor_ibfk_3` FOREIGN KEY (`speciality_Sub_Speciality_link_id`) REFERENCES `speciality_sub_speciality_link` (`speciality_sub_speciality_link_id`) ON DELETE SET NULL;
 
 --
 -- Constraints for table `location`
@@ -222,8 +335,8 @@ ALTER TABLE `location`
 -- Constraints for table `patient_request`
 --
 ALTER TABLE `patient_request`
-  ADD CONSTRAINT `patient_request_ibfk_2` FOREIGN KEY (`patient_id`) REFERENCES `patient` (`patient_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `patient_request_ibfk_1` FOREIGN KEY (`schedule_id`) REFERENCES `schedule` (`schedule_id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `patient_request_ibfk_1` FOREIGN KEY (`schedule_id`) REFERENCES `schedule` (`schedule_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `patient_request_ibfk_2` FOREIGN KEY (`patient_id`) REFERENCES `patient` (`patient_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `schedule`

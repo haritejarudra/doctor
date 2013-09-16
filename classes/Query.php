@@ -13,7 +13,6 @@ class Query {
    * call connect_e() yourself.
    */
   function Query() {
-
     $e = $this->connect_e();
     if ($e) {
       Fatal::dbError($e->sql, $e->msg, $e->dberror);
@@ -42,6 +41,7 @@ class Query {
                                        mysqli_error()));
       }
       $rc = mysqli_select_db($link,OBIB_DATABASE);
+
       if (!$rc) {
         return array(NULL, new DbError("Selecting database...",
                                        "Cannot select database.",
