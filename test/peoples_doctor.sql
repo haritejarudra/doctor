@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.5.8.1deb1
+-- version 3.5.1
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Sep 16, 2013 at 08:28 AM
--- Server version: 5.5.31-0ubuntu0.13.04.1
--- PHP Version: 5.4.9-4ubuntu2
+-- Generation Time: Sep 16, 2013 at 02:45 PM
+-- Server version: 5.5.24-log
+-- PHP Version: 5.3.13
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -39,8 +39,8 @@ CREATE TABLE IF NOT EXISTS `city` (
 --
 
 INSERT INTO `city` (`city_id`, `lat`, `long`, `city`) VALUES
-(1, 17.366000, 78.476000, 'Hyderabad'),
-(2, 12.966700, 77.566700, 'Bangalore');
+(1, '17.366000', '78.476000', 'Hyderabad'),
+(2, '12.966700', '77.566700', 'Bangalore');
 
 -- --------------------------------------------------------
 
@@ -99,8 +99,8 @@ CREATE TABLE IF NOT EXISTS `location` (
 --
 
 INSERT INTO `location` (`location_id`, `lat`, `long`, `city_id`, `location`) VALUES
-(2, 17.424438, 78.504285, 1, 'Gandhi Hospital, Padmarao Nagar, Secunderabad'),
-(3, 12.938398, 77.746890, 2, 'Varthur Government Hospital, State Highway 35, Var');
+(2, '17.424438', '78.504285', 1, 'Gandhi Hospital, Padmarao Nagar, Secunderabad'),
+(3, '12.938398', '77.746890', 2, 'Varthur Government Hospital, State Highway 35, Var');
 
 -- --------------------------------------------------------
 
@@ -133,6 +133,7 @@ CREATE TABLE IF NOT EXISTS `patient_request` (
   `patient_id` int(10) NOT NULL,
   `schedule_id` int(10) NOT NULL,
   `problem_history` varchar(500) NOT NULL,
+  `planned_date_consultation` date NOT NULL,
   `actual_date_of_consultation` date NOT NULL,
   `time_of_consultation` time NOT NULL,
   PRIMARY KEY (`request_id`),
@@ -186,6 +187,8 @@ CREATE TABLE IF NOT EXISTS `schedule` (
   `schedule_id` int(11) NOT NULL AUTO_INCREMENT,
   `from_date` date NOT NULL,
   `to_date` date NOT NULL,
+  `expiry_date` date NOT NULL,
+  `days_of_week` varchar(20) NOT NULL,
   `from_time` time NOT NULL,
   `to_time` time NOT NULL,
   `location_id` int(10) NOT NULL,
@@ -200,8 +203,8 @@ CREATE TABLE IF NOT EXISTS `schedule` (
 -- Dumping data for table `schedule`
 --
 
-INSERT INTO `schedule` (`schedule_id`, `from_date`, `to_date`, `from_time`, `to_time`, `location_id`, `doctor_id`, `description`) VALUES
-(2, '2013-09-01', '2013-09-01', '17:00:00', '19:00:00', 2, 1, 'Pediatric consulting below 5 years');
+INSERT INTO `schedule` (`schedule_id`, `from_date`, `to_date`, `expiry_date`, `days_of_week`, `from_time`, `to_time`, `location_id`, `doctor_id`, `description`) VALUES
+(2, '2013-09-01', '2013-09-01', '0000-00-00', '', '17:00:00', '19:00:00', 2, 1, 'Pediatric consulting below 5 years');
 
 -- --------------------------------------------------------
 

@@ -148,7 +148,7 @@ div#searchAllConditionsDisplayed, div#searchConditionsDisplayed {
 						</div>
 						<div class="button">
 						<span class="tooltip">
-						 <a> <?php echo "Start a People's Library";?>
+						 <a> <?php echo "Registration for Doctors";?>
 						<span>
 						To be a People's Doctor, you can contact us at<br />Email : contact@yousee.in<br />Phone : +91-8008-884422 </span></a>
 						</span>
