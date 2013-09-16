@@ -35,7 +35,7 @@ class LocationQuery extends Query {
 	}
 	function getCityOfLocation($chosenlocationid)
 	{
-		$sql = $this->mkSQL("select city from location where locationid= %Q",$chosenlocationid);
+		$sql = $this->mkSQL("select city from city where city_id in (select city_id from location where location_id= %N)",$chosenlocationid);
 		$result= $this->exec($sql);
 		return $result[0]['city'];
 	}

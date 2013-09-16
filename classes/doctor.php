@@ -1,5 +1,6 @@
 <?php 
 class Doctor {
+
 var $doctor_id;
 function getDoctor_id() {
 return $this->_doctor_id;
@@ -98,5 +99,13 @@ return $this->_city_id;
 function setCity_id($city_id) {
 $this->_city_id=$city_id;
  }
+var $speciality_Sub_Speciality_link_id;
+function getSpeciality_Sub_Speciality_link_id() {
+return $this->_speciality_Sub_Speciality_link_id;
+ }
+function setSpeciality_Sub_Speciality_link_id($speciality_Sub_Speciality_link_id) {
+$this->_speciality_Sub_Speciality_link_id=$speciality_Sub_Speciality_link_id;
+ }
+
 }
 ?>

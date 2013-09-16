@@ -91,6 +91,8 @@ else if (isset ( $_GET ['chosencity'] ) && $_GET ['chosencity'] != '') {
 } else
 	$condition = 4;
 
+
+
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
@@ -167,7 +169,7 @@ div#searchAllConditionsDisplayed, div#searchConditionsDisplayed {
 						</div>
 						<div id="mapLocations">
 							<?php
-							include 'map_doctor_locations.php';
+								include 'map_doctor_locations.php';
 							?>
 						</div> 
 						<?php
@@ -195,7 +197,8 @@ div#searchAllConditionsDisplayed, div#searchConditionsDisplayed {
 						</div> 
 						<div  id="ListingSchedulesForClick">
 							<?php
-							include 'schedules.php';
+								echo "hello there";
+								include 'schedules.php';
 							?>
 						</div>
 					</td>
