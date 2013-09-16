@@ -184,7 +184,7 @@ div#searchAllConditionsDisplayed, div#searchConditionsDisplayed {
 						</div>
 							<div id="mapCitiesWithDoctors">
 							<?php
-							include 'map_doctor_cities.php';
+								include 'map_doctor_cities.php';
 							?>
 						</div>
 						</div> 
@@ -192,8 +192,8 @@ div#searchAllConditionsDisplayed, div#searchConditionsDisplayed {
 						}?>
 						<div id="conditionsFromMap">
 							<?php 
-							include 'display_search_conditions.php';
-						?>
+								include 'display_search_conditions.php';
+							?>
 						</div> 
 						<div  id="ListingSchedulesForClick">
 							<?php
