@@ -16,7 +16,20 @@ class ScheduleQuery extends Query {
 		}
 		return $this->_mkObj($array);
 	}
-
+	function _mkObj($array) {
+		$obj = new Schedule();
+		$obj->setSchedule_id($array["schedule_id"]);
+		$obj->setFrom_date($array["from_date"]);
+		$obj->setTo_date($array["to_date"]);
+		$obj->setExpiry_date($array["expiry_date"]);
+		$obj->setDays_of_week($array["days_of_week"]);
+		$obj->setFrom_time($array["from_time"]);
+		$obj->setTo_time($array["to_time"]);
+		$obj->setLocation_id($array["location_id"]);
+		$obj->setDoctor_id($array["doctor_id"]);
+		$obj->setDescription($array["description"]);
+		return $obj;
+	}
 	/********************************************************************************
 	*  this query returns schedule details for a given doctor at a location
 	*
@@ -45,7 +58,8 @@ class ScheduleQuery extends Query {
 	********************************************************************************
 	*/
 	function getDoctorsByCriteria($speciality, $subspeciality, $chosencity, $chosenlocationid, $last,$count) {
-		$sqlstring  = "select a.doctor_id, concat(a.first_name, ' ', a.last_name) as doctor, d.speciality as Speciality, e.speciality as 'Sub Speciality'";
+		$sqlstring  = "select a.doctor_id, concat(a.first_name, ' ', a.last_name) as doctor, d.speciality as speciality, e.speciality as 'sub speciality',";
+		$sqlstring .= " g.city as city, f.location as location";
 		$sqlstring .= " from doctor a, schedule b, speciality_sub_speciality_link c, speciality d, sub_speciality e, location f, city g";
 		$sqlstring .= " where a.doctor_id = b.doctor_id and a.speciality_Sub_Speciality_link_id = c.speciality_Sub_Speciality_link_id";
 		$sqlstring .= " and c.speciality_id = d.speciality_id and c.sub_speciality_id = e.sub_speciality_id";
@@ -63,7 +77,7 @@ class ScheduleQuery extends Query {
 		if ( !(empty($location)) && (strlen($location) > 0) )
 			$sqlstring .= " and f.location_id = ". $location;
 		
-		$sqlstring .= " group by doctor_id, doctor, Speciality, 'Sub Speciality'";
+		$sqlstring .= " group by doctor_id, doctor, Speciality, 'Sub Speciality', city, location";
 		$sqlstring .= " limit  ". $last. ",". $count;
 
 		return $this->exec($sqlstring);
@@ -104,18 +118,6 @@ class ScheduleQuery extends Query {
 	}
 
 	
-	function _mkObj($array) {
-		$obj = new Schedule();
-		$obj->setSchedule_id($array["schedule_id"]);
-		$obj->setFrom_date($array["from_date"]);
-		$obj->setTo_date($array["to_date"]);
-		$obj->setFrom_time($array["from_time"]);
-		$obj->setTo_time($array["to_time"]);
-		$obj->setLocation_id($array["location_id"]);
-		$obj->setDoctor_id($array["doctor_id"]);
-		$obj->setDescription($array["description"]);
-		return $obj;
-	}
 	function selectAll($last,$count) {
 		$sql = $this->mkSQL("select * from schedule limit %N, %N",$last, $count);
 		if (!$this->_query($sql, "Error in selecting from table schedule")) {
@@ -124,9 +126,9 @@ class ScheduleQuery extends Query {
 		$this->_rowCount = $this->_conn->numRows();
 		return true;
 	}
-	function selectSchedule_id($schedule) {
+	function selectSchedule_id($schedule_id) {
 		$sql = $this->mkSQL("select * from schedule where schedule_id  = %N",
-				$schedule->getSchedule_id()
+				$schedule_id
 			);
 		if (!$this->_query($sql, "Error in selecting from table schedule")) {
 			 return false;
@@ -134,9 +136,9 @@ class ScheduleQuery extends Query {
 		$this->_rowCount = $this->_conn->numRows();
 		return true;
 	}
-	function selectFrom_date($schedule) {
-		$sql = $this->mkSQL("select * from schedule where from_date  = %N",
-				$schedule->getFrom_date()
+	function selectFrom_date($from_date) {
+		$sql = $this->mkSQL("select * from schedule where from_date  = %Q",
+				$from_date
 			);
 		if (!$this->_query($sql, "Error in selecting from table schedule")) {
 			 return false;
@@ -144,9 +146,9 @@ class ScheduleQuery extends Query {
 		$this->_rowCount = $this->_conn->numRows();
 		return true;
 	}
-	function selectTo_date($schedule) {
-		$sql = $this->mkSQL("select * from schedule where to_date  = %N",
-				$schedule->getTo_date()
+	function selectTo_date($to_date) {
+		$sql = $this->mkSQL("select * from schedule where to_date  = %Q",
+				$to_date
 			);
 		if (!$this->_query($sql, "Error in selecting from table schedule")) {
 			 return false;
@@ -154,9 +156,9 @@ class ScheduleQuery extends Query {
 		$this->_rowCount = $this->_conn->numRows();
 		return true;
 	}
-	function selectFrom_time($schedule) {
-		$sql = $this->mkSQL("select * from schedule where from_time  = %N",
-				$schedule->getFrom_time()
+	function selectExpiry_date($expiry_date) {
+		$sql = $this->mkSQL("select * from schedule where expiry_date  = %Q",
+				$expiry_date
 			);
 		if (!$this->_query($sql, "Error in selecting from table schedule")) {
 			 return false;
@@ -164,9 +166,9 @@ class ScheduleQuery extends Query {
 		$this->_rowCount = $this->_conn->numRows();
 		return true;
 	}
-	function selectTo_time($schedule) {
-		$sql = $this->mkSQL("select * from schedule where to_time  = %N",
-				$schedule->getTo_time()
+	function selectDays_of_week($days_of_week) {
+		$sql = $this->mkSQL("select * from schedule where days_of_week  = %Q",
+				$days_of_week
 			);
 		if (!$this->_query($sql, "Error in selecting from table schedule")) {
 			 return false;
@@ -174,9 +176,29 @@ class ScheduleQuery extends Query {
 		$this->_rowCount = $this->_conn->numRows();
 		return true;
 	}
-	function selectLocation_id($schedule) {
+	function selectFrom_time($from_time) {
+		$sql = $this->mkSQL("select * from schedule where from_time  = %Q",
+				$from_time
+			);
+		if (!$this->_query($sql, "Error in selecting from table schedule")) {
+			 return false;
+		}
+		$this->_rowCount = $this->_conn->numRows();
+		return true;
+	}
+	function selectTo_time($to_time) {
+		$sql = $this->mkSQL("select * from schedule where to_time  = %Q",
+				$to_time
+			);
+		if (!$this->_query($sql, "Error in selecting from table schedule")) {
+			 return false;
+		}
+		$this->_rowCount = $this->_conn->numRows();
+		return true;
+	}
+	function selectLocation_id($location_id) {
 		$sql = $this->mkSQL("select * from schedule where location_id  = %N",
-				$schedule->getLocation_id()
+				$location_id
 			);
 		if (!$this->_query($sql, "Error in selecting from table schedule")) {
 			 return false;
@@ -184,9 +206,9 @@ class ScheduleQuery extends Query {
 		$this->_rowCount = $this->_conn->numRows();
 		return true;
 	}
-	function selectDoctor_id($schedule) {
+	function selectDoctor_id($doctor_id) {
 		$sql = $this->mkSQL("select * from schedule where doctor_id  = %N",
-				$schedule->getDoctor_id()
+				$doctor_id
 			);
 		if (!$this->_query($sql, "Error in selecting from table schedule")) {
 			 return false;
@@ -194,9 +216,9 @@ class ScheduleQuery extends Query {
 		$this->_rowCount = $this->_conn->numRows();
 		return true;
 	}
-	function selectDescription($schedule) {
-		$sql = $this->mkSQL("select * from schedule where description  = %N",
-				$schedule->getDescription()
+	function selectDescription($description) {
+		$sql = $this->mkSQL("select * from schedule where description  = %Q",
+				$description
 			);
 		if (!$this->_query($sql, "Error in selecting from table schedule")) {
 			 return false;
@@ -205,64 +227,78 @@ class ScheduleQuery extends Query {
 		return true;
 	}
 	function insert($schedule) {
-		$sql = $this->mkSQL("insert into schedule values (%N, %Q, %Q, %Q, %Q, %N, %N, %Q)",
-				$schedule->getSchedule_id(),$schedule->getFrom_date(),$schedule->getTo_date(),$schedule->getFrom_time(),$schedule->getTo_time(),$schedule->getLocation_id(),$schedule->getDoctor_id(),$schedule->getDescription()
+		$sql = $this->mkSQL("insert into schedule values (%N, %Q, %Q, %Q, %Q, %Q, %Q, %N, %N, %Q)",
+				$schedule->getSchedule_id(),$schedule->getFrom_date(),$schedule->getTo_date(),$schedule->getExpiry_date(),$schedule->getDays_of_week(),$schedule->getFrom_time(),$schedule->getTo_time(),$schedule->getLocation_id(),$schedule->getDoctor_id(),$schedule->getDescription()
 			);
 		$ret = $this->_query($sql,"Insert failed on schedule table");
 	}
 	function updateSchedule_id($schedule) {
 		$sql = $this->mkSQL("update schedule
-				set from_date = %Q, to_date = %Q, from_time = %Q, to_time = %Q, location_id = %N, doctor_id = %N, description = %Q where schedule_id = %N ",
-				$schedule->getFrom_date(),$schedule->getTo_date(),$schedule->getFrom_time(),$schedule->getTo_time(),$schedule->getLocation_id(),$schedule->getDoctor_id(),$schedule->getDescription(),$schedule->get(),$schedule->getSchedule_id()
+				set from_date = %Q, to_date = %Q, expiry_date = %Q, days_of_week = %Q, from_time = %Q, to_time = %Q, location_id = %N, doctor_id = %N, description = %Q where schedule_id = %N ",
+				$schedule->getFrom_date(),$schedule->getTo_date(),$schedule->getExpiry_date(),$schedule->getDays_of_week(),$schedule->getFrom_time(),$schedule->getTo_time(),$schedule->getLocation_id(),$schedule->getDoctor_id(),$schedule->getDescription(),$schedule->get(),$schedule->getSchedule_id()
 			);
 		$ret = $this->_query($sql,"Update using column schedule_id failed on schedule table");
 	}
 	function updateFrom_date($schedule) {
 		$sql = $this->mkSQL("update schedule
-				set schedule_id = %N, to_date = %Q, from_time = %Q, to_time = %Q, location_id = %N, doctor_id = %N, description = %Q where from_date = %Q ",
-				$schedule->getSchedule_id(),$schedule->getTo_date(),$schedule->getFrom_time(),$schedule->getTo_time(),$schedule->getLocation_id(),$schedule->getDoctor_id(),$schedule->getDescription(),$schedule->get(),$schedule->getFrom_date()
+				set schedule_id = %N, to_date = %Q, expiry_date = %Q, days_of_week = %Q, from_time = %Q, to_time = %Q, location_id = %N, doctor_id = %N, description = %Q where from_date = %Q ",
+				$schedule->getSchedule_id(),$schedule->getTo_date(),$schedule->getExpiry_date(),$schedule->getDays_of_week(),$schedule->getFrom_time(),$schedule->getTo_time(),$schedule->getLocation_id(),$schedule->getDoctor_id(),$schedule->getDescription(),$schedule->get(),$schedule->getFrom_date()
 			);
 		$ret = $this->_query($sql,"Update using column from_date failed on schedule table");
 	}
 	function updateTo_date($schedule) {
 		$sql = $this->mkSQL("update schedule
-				set schedule_id = %N, from_date = %Q, from_time = %Q, to_time = %Q, location_id = %N, doctor_id = %N, description = %Q where to_date = %Q ",
-				$schedule->getSchedule_id(),$schedule->getFrom_date(),$schedule->getFrom_time(),$schedule->getTo_time(),$schedule->getLocation_id(),$schedule->getDoctor_id(),$schedule->getDescription(),$schedule->get(),$schedule->getTo_date()
+				set schedule_id = %N, from_date = %Q, expiry_date = %Q, days_of_week = %Q, from_time = %Q, to_time = %Q, location_id = %N, doctor_id = %N, description = %Q where to_date = %Q ",
+				$schedule->getSchedule_id(),$schedule->getFrom_date(),$schedule->getExpiry_date(),$schedule->getDays_of_week(),$schedule->getFrom_time(),$schedule->getTo_time(),$schedule->getLocation_id(),$schedule->getDoctor_id(),$schedule->getDescription(),$schedule->get(),$schedule->getTo_date()
 			);
 		$ret = $this->_query($sql,"Update using column to_date failed on schedule table");
 	}
+	function updateExpiry_date($schedule) {
+		$sql = $this->mkSQL("update schedule
+				set schedule_id = %N, from_date = %Q, to_date = %Q, days_of_week = %Q, from_time = %Q, to_time = %Q, location_id = %N, doctor_id = %N, description = %Q where expiry_date = %Q ",
+				$schedule->getSchedule_id(),$schedule->getFrom_date(),$schedule->getTo_date(),$schedule->getDays_of_week(),$schedule->getFrom_time(),$schedule->getTo_time(),$schedule->getLocation_id(),$schedule->getDoctor_id(),$schedule->getDescription(),$schedule->get(),$schedule->getExpiry_date()
+			);
+		$ret = $this->_query($sql,"Update using column expiry_date failed on schedule table");
+	}
+	function updateDays_of_week($schedule) {
+		$sql = $this->mkSQL("update schedule
+				set schedule_id = %N, from_date = %Q, to_date = %Q, expiry_date = %Q, from_time = %Q, to_time = %Q, location_id = %N, doctor_id = %N, description = %Q where days_of_week = %Q ",
+				$schedule->getSchedule_id(),$schedule->getFrom_date(),$schedule->getTo_date(),$schedule->getExpiry_date(),$schedule->getFrom_time(),$schedule->getTo_time(),$schedule->getLocation_id(),$schedule->getDoctor_id(),$schedule->getDescription(),$schedule->get(),$schedule->getDays_of_week()
+			);
+		$ret = $this->_query($sql,"Update using column days_of_week failed on schedule table");
+	}
 	function updateFrom_time($schedule) {
 		$sql = $this->mkSQL("update schedule
-				set schedule_id = %N, from_date = %Q, to_date = %Q, to_time = %Q, location_id = %N, doctor_id = %N, description = %Q where from_time = %Q ",
-				$schedule->getSchedule_id(),$schedule->getFrom_date(),$schedule->getTo_date(),$schedule->getTo_time(),$schedule->getLocation_id(),$schedule->getDoctor_id(),$schedule->getDescription(),$schedule->get(),$schedule->getFrom_time()
+				set schedule_id = %N, from_date = %Q, to_date = %Q, expiry_date = %Q, days_of_week = %Q, to_time = %Q, location_id = %N, doctor_id = %N, description = %Q where from_time = %Q ",
+				$schedule->getSchedule_id(),$schedule->getFrom_date(),$schedule->getTo_date(),$schedule->getExpiry_date(),$schedule->getDays_of_week(),$schedule->getTo_time(),$schedule->getLocation_id(),$schedule->getDoctor_id(),$schedule->getDescription(),$schedule->get(),$schedule->getFrom_time()
 			);
 		$ret = $this->_query($sql,"Update using column from_time failed on schedule table");
 	}
 	function updateTo_time($schedule) {
 		$sql = $this->mkSQL("update schedule
-				set schedule_id = %N, from_date = %Q, to_date = %Q, from_time = %Q, location_id = %N, doctor_id = %N, description = %Q where to_time = %Q ",
-				$schedule->getSchedule_id(),$schedule->getFrom_date(),$schedule->getTo_date(),$schedule->getFrom_time(),$schedule->getLocation_id(),$schedule->getDoctor_id(),$schedule->getDescription(),$schedule->get(),$schedule->getTo_time()
+				set schedule_id = %N, from_date = %Q, to_date = %Q, expiry_date = %Q, days_of_week = %Q, from_time = %Q, location_id = %N, doctor_id = %N, description = %Q where to_time = %Q ",
+				$schedule->getSchedule_id(),$schedule->getFrom_date(),$schedule->getTo_date(),$schedule->getExpiry_date(),$schedule->getDays_of_week(),$schedule->getFrom_time(),$schedule->getLocation_id(),$schedule->getDoctor_id(),$schedule->getDescription(),$schedule->get(),$schedule->getTo_time()
 			);
 		$ret = $this->_query($sql,"Update using column to_time failed on schedule table");
 	}
 	function updateLocation_id($schedule) {
 		$sql = $this->mkSQL("update schedule
-				set schedule_id = %N, from_date = %Q, to_date = %Q, from_time = %Q, to_time = %Q, doctor_id = %N, description = %Q where location_id = %N ",
-				$schedule->getSchedule_id(),$schedule->getFrom_date(),$schedule->getTo_date(),$schedule->getFrom_time(),$schedule->getTo_time(),$schedule->getDoctor_id(),$schedule->getDescription(),$schedule->get(),$schedule->getLocation_id()
+				set schedule_id = %N, from_date = %Q, to_date = %Q, expiry_date = %Q, days_of_week = %Q, from_time = %Q, to_time = %Q, doctor_id = %N, description = %Q where location_id = %N ",
+				$schedule->getSchedule_id(),$schedule->getFrom_date(),$schedule->getTo_date(),$schedule->getExpiry_date(),$schedule->getDays_of_week(),$schedule->getFrom_time(),$schedule->getTo_time(),$schedule->getDoctor_id(),$schedule->getDescription(),$schedule->get(),$schedule->getLocation_id()
 			);
 		$ret = $this->_query($sql,"Update using column location_id failed on schedule table");
 	}
 	function updateDoctor_id($schedule) {
 		$sql = $this->mkSQL("update schedule
-				set schedule_id = %N, from_date = %Q, to_date = %Q, from_time = %Q, to_time = %Q, location_id = %N, description = %Q where doctor_id = %N ",
-				$schedule->getSchedule_id(),$schedule->getFrom_date(),$schedule->getTo_date(),$schedule->getFrom_time(),$schedule->getTo_time(),$schedule->getLocation_id(),$schedule->getDescription(),$schedule->get(),$schedule->getDoctor_id()
+				set schedule_id = %N, from_date = %Q, to_date = %Q, expiry_date = %Q, days_of_week = %Q, from_time = %Q, to_time = %Q, location_id = %N, description = %Q where doctor_id = %N ",
+				$schedule->getSchedule_id(),$schedule->getFrom_date(),$schedule->getTo_date(),$schedule->getExpiry_date(),$schedule->getDays_of_week(),$schedule->getFrom_time(),$schedule->getTo_time(),$schedule->getLocation_id(),$schedule->getDescription(),$schedule->get(),$schedule->getDoctor_id()
 			);
 		$ret = $this->_query($sql,"Update using column doctor_id failed on schedule table");
 	}
 	function updateDescription($schedule) {
 		$sql = $this->mkSQL("update schedule
-				set schedule_id = %N, from_date = %Q, to_date = %Q, from_time = %Q, to_time = %Q, location_id = %N, doctor_id = %N where description = %Q ",
-				$schedule->getSchedule_id(),$schedule->getFrom_date(),$schedule->getTo_date(),$schedule->getFrom_time(),$schedule->getTo_time(),$schedule->getLocation_id(),$schedule->getDoctor_id(),$schedule->get(),$schedule->getDescription()
+				set schedule_id = %N, from_date = %Q, to_date = %Q, expiry_date = %Q, days_of_week = %Q, from_time = %Q, to_time = %Q, location_id = %N, doctor_id = %N where description = %Q ",
+				$schedule->getSchedule_id(),$schedule->getFrom_date(),$schedule->getTo_date(),$schedule->getExpiry_date(),$schedule->getDays_of_week(),$schedule->getFrom_time(),$schedule->getTo_time(),$schedule->getLocation_id(),$schedule->getDoctor_id(),$schedule->get(),$schedule->getDescription()
 			);
 		$ret = $this->_query($sql,"Update using column description failed on schedule table");
 	}
@@ -283,6 +319,18 @@ class ScheduleQuery extends Query {
 				$schedule->getTo_date()
 			);
 		$ret = $this->_query($sql,"Delete using column to_date failed on schedule table");
+	}
+	function deleteExpiry_date($schedule) {
+		$sql = $this->mkSQL("delete from schedule where expiry_date = %Q ",
+				$schedule->getExpiry_date()
+			);
+		$ret = $this->_query($sql,"Delete using column expiry_date failed on schedule table");
+	}
+	function deleteDays_of_week($schedule) {
+		$sql = $this->mkSQL("delete from schedule where days_of_week = %Q ",
+				$schedule->getDays_of_week()
+			);
+		$ret = $this->_query($sql,"Delete using column days_of_week failed on schedule table");
 	}
 	function deleteFrom_time($schedule) {
 		$sql = $this->mkSQL("delete from schedule where from_time = %Q ",

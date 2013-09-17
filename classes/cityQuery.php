@@ -16,6 +16,11 @@ class CityQuery extends Query {
 		}
 		return $this->_mkObj($array);
 	}
+	function getCities(){
+		$sql = $this->mkSQL("select * from city where city_id IN (select distinct city_id from location where location_id IN (
+					select location_id from schedule where expiry_date > CURDATE() ))");
+		return array_map(array($this, '_mkObj'), $this->exec($sql));
+	}
 	function _mkObj($array) {
 		$obj = new City();
 		$obj->setCity_id($array["city_id"]);
@@ -32,14 +37,9 @@ class CityQuery extends Query {
 		$this->_rowCount = $this->_conn->numRows();
 		return true;
 	}
-	function getCities(){
-		$sql = $this->mkSQL("select * from city where city_id IN (select distinct city_id from location)");
-		return array_map(array($this, '_mkObj'), $this->exec($sql));
-	}
-  
-	function selectCity_id($city) {
+	function selectCity_id($city_id) {
 		$sql = $this->mkSQL("select * from city where city_id  = %N",
-				$city->getCity_id()
+				$city_id
 			);
 		if (!$this->_query($sql, "Error in selecting from table city")) {
 			 return false;
@@ -47,9 +47,9 @@ class CityQuery extends Query {
 		$this->_rowCount = $this->_conn->numRows();
 		return true;
 	}
-	function selectLat($city) {
+	function selectLat($lat) {
 		$sql = $this->mkSQL("select * from city where lat  = %N",
-				$city->getLat()
+				$lat
 			);
 		if (!$this->_query($sql, "Error in selecting from table city")) {
 			 return false;
@@ -57,9 +57,9 @@ class CityQuery extends Query {
 		$this->_rowCount = $this->_conn->numRows();
 		return true;
 	}
-	function selectLong($city) {
+	function selectLong($long) {
 		$sql = $this->mkSQL("select * from city where long  = %N",
-				$city->getLong()
+				$long
 			);
 		if (!$this->_query($sql, "Error in selecting from table city")) {
 			 return false;
@@ -68,8 +68,8 @@ class CityQuery extends Query {
 		return true;
 	}
 	function selectCity($city) {
-		$sql = $this->mkSQL("select * from city where city  = %N",
-				$city->getCity()
+		$sql = $this->mkSQL("select * from city where city  = %Q",
+				$city
 			);
 		if (!$this->_query($sql, "Error in selecting from table city")) {
 			 return false;

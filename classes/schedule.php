@@ -21,6 +21,20 @@ return $this->_to_date;
 function setTo_date($to_date) {
 $this->_to_date=$to_date;
  }
+var $expiry_date;
+function getExpiry_date() {
+return $this->_expiry_date;
+ }
+function setExpiry_date($expiry_date) {
+$this->_expiry_date=$expiry_date;
+ }
+var $days_of_week;
+function getDays_of_week() {
+return $this->_days_of_week;
+ }
+function setDays_of_week($days_of_week) {
+$this->_days_of_week=$days_of_week;
+ }
 var $from_time;
 function getFrom_time() {
 return $this->_from_time;

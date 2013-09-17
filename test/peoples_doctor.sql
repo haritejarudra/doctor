@@ -59,13 +59,11 @@ CREATE TABLE IF NOT EXISTS `doctor` (
   `country` varchar(50) NOT NULL,
   `current_hospital` varchar(100) NOT NULL,
   `experience` varchar(100) NOT NULL,
-  `qualification_id` int(10) NOT NULL,
   `date_of_birth` date NOT NULL,
   `age` int(3) NOT NULL,
   `city_id` int(11) DEFAULT NULL,
   `speciality_Sub_Speciality_link_id` int(10) DEFAULT NULL,
   PRIMARY KEY (`doctor_id`),
-  KEY `qualification_id` (`qualification_id`),
   KEY `city_id` (`city_id`),
   KEY `speciality_Sub_Speciality_link_id` (`speciality_Sub_Speciality_link_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
@@ -74,9 +72,9 @@ CREATE TABLE IF NOT EXISTS `doctor` (
 -- Dumping data for table `doctor`
 --
 
-INSERT INTO `doctor` (`doctor_id`, `first_name`, `last_name`, `mobile`, `gender`, `address`, `state`, `country`, `current_hospital`, `experience`, `qualification_id`, `date_of_birth`, `age`, `city_id`, `speciality_Sub_Speciality_link_id`) VALUES
-(1, 'Rahul', 'Abraham', '9632578410', 'm', 'Padmarao Nagar,Secunderabad,Andhra Pradesh,500020, Walker town, Padmarao Nagar, Secunderabad, AP', 'AP', 'INDIA', 'Gandhi Medical', '5', 1, '0000-00-00', 19, 1, 7),
-(2, 'Sudha', 'Nakala', '1478523690', 'f', 'Padmarao Nagar,Secunderabad,Andhra Pradesh,500020, Walker town, Padmarao Nagar, Bangalore, AP', 'AP', 'INDIA', 'xxx-Medical college', '15', 2, '0000-00-00', 21, 2, 19);
+INSERT INTO `doctor` (`doctor_id`, `first_name`, `last_name`, `mobile`, `gender`, `address`, `state`, `country`, `current_hospital`, `experience`, `date_of_birth`, `age`, `city_id`, `speciality_Sub_Speciality_link_id`) VALUES
+(1, 'Rahul', 'Abraham', '9632578410', 'm', 'Padmarao Nagar,Secunderabad,Andhra Pradesh,500020, Walker town, Padmarao Nagar, Secunderabad, AP', 'AP', 'INDIA', 'Gandhi Medical', '5', '0000-00-00', 19, 1, 7),
+(2, 'Sudha', 'Nakala', '1478523690', 'f', 'Padmarao Nagar,Secunderabad,Andhra Pradesh,500020, Walker town, Padmarao Nagar, Bangalore, AP', 'AP', 'INDIA', 'xxx-Medical college', '15', '0000-00-00', 21, 2, 19);
 
 -- --------------------------------------------------------
 
@@ -149,19 +147,21 @@ CREATE TABLE IF NOT EXISTS `patient_request` (
 
 CREATE TABLE IF NOT EXISTS `qualification` (
   `qualification_id` int(10) NOT NULL AUTO_INCREMENT,
+  `doctor_id` int(10) NOT NULL,  
   `degree` varchar(50) NOT NULL,
   `year` int(4) NOT NULL,
   `university` varchar(20) NOT NULL,
-  PRIMARY KEY (`qualification_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+  PRIMARY KEY (`qualification_id`),
+  KEY `doctor_id` (`doctor_id`)
+ ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `qualification`
 --
 
-INSERT INTO `qualification` (`qualification_id`, `degree`, `year`, `university`) VALUES
-(1, 'M.B.B.S', 2012, 'J.N.T.U'),
-(2, 'M.B.B.S', 2013, 'O.U');
+INSERT INTO `qualification` (`qualification_id`, `doctor_id`, `degree`, `year`, `university`) VALUES
+(1, 1,'M.B.B.S', 2012, 'Gandhi Medical College'),
+(2, 2,'M.B.B.S', 2013, 'Osmania Medical College');
 
 -- --------------------------------------------------------
 
@@ -324,9 +324,14 @@ INSERT INTO `sub_speciality` (`sub_speciality_id`, `speciality`) VALUES
 -- Constraints for table `doctor`
 --
 ALTER TABLE `doctor`
-  ADD CONSTRAINT `doctor_ibfk_1` FOREIGN KEY (`qualification_id`) REFERENCES `qualification` (`qualification_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `doctor_ibfk_2` FOREIGN KEY (`city_id`) REFERENCES `city` (`city_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `doctor_ibfk_3` FOREIGN KEY (`speciality_Sub_Speciality_link_id`) REFERENCES `speciality_sub_speciality_link` (`speciality_sub_speciality_link_id`) ON DELETE SET NULL;
+
+--
+-- Constraints for table `qualification`
+--
+ALTER TABLE `qualification`
+  ADD CONSTRAINT `qualification_ibfk_2` FOREIGN KEY (`doctor_id`) REFERENCES `doctor` (`doctor_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `location`
