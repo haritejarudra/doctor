@@ -73,6 +73,41 @@ function displaySubSpecialityDiv() {
 	</div>
 	</br></br>
 	<input type="submit" name="Submit" value="Submit">
+	 <a style="color:black;text-decoration:none;" href="opencityregistration.php"><font
+						color="#369">
+						</font> </a> <div style="margin-top: 20px;">
+						<div class="button">
+						<span class="tooltip">
+						 <a> <?php echo "Registration</br>For</br>PATIENTS";?>
+						 <span>	
+						 					
+<form>
+<font color="#369">
+<div class="button">
+			<input type="Radio" name="Registration" value="New Registration">New Registration<br>
+</div>
+<div class="button">
+      		<input type="Radio" name="Registration" value="Already Member">Already Member</form>
+</font>
+</div>
+ </span>
+ </span> </a>
+ </div>
+				 
+		            	<div class="button">
+						<span class="tooltip">
+						 <a> <?php echo "Registration</br>For</br>DOCTORS";?>
+						<span>
+<form>
+<div class="button">
+            <font color="#369">
+			<input type="Radio" name="Registration" value="New Registration">New Registration<br>
+</div>
+<div class="button">
+      		<input type="Radio" name="Registration" value="Already Member">Already Member</form>
+			</font>
+</div>
+        </span>              </span> </a> </td>
 </div>
 
 </form>

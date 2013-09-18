@@ -143,18 +143,6 @@ div#searchAllConditionsDisplayed, div#searchConditionsDisplayed {
 				<tr>
 					<td valign="top">
 							<?php include 'search_doctor.php';?>
-						<div class="button">
-						 <a style="color:black;text-decoration:none;" href="opencityregistration.php"><font
-						color="#369"> <?php echo "Get Membership!";?>
-						</font></a>
-						</div>
-						<div class="button">
-						<span class="tooltip">
-						 <a> <?php echo "Start a People's Library";?>
-						<span>
-						To be a People's Doctor, you can contact us at<br />Email : contact@yousee.in<br />Phone : +91-8008-884422 </span></a>
-						</span>
-						</div>
 					</td>
 				<td valign="top"><?php
 						// when a city is clicked upon in the map, display the locations of the city that have a open library
@@ -197,7 +185,6 @@ div#searchAllConditionsDisplayed, div#searchConditionsDisplayed {
 						</div> 
 						<div  id="ListingSchedulesForClick">
 							<?php
-								echo "hello there";
 								include 'schedules.php';
 							?>
 						</div>

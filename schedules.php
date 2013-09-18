@@ -18,10 +18,10 @@ if(isset($_GET['page'])&&($_GET['page']!=''))
 } else {
 	$page=1;
 	$lastcount=0;
-	$count = $schedq->getCountOfSchedulesByCriteria($speciality, $subspeciality, $chosencity, $chosenlocationid);
+	$count = $schedq->getCountOfDoctorsByCriteria($speciality, $subspeciality, $chosencity, $chosenlocationid);
 }
 
-$schedules=$schedq->getSchedulesByCriteria($speciality, $subspeciality, $chosencity, $chosenlocationid, $lastcount, $NUMBER_OF_RECORDS_PER_PAGE);
+$schedules=$schedq->getDoctorsByCriteria($speciality, $subspeciality, $chosencity, $chosenlocationid, $lastcount, $NUMBER_OF_RECORDS_PER_PAGE);
 
 //set conditions to supress columns of the listing based on search conditions chosen
 
@@ -55,7 +55,7 @@ $schedules=$schedq->getSchedulesByCriteria($speciality, $subspeciality, $chosenc
 			<tr style="background: #ccc">
 				<th class="category">Doctor</th>
 				<th>Speciality</th>
-				<th>Clinic</th>
+				<th>Sub Speciality</th>
 				<th class="city">City</th>
 				<th class="location">Location</th>
 				<th>View and Commit</th>
@@ -66,10 +66,9 @@ $schedules=$schedq->getSchedulesByCriteria($speciality, $subspeciality, $chosenc
 			<tr align="center">
 				<td class="doctor"><?php echo $schedule["doctor"] ?>
 				<td class="speciality"><?php echo $schedule["speciality"] ?></td>
-				<td class="clinic"><?php echo $schedule["clinic"] ?></td>
+				<td class="clinic"><?php echo $schedule["sub speciality"] ?></td>
 				<td class="city"><?php echo $schedule["city"] ?></td>
 				<td class="location"><?php echo $schedule["location"] ?></td>
-				<td > <input style="float:right;margin-right:8px;margin-top:-11px;" type="button" value="View and Commit"></td>
 			</tr>
 			<?php }
 
