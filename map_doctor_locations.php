@@ -5,7 +5,6 @@ require_once("classes/location.php");
 
 $locq = new locationQuery();
 
-
 //if a city is clicked on the map its locations are shown
 //if a location is clicked this map it is refreshed
 //if a location is chosen from the search bar and submit is pressed

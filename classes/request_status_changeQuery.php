@@ -32,9 +32,9 @@ class Request_status_changeQuery extends Query {
 		$this->_rowCount = $this->_conn->numRows();
 		return true;
 	}
-	function selectStatus_Change_id($request_status_change) {
+	function selectStatus_Change_id($Status_Change_id) {
 		$sql = $this->mkSQL("select * from request_status_change where Status_Change_id  = %N",
-				$request_status_change->getStatus_Change_id()
+				$Status_Change_id
 			);
 		if (!$this->_query($sql, "Error in selecting from table request_status_change")) {
 			 return false;
@@ -42,9 +42,9 @@ class Request_status_changeQuery extends Query {
 		$this->_rowCount = $this->_conn->numRows();
 		return true;
 	}
-	function selectStatus_from($request_status_change) {
-		$sql = $this->mkSQL("select * from request_status_change where Status_from  = %N",
-				$request_status_change->getStatus_from()
+	function selectStatus_from($Status_from) {
+		$sql = $this->mkSQL("select * from request_status_change where Status_from  = %Q",
+				$Status_from
 			);
 		if (!$this->_query($sql, "Error in selecting from table request_status_change")) {
 			 return false;
@@ -52,9 +52,9 @@ class Request_status_changeQuery extends Query {
 		$this->_rowCount = $this->_conn->numRows();
 		return true;
 	}
-	function selectStatus_to($request_status_change) {
-		$sql = $this->mkSQL("select * from request_status_change where Status_to  = %N",
-				$request_status_change->getStatus_to()
+	function selectStatus_to($Status_to) {
+		$sql = $this->mkSQL("select * from request_status_change where Status_to  = %Q",
+				$Status_to
 			);
 		if (!$this->_query($sql, "Error in selecting from table request_status_change")) {
 			 return false;
@@ -62,9 +62,9 @@ class Request_status_changeQuery extends Query {
 		$this->_rowCount = $this->_conn->numRows();
 		return true;
 	}
-	function selectActor($request_status_change) {
-		$sql = $this->mkSQL("select * from request_status_change where Actor  = %N",
-				$request_status_change->getActor()
+	function selectActor($Actor) {
+		$sql = $this->mkSQL("select * from request_status_change where Actor  = %Q",
+				$Actor
 			);
 		if (!$this->_query($sql, "Error in selecting from table request_status_change")) {
 			 return false;

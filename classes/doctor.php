@@ -70,13 +70,6 @@ return $this->_experience;
 function setExperience($experience) {
 $this->_experience=$experience;
  }
-var $qualification_id;
-function getQualification_id() {
-return $this->_qualification_id;
- }
-function setQualification_id($qualification_id) {
-$this->_qualification_id=$qualification_id;
- }
 var $date_of_birth;
 function getDate_of_birth() {
 return $this->_date_of_birth;
@@ -97,6 +90,13 @@ return $this->_city_id;
  }
 function setCity_id($city_id) {
 $this->_city_id=$city_id;
+ }
+var $speciality_Sub_Speciality_link_id;
+function getSpeciality_Sub_Speciality_link_id() {
+return $this->_speciality_Sub_Speciality_link_id;
+ }
+function setSpeciality_Sub_Speciality_link_id($speciality_Sub_Speciality_link_id) {
+$this->_speciality_Sub_Speciality_link_id=$speciality_Sub_Speciality_link_id;
  }
 }
 ?>

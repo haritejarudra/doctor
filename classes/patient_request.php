@@ -28,6 +28,13 @@ return $this->_problem_history;
 function setProblem_history($problem_history) {
 $this->_problem_history=$problem_history;
  }
+var $planned_date_consultation;
+function getPlanned_date_consultation() {
+return $this->_planned_date_consultation;
+ }
+function setPlanned_date_consultation($planned_date_consultation) {
+$this->_planned_date_consultation=$planned_date_consultation;
+ }
 var $actual_date_of_consultation;
 function getActual_date_of_consultation() {
 return $this->_actual_date_of_consultation;

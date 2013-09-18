@@ -31,9 +31,9 @@ class Speciality_sub_speciality_linkQuery extends Query {
 		$this->_rowCount = $this->_conn->numRows();
 		return true;
 	}
-	function selectSpeciality_sub_speciality_link_id($speciality_sub_speciality_link) {
+	function selectSpeciality_sub_speciality_link_id($speciality_sub_speciality_link_id) {
 		$sql = $this->mkSQL("select * from speciality_sub_speciality_link where speciality_sub_speciality_link_id  = %N",
-				$speciality_sub_speciality_link->getSpeciality_sub_speciality_link_id()
+				$speciality_sub_speciality_link_id
 			);
 		if (!$this->_query($sql, "Error in selecting from table speciality_sub_speciality_link")) {
 			 return false;
@@ -41,9 +41,9 @@ class Speciality_sub_speciality_linkQuery extends Query {
 		$this->_rowCount = $this->_conn->numRows();
 		return true;
 	}
-	function selectSub_speciality_id($speciality_sub_speciality_link) {
+	function selectSub_speciality_id($sub_speciality_id) {
 		$sql = $this->mkSQL("select * from speciality_sub_speciality_link where sub_speciality_id  = %N",
-				$speciality_sub_speciality_link->getSub_speciality_id()
+				$sub_speciality_id
 			);
 		if (!$this->_query($sql, "Error in selecting from table speciality_sub_speciality_link")) {
 			 return false;
@@ -51,9 +51,9 @@ class Speciality_sub_speciality_linkQuery extends Query {
 		$this->_rowCount = $this->_conn->numRows();
 		return true;
 	}
-	function selectSpeciality_id($speciality_sub_speciality_link) {
+	function selectSpeciality_id($speciality_id) {
 		$sql = $this->mkSQL("select * from speciality_sub_speciality_link where speciality_id  = %N",
-				$speciality_sub_speciality_link->getSpeciality_id()
+				$speciality_id
 			);
 		if (!$this->_query($sql, "Error in selecting from table speciality_sub_speciality_link")) {
 			 return false;

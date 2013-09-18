@@ -12,8 +12,9 @@ class DBUtility {
 				$classdetails = '<?php '."\n";
 				$classdetails .= 'class '.ucfirst($classname).' {'."\n";
 			} else if (isset($classname) && ($classname != '')) {
-				if (preg_match('/ENGINE=InnoDB DEFAULT/',$lines[$i]) > 0){
+				if (preg_match('/ENGINE=InnoDB/',$lines[$i]) > 0){
 					$classdetails .= '}'."\n".'?>';	
+					echo "<br>Created Class ". $classname.".php" ."<br>";
 					file_put_contents('/var/www/yousee.in/doctor/classes/'.$classname.'.php',$classdetails);
 					$classname='';
 				} else if (preg_match('/KEY/',$lines[$i]) == 0) {
@@ -71,7 +72,7 @@ class DBUtility {
 				$classdetails .= "\t".'}'."\n";	
 			
 			} else if (isset($classname) && ($classname != '')) {
-				if (preg_match('/ENGINE=InnoDB DEFAULT/',$lines[$i]) > 0){
+				if (preg_match('/ENGINE=InnoDB/',$lines[$i]) > 0){
 					//function makeobject
 					$classdetails .= "\t".'function _mkObj($array)' .' {'."\n";
 					$classdetails .= "\t"."\t".'$obj = new '.ucfirst($modelclassname).'();'."\n";
@@ -92,11 +93,26 @@ class DBUtility {
 						$classdetails.="\t"."\t".'return true;'."\n";
 						$classdetails.= "\t".'}'."\n";		
 					//functions for select
+					$x=0;
 					foreach ($colnames as $selectcolname)	{
-						$classdetails.="\t"."function select". ucfirst($selectcolname)."("."$".$modelclassname.") {"."\n";
+						$classdetails.="\t"."function select". ucfirst($selectcolname)."("."$".$selectcolname.") {"."\n";
 						$classdetails.="\t"."\t".'$sql = $this->mkSQL("select * from '.$modelclassname;
-						$classdetails.=' where '.$selectcolname."  = %N".'",'."\n"."\t"."\t"."\t"."\t";
-						$classdetails.= '$'.$modelclassname.'->get'.ucfirst($selectcolname).'()'."\n";
+						$classdetails.=' where '.$selectcolname."  = ";
+						//get the right coltype "%N";
+						$k=0;
+						foreach ($coltypes as $coltype) {
+							if ($k == $x)	{
+								if (  	(preg_match("/int/",$coltype) == 1) || (preg_match("/dec/",$coltype) == 1) || 
+									(preg_match("/float/",$coltype) == 1) || (preg_match("/double/",$coltype) == 1) ) {
+									$classdetails.="%N";
+								} else {
+									$classdetails.="%Q";
+								}
+							} 
+							$k++;
+						}
+						$classdetails.='",'."\n"."\t"."\t"."\t"."\t";
+						$classdetails.= '$'.$selectcolname."\n";
 						$classdetails.="\t"."\t"."\t".');'."\n";	
 						$classdetails.="\t"."\t".'if (!$this->_query($sql, "Error in selecting from table '.$modelclassname.'")) {'."\n";
 						$classdetails.="\t"."\t"."\t".' return false;'."\n";
@@ -104,12 +120,12 @@ class DBUtility {
 						$classdetails.="\t"."\t".'$this->_rowCount = $this->_conn->numRows();'."\n";
 						$classdetails.="\t"."\t".'return true;'."\n";
 						$classdetails.= "\t".'}'."\n";
+						$x++;
 					}
 					//function insert
 					$classdetails.="\t"."function insert("."$".$modelclassname.") {"."\n";
 					$classdetails.="\t"."\t".'$sql = $this->mkSQL("insert into '.$modelclassname.' values (';
 					foreach ($coltypes as $coltype) {
-						echo $coltype." ".strpos($coltype,'varchar') ."<br>";
 						if ( 	(preg_match('/int/',$coltype) == 1) || (preg_match('/dec/',$coltype) == 1) || 
 							(preg_match('/float/',$coltype) == 1) || (preg_match('/double/',$coltype) == 1) ) {
 							$classdetails.="%N, ";
@@ -185,6 +201,7 @@ class DBUtility {
 					}
 					//end of the class	
 					$classdetails .= '}'."\n".'?>';	
+					echo "<br>Created Class ". $classname.".php" ."<br>";
 					file_put_contents('/var/www/yousee.in/doctor/classes/'.$classname.'.php',$classdetails);
 					$classname='';
 					$modelclassname='';
