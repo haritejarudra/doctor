@@ -31,51 +31,39 @@ class CityQuery extends Query {
 	}
 	function selectAll($last,$count) {
 		$sql = $this->mkSQL("select * from city limit %N, %N",$last, $count);
-		if (!$this->_query($sql, "Error in selecting from table city")) {
-			 return false;
-		}
-		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return array_map(array($this, '_mkObj'), $this->exec($sql));
 	}
 	function selectCity_id($city_id) {
 		$sql = $this->mkSQL("select * from city where city_id  = %N",
 				$city_id
 			);
-		if (!$this->_query($sql, "Error in selecting from table city")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectLat($lat) {
 		$sql = $this->mkSQL("select * from city where lat  = %N",
 				$lat
 			);
-		if (!$this->_query($sql, "Error in selecting from table city")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectLong($long) {
 		$sql = $this->mkSQL("select * from city where long  = %N",
 				$long
 			);
-		if (!$this->_query($sql, "Error in selecting from table city")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectCity($city) {
 		$sql = $this->mkSQL("select * from city where city  = %Q",
 				$city
 			);
-		if (!$this->_query($sql, "Error in selecting from table city")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function insert($city) {
 		$sql = $this->mkSQL("insert into city values (%N, %N, %N, %Q)",

@@ -21,7 +21,7 @@ if(isset($_GET['page'])&&($_GET['page']!=''))
 	$count = $schedq->getCountOfDoctorsByCriteria($speciality, $subspeciality, $chosencity, $chosenlocationid);
 }
 
-$schedules=$schedq->getDoctorsByCriteria($speciality, $subspeciality, $chosencity, $chosenlocationid, $lastcount, $NUMBER_OF_RECORDS_PER_PAGE);
+$doctors=$schedq->getDoctorsByCriteria($speciality, $subspeciality, $chosencity, $chosenlocationid, $lastcount, $NUMBER_OF_RECORDS_PER_PAGE);
 
 //set conditions to supress columns of the listing based on search conditions chosen
 
@@ -29,11 +29,14 @@ $schedules=$schedq->getDoctorsByCriteria($speciality, $subspeciality, $chosencit
 
 <script> 
 		<?php if ( (isset($speciality)) && ($speciality != '')) { ?> 
+				$(document).ready(function() { $('.sub speciality').hide();});
+	        <?php } ?>			
+		<?php if ( (isset($speciality)) && ($speciality != '')) { ?> 
 				$(document).ready(function() { $('.speciality').hide();});
-	    <?php } ?>			
+	        <?php } ?>			
 		<?php if ( (isset($chosenlocationid)) && ($chosenlocationid != '') ) { ?> 
 				$(document).ready(function() { $('.location').hide();});
-	    <?php } ?>			
+  	        <?php } ?>			
 		<?php if ( (isset($chosencity)) && ($chosencity != 'ALL') )  { ?> 
 				$(document).ready(function() { $('.city').hide();});
 		<?php } ?>
@@ -42,7 +45,7 @@ $schedules=$schedq->getDoctorsByCriteria($speciality, $subspeciality, $chosencit
 <div id="bookListing" style="width:800px; height: 500px" onload="supressColumns();">
 		<br />
 		<?php 
-			if($schedules==null)
+			if($doctors==null)
 			{
 				echo "<br></br><br></br><font style='color:red;font-weight:bold;font-size:16px;text-align:center;padding:20px' >No Schedules Found </font>\n";
 				
@@ -50,25 +53,62 @@ $schedules=$schedq->getDoctorsByCriteria($speciality, $subspeciality, $chosencit
 			else {
 ?>
 
-		<table id="table-search" style="position:relative;float:left;" width="100%">
-		<tr><td colspan="100" style="background:#eee;color:#333;font-size:15px;text-align:center;font-weight:bold;">Books Listing</td></tr>
+		<table id="table-search" style="position:relative;float:left;border-collapse:collapse;font-size:12px" width="100%">
+		<tr><td colspan="100" style="background:#eee;color:#333;font-size:15px;text-align:center;font-weight:bold;">Doctors Listing</td></tr>
 			<tr style="background: #ccc">
-				<th class="category">Doctor</th>
-				<th>Speciality</th>
-				<th>Sub Speciality</th>
+				<th class="doctor">Doctor</th>
+				<th class="speciality">Speciality</th>
+				<th class="sub speciality">Sub Speciality</th>
 				<th class="city">City</th>
 				<th class="location">Location</th>
 				<th>View and Commit</th>
 			</tr>
 			<?php
-			$pagedResults = new Paginated($schedules,$count,$NUMBER_OF_RECORDS_PER_PAGE, $page);
-			while($schedule = $pagedResults->fetchPagedRow()) { ?>
+			$pagedResults = new Paginated($doctors,$count,$NUMBER_OF_RECORDS_PER_PAGE, $page);
+			while($doctor = $pagedResults->fetchPagedRow()) { ?>
 			<tr align="center">
-				<td class="doctor"><?php echo $schedule["doctor"] ?>
-				<td class="speciality"><?php echo $schedule["speciality"] ?></td>
-				<td class="clinic"><?php echo $schedule["sub speciality"] ?></td>
-				<td class="city"><?php echo $schedule["city"] ?></td>
-				<td class="location"><?php echo $schedule["location"] ?></td>
+				<td class="doctor"><?php echo $doctor["doctor"] ?></td>
+				<td class="speciality"><?php echo $doctor["speciality"] ?></td>
+				<td class="sub speciality"><?php echo $doctor["sub speciality"] ?></td>
+				<td class="city"><?php echo $doctor["city"] ?></td>
+				<td class="location"><?php echo $doctor["location"] ?></td>	
+				<td><input type="button" value="View" id="view_doc" class="doctor_<?php echo $doctor['doctor_id'];?>" /></td>
+			</tr>
+			
+<script>
+$(function(){
+	$(".doctor_<?php echo $doctor['doctor_id'];?>").click(function(){
+		$(".schedule_<?php echo $doctor['doctor_id'];?>").slideToggle("fast");
+	});
+});
+</script>
+			<tr>
+				<td colspan="100" hidden class="schedule_<?php echo $doctor['doctor_id'];?>">
+					<table style="border-collapse:collapse;font-size:12px;width:100%;border:1px solid #ccc;" align="center">
+						<thead>
+						<?php $i=1; ?>
+							<th>S.no</th><th>Description</th><th>Schedule</th><th>[?]</th>
+						</thead>
+						<?php 
+						$schedules = $schedq -> getSchedulesByCriteria($doctor['doctor_id'],$chosenlocationid);
+						foreach($schedules as $schedule){
+						?>
+						<tr>
+							<td>
+							<?php echo $i; ?>
+							</td>
+							<td>
+								<?php echo $schedule['clinic']; ?>
+							</td>
+							<td>
+								<p><?php echo $schedule['date']; ?><br />
+								Timings : <?php echo $schedule['from']." to ".$schedule['to'];?></p>
+							</td>
+							<td><a href="request_appointment.php">Get an appointment</a></td>
+						</tr>
+						<?php $i++; } ?>
+					</table>
+				</td>
 			</tr>
 			<?php }
 
