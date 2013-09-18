@@ -32,12 +32,12 @@ class LocationQuery extends Query {
 		$sqlstring .= " and c.speciality_sub_speciality_link_id = d.speciality_sub_speciality_link_id";
 		$sqlstring .= " and d.speciality_id = e.speciality_id and d.sub_speciality_id = f.sub_speciality_id";
 		if ( !(empty($speciality)) && (strlen($speciality) > 0) )
-			$sqlstring .= " and d.speciality = '" . $speciality . "'";
+			$sqlstring .= " and e.speciality = '" . $speciality . "'";
 
 		if ( !(empty($subspeciality)) && (strlen($subspeciality) > 0) )
-			$sqlstring .= " and e.speciality = '" . $subspeciality . "'";
+			$sqlstring .= " and f.speciality = '" . $subspeciality . "'";
 
-		return array_map(array($this, '_mkObj'), $this->exec($sql));
+		return array_map(array($this, '_mkObj'), $this->exec($sqlstring));
 
 	}
 	function getCityOfLocation($chosenlocationid)
