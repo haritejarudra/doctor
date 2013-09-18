@@ -1,5 +1,4 @@
 <?php
-
 class Iter {
   # All subclasses must implement this method.
   function next() {

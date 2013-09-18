@@ -16,6 +16,10 @@ class Sub_specialityQuery extends Query {
 		}
 		return $this->_mkObj($array);
 	}
+	function getSubSpecialitiesFor($speciality){
+		$sql = $this->mkSQL("select * from sub_speciality where sub_speciality_id IN(select sub_speciality_id from speciality_sub_speciality_link where 					speciality_id IN (select speciality_id from speciality where speciality=%Q))",$speciality);
+		return array_map(array($this, '_mkObj'), $this->exec($sql));
+	}
 	function _mkObj($array) {
 		$obj = new Sub_speciality();
 		$obj->setSub_speciality_id($array["sub_speciality_id"]);
@@ -30,13 +34,9 @@ class Sub_specialityQuery extends Query {
 		$this->_rowCount = $this->_conn->numRows();
 		return true;
 	}
-	function getSubSpecialitiesFor($speciality){
-		$sql = $this->mkSQL("select * from sub_speciality where sub_speciality_id IN(select sub_speciality_id from speciality_sub_speciality_link where speciality_id IN (select speciality_id from speciality where speciality=%Q))",$speciality);
-		return array_map(array($this, '_mkObj'), $this->exec($sql));
-	}
-	function selectSub_speciality_id($sub_speciality) {
+	function selectSub_speciality_id($sub_speciality_id) {
 		$sql = $this->mkSQL("select * from sub_speciality where sub_speciality_id  = %N",
-				$sub_speciality->getSub_speciality_id()
+				$sub_speciality_id
 			);
 		if (!$this->_query($sql, "Error in selecting from table sub_speciality")) {
 			 return false;
@@ -44,9 +44,9 @@ class Sub_specialityQuery extends Query {
 		$this->_rowCount = $this->_conn->numRows();
 		return true;
 	}
-	function selectSpeciality($sub_speciality) {
-		$sql = $this->mkSQL("select * from sub_speciality where speciality  = %N",
-				$sub_speciality->getSpeciality()
+	function selectSpeciality($speciality) {
+		$sql = $this->mkSQL("select * from sub_speciality where speciality  = %Q",
+				$speciality
 			);
 		if (!$this->_query($sql, "Error in selecting from table sub_speciality")) {
 			 return false;

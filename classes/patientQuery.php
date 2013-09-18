@@ -38,9 +38,9 @@ class PatientQuery extends Query {
 		$this->_rowCount = $this->_conn->numRows();
 		return true;
 	}
-	function selectPatient_id($patient) {
+	function selectPatient_id($patient_id) {
 		$sql = $this->mkSQL("select * from patient where patient_id  = %N",
-				$patient->getPatient_id()
+				$patient_id
 			);
 		if (!$this->_query($sql, "Error in selecting from table patient")) {
 			 return false;
@@ -48,9 +48,9 @@ class PatientQuery extends Query {
 		$this->_rowCount = $this->_conn->numRows();
 		return true;
 	}
-	function selectFirst_name($patient) {
-		$sql = $this->mkSQL("select * from patient where first_name  = %N",
-				$patient->getFirst_name()
+	function selectFirst_name($first_name) {
+		$sql = $this->mkSQL("select * from patient where first_name  = %Q",
+				$first_name
 			);
 		if (!$this->_query($sql, "Error in selecting from table patient")) {
 			 return false;
@@ -58,9 +58,9 @@ class PatientQuery extends Query {
 		$this->_rowCount = $this->_conn->numRows();
 		return true;
 	}
-	function selectLast_name($patient) {
-		$sql = $this->mkSQL("select * from patient where last_name  = %N",
-				$patient->getLast_name()
+	function selectLast_name($last_name) {
+		$sql = $this->mkSQL("select * from patient where last_name  = %Q",
+				$last_name
 			);
 		if (!$this->_query($sql, "Error in selecting from table patient")) {
 			 return false;
@@ -68,9 +68,9 @@ class PatientQuery extends Query {
 		$this->_rowCount = $this->_conn->numRows();
 		return true;
 	}
-	function selectEmail($patient) {
-		$sql = $this->mkSQL("select * from patient where email  = %N",
-				$patient->getEmail()
+	function selectEmail($email) {
+		$sql = $this->mkSQL("select * from patient where email  = %Q",
+				$email
 			);
 		if (!$this->_query($sql, "Error in selecting from table patient")) {
 			 return false;
@@ -78,9 +78,9 @@ class PatientQuery extends Query {
 		$this->_rowCount = $this->_conn->numRows();
 		return true;
 	}
-	function selectMobile($patient) {
-		$sql = $this->mkSQL("select * from patient where mobile  = %N",
-				$patient->getMobile()
+	function selectMobile($mobile) {
+		$sql = $this->mkSQL("select * from patient where mobile  = %Q",
+				$mobile
 			);
 		if (!$this->_query($sql, "Error in selecting from table patient")) {
 			 return false;
@@ -88,9 +88,9 @@ class PatientQuery extends Query {
 		$this->_rowCount = $this->_conn->numRows();
 		return true;
 	}
-	function selectGender($patient) {
-		$sql = $this->mkSQL("select * from patient where gender  = %N",
-				$patient->getGender()
+	function selectGender($gender) {
+		$sql = $this->mkSQL("select * from patient where gender  = %Q",
+				$gender
 			);
 		if (!$this->_query($sql, "Error in selecting from table patient")) {
 			 return false;
@@ -98,9 +98,9 @@ class PatientQuery extends Query {
 		$this->_rowCount = $this->_conn->numRows();
 		return true;
 	}
-	function selectAge($patient) {
+	function selectAge($age) {
 		$sql = $this->mkSQL("select * from patient where age  = %N",
-				$patient->getAge()
+				$age
 			);
 		if (!$this->_query($sql, "Error in selecting from table patient")) {
 			 return false;
@@ -108,9 +108,9 @@ class PatientQuery extends Query {
 		$this->_rowCount = $this->_conn->numRows();
 		return true;
 	}
-	function selectDate_of_birth($patient) {
-		$sql = $this->mkSQL("select * from patient where date_of_birth  = %N",
-				$patient->getDate_of_birth()
+	function selectDate_of_birth($date_of_birth) {
+		$sql = $this->mkSQL("select * from patient where date_of_birth  = %Q",
+				$date_of_birth
 			);
 		if (!$this->_query($sql, "Error in selecting from table patient")) {
 			 return false;
@@ -118,9 +118,9 @@ class PatientQuery extends Query {
 		$this->_rowCount = $this->_conn->numRows();
 		return true;
 	}
-	function selectAddress($patient) {
-		$sql = $this->mkSQL("select * from patient where address  = %N",
-				$patient->getAddress()
+	function selectAddress($address) {
+		$sql = $this->mkSQL("select * from patient where address  = %Q",
+				$address
 			);
 		if (!$this->_query($sql, "Error in selecting from table patient")) {
 			 return false;
@@ -128,9 +128,9 @@ class PatientQuery extends Query {
 		$this->_rowCount = $this->_conn->numRows();
 		return true;
 	}
-	function selectParent_guardian($patient) {
-		$sql = $this->mkSQL("select * from patient where parent_guardian  = %N",
-				$patient->getParent_guardian()
+	function selectParent_guardian($parent_guardian) {
+		$sql = $this->mkSQL("select * from patient where parent_guardian  = %Q",
+				$parent_guardian
 			);
 		if (!$this->_query($sql, "Error in selecting from table patient")) {
 			 return false;

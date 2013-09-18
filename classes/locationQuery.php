@@ -16,15 +16,6 @@ class LocationQuery extends Query {
 		}
 		return $this->_mkObj($array);
 	}
-	function _mkObj($array) {
-		$obj = new Location();
-		$obj->setLocation_id($array["location_id"]);
-		$obj->setLat($array["lat"]);
-		$obj->setLong($array["long"]);
-		$obj->setCity_id($array["city_id"]);
-		$obj->setLocation($array["location"]);
-		return $obj;
-	}
 	function getLocationsForCity($city) {
 		$sql = $this->mkSQL("select * from location where city_id in (select city_id from city where city = %Q)",$city);
 		return array_map(array($this, '_mkObj'), $this->exec($sql));
@@ -35,9 +26,18 @@ class LocationQuery extends Query {
 	}
 	function getCityOfLocation($chosenlocationid)
 	{
-		$sql = $this->mkSQL("select city from location where locationid= %Q",$chosenlocationid);
+		$sql = $this->mkSQL("select city from city where city_id in (select city_id from location where location_id= %N)",$chosenlocationid);
 		$result= $this->exec($sql);
 		return $result[0]['city'];
+	}
+	function _mkObj($array) {
+		$obj = new Location();
+		$obj->setLocation_id($array["location_id"]);
+		$obj->setLat($array["lat"]);
+		$obj->setLong($array["long"]);
+		$obj->setCity_id($array["city_id"]);
+		$obj->setLocation($array["location"]);
+		return $obj;
 	}
 	function selectAll($last,$count) {
 		$sql = $this->mkSQL("select * from location limit %N, %N",$last, $count);
@@ -47,9 +47,9 @@ class LocationQuery extends Query {
 		$this->_rowCount = $this->_conn->numRows();
 		return true;
 	}
-	function selectLocation_id($location) {
+	function selectLocation_id($location_id) {
 		$sql = $this->mkSQL("select * from location where location_id  = %N",
-				$location->getLocation_id()
+				$location_id
 			);
 		if (!$this->_query($sql, "Error in selecting from table location")) {
 			 return false;
@@ -57,9 +57,9 @@ class LocationQuery extends Query {
 		$this->_rowCount = $this->_conn->numRows();
 		return true;
 	}
-	function selectLat($location) {
+	function selectLat($lat) {
 		$sql = $this->mkSQL("select * from location where lat  = %N",
-				$location->getLat()
+				$lat
 			);
 		if (!$this->_query($sql, "Error in selecting from table location")) {
 			 return false;
@@ -67,9 +67,9 @@ class LocationQuery extends Query {
 		$this->_rowCount = $this->_conn->numRows();
 		return true;
 	}
-	function selectLong($location) {
+	function selectLong($long) {
 		$sql = $this->mkSQL("select * from location where long  = %N",
-				$location->getLong()
+				$long
 			);
 		if (!$this->_query($sql, "Error in selecting from table location")) {
 			 return false;
@@ -77,9 +77,9 @@ class LocationQuery extends Query {
 		$this->_rowCount = $this->_conn->numRows();
 		return true;
 	}
-	function selectCity_id($location) {
+	function selectCity_id($city_id) {
 		$sql = $this->mkSQL("select * from location where city_id  = %N",
-				$location->getCity_id()
+				$city_id
 			);
 		if (!$this->_query($sql, "Error in selecting from table location")) {
 			 return false;
@@ -88,8 +88,8 @@ class LocationQuery extends Query {
 		return true;
 	}
 	function selectLocation($location) {
-		$sql = $this->mkSQL("select * from location where location  = %N",
-				$location->getLocation()
+		$sql = $this->mkSQL("select * from location where location  = %Q",
+				$location
 			);
 		if (!$this->_query($sql, "Error in selecting from table location")) {
 			 return false;

@@ -91,6 +91,8 @@ else if (isset ( $_GET ['chosencity'] ) && $_GET ['chosencity'] != '') {
 } else
 	$condition = 4;
 
+
+
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
@@ -141,18 +143,6 @@ div#searchAllConditionsDisplayed, div#searchConditionsDisplayed {
 				<tr>
 					<td valign="top">
 							<?php include 'search_doctor.php';?>
-						<div class="button">
-						 <a style="color:black;text-decoration:none;" href="opencityregistration.php"><font
-						color="#369"> <?php echo "Get Membership!";?>
-						</font></a>
-						</div>
-						<div class="button">
-						<span class="tooltip">
-						 <a> <?php echo "Registration for Doctors";?>
-						<span>
-						To be a People's Doctor, you can contact us at<br />Email : contact@yousee.in<br />Phone : +91-8008-884422 </span></a>
-						</span>
-						</div>
 					</td>
 				<td valign="top"><?php
 						// when a city is clicked upon in the map, display the locations of the city that have a open library
@@ -167,7 +157,7 @@ div#searchAllConditionsDisplayed, div#searchConditionsDisplayed {
 						</div>
 						<div id="mapLocations">
 							<?php
-							include 'map_doctor_locations.php';
+								include 'map_doctor_locations.php';
 							?>
 						</div> 
 						<?php
@@ -182,7 +172,7 @@ div#searchAllConditionsDisplayed, div#searchConditionsDisplayed {
 						</div>
 							<div id="mapCitiesWithDoctors">
 							<?php
-							include 'map_doctor_cities.php';
+								include 'map_doctor_cities.php';
 							?>
 						</div>
 						</div> 
@@ -190,12 +180,12 @@ div#searchAllConditionsDisplayed, div#searchConditionsDisplayed {
 						}?>
 						<div id="conditionsFromMap">
 							<?php 
-							include 'display_search_conditions.php';
-						?>
+								include 'display_search_conditions.php';
+							?>
 						</div> 
 						<div  id="ListingSchedulesForClick">
 							<?php
-							include 'schedules.php';
+								include 'schedules.php';
 							?>
 						</div>
 					</td>

@@ -7,6 +7,13 @@ return $this->_qualification_id;
 function setQualification_id($qualification_id) {
 $this->_qualification_id=$qualification_id;
  }
+var $doctor_id;
+function getDoctor_id() {
+return $this->_doctor_id;
+ }
+function setDoctor_id($doctor_id) {
+$this->_doctor_id=$doctor_id;
+ }
 var $degree;
 function getDegree() {
 return $this->_degree;

@@ -1,6 +1,8 @@
 <?php 
+
 require_once ("classes/Query.php");
 require_once ("classes/speciality.php");
+
 class SpecialityQuery extends Query {
 	var $_rowCount = 0;
 	function SpecialityQuery () {
@@ -16,6 +18,10 @@ class SpecialityQuery extends Query {
 		}
 		return $this->_mkObj($array);
 	}
+	function getSpecialities (){
+		$sql = $this->mkSQL("select * from speciality");
+		return array_map(array($this, '_mkObj'), $this->exec($sql));
+	}
 	function _mkObj($array) {
 		$obj = new Speciality();
 		$obj->setSpeciality_id($array["speciality_id"]);
@@ -30,13 +36,9 @@ class SpecialityQuery extends Query {
 		$this->_rowCount = $this->_conn->numRows();
 		return true;
 	}
-	function getSpecialities (){
-		$sql = $this->mkSQL("select * from speciality");
-		return array_map(array($this, '_mkObj'), $this->exec($sql));
-	}
-	function selectSpeciality_id($speciality) {
+	function selectSpeciality_id($speciality_id) {
 		$sql = $this->mkSQL("select * from speciality where speciality_id  = %N",
-				$speciality->getSpeciality_id()
+				$speciality_id
 			);
 		if (!$this->_query($sql, "Error in selecting from table speciality")) {
 			 return false;
@@ -45,8 +47,8 @@ class SpecialityQuery extends Query {
 		return true;
 	}
 	function selectSpeciality($speciality) {
-		$sql = $this->mkSQL("select * from speciality where speciality  = %N",
-				$speciality->getSpeciality()
+		$sql = $this->mkSQL("select * from speciality where speciality  = %Q",
+				$speciality
 			);
 		if (!$this->_query($sql, "Error in selecting from table speciality")) {
 			 return false;
