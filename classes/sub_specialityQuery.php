@@ -28,31 +28,23 @@ class Sub_specialityQuery extends Query {
 	}
 	function selectAll($last,$count) {
 		$sql = $this->mkSQL("select * from sub_speciality limit %N, %N",$last, $count);
-		if (!$this->_query($sql, "Error in selecting from table sub_speciality")) {
-			 return false;
-		}
-		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return array_map(array($this, '_mkObj'), $this->exec($sql));
 	}
 	function selectSub_speciality_id($sub_speciality_id) {
 		$sql = $this->mkSQL("select * from sub_speciality where sub_speciality_id  = %N",
 				$sub_speciality_id
 			);
-		if (!$this->_query($sql, "Error in selecting from table sub_speciality")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectSpeciality($speciality) {
 		$sql = $this->mkSQL("select * from sub_speciality where speciality  = %Q",
 				$speciality
 			);
-		if (!$this->_query($sql, "Error in selecting from table sub_speciality")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function insert($sub_speciality) {
 		$sql = $this->mkSQL("insert into sub_speciality values (%N, %Q)",

@@ -31,101 +31,79 @@ class Patient_requestQuery extends Query {
 	}
 	function selectAll($last,$count) {
 		$sql = $this->mkSQL("select * from patient_request limit %N, %N",$last, $count);
-		if (!$this->_query($sql, "Error in selecting from table patient_request")) {
-			 return false;
-		}
-		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return array_map(array($this, '_mkObj'), $this->exec($sql));
 	}
 	function selectRequest_id($request_id) {
 		$sql = $this->mkSQL("select * from patient_request where request_id  = %N",
 				$request_id
 			);
-		if (!$this->_query($sql, "Error in selecting from table patient_request")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectPatient_id($patient_id) {
 		$sql = $this->mkSQL("select * from patient_request where patient_id  = %N",
 				$patient_id
 			);
-		if (!$this->_query($sql, "Error in selecting from table patient_request")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectSchedule_id($schedule_id) {
 		$sql = $this->mkSQL("select * from patient_request where schedule_id  = %N",
 				$schedule_id
 			);
-		if (!$this->_query($sql, "Error in selecting from table patient_request")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectProblem_history($problem_history) {
 		$sql = $this->mkSQL("select * from patient_request where problem_history  = %Q",
 				$problem_history
 			);
-		if (!$this->_query($sql, "Error in selecting from table patient_request")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectPlanned_date_consultation($planned_date_consultation) {
 		$sql = $this->mkSQL("select * from patient_request where planned_date_consultation  = %Q",
 				$planned_date_consultation
 			);
-		if (!$this->_query($sql, "Error in selecting from table patient_request")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectActual_date_of_consultation($actual_date_of_consultation) {
 		$sql = $this->mkSQL("select * from patient_request where actual_date_of_consultation  = %Q",
 				$actual_date_of_consultation
 			);
-		if (!$this->_query($sql, "Error in selecting from table patient_request")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectTime_of_consultation($time_of_consultation) {
 		$sql = $this->mkSQL("select * from patient_request where time_of_consultation  = %Q",
 				$time_of_consultation
 			);
-		if (!$this->_query($sql, "Error in selecting from table patient_request")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectRequest_status($request_status) {
 		$sql = $this->mkSQL("select * from patient_request where request_status  = %Q",
 				$request_status
 			);
-		if (!$this->_query($sql, "Error in selecting from table patient_request")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectStatus_change_date($status_change_date) {
 		$sql = $this->mkSQL("select * from patient_request where status_change_date  = %Q",
 				$status_change_date
 			);
-		if (!$this->_query($sql, "Error in selecting from table patient_request")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function insert($patient_request) {
 		$sql = $this->mkSQL("insert into patient_request values (%N, %N, %N, %Q, %Q, %Q, %Q, %Q, %Q)",

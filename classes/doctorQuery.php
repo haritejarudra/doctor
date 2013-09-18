@@ -36,151 +36,119 @@ class DoctorQuery extends Query {
 	}
 	function selectAll($last,$count) {
 		$sql = $this->mkSQL("select * from doctor limit %N, %N",$last, $count);
-		if (!$this->_query($sql, "Error in selecting from table doctor")) {
-			 return false;
-		}
-		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return array_map(array($this, '_mkObj'), $this->exec($sql));
 	}
 	function selectDoctor_id($doctor_id) {
 		$sql = $this->mkSQL("select * from doctor where doctor_id  = %N",
 				$doctor_id
 			);
-		if (!$this->_query($sql, "Error in selecting from table doctor")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectFirst_name($first_name) {
 		$sql = $this->mkSQL("select * from doctor where first_name  = %Q",
 				$first_name
 			);
-		if (!$this->_query($sql, "Error in selecting from table doctor")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectLast_name($last_name) {
 		$sql = $this->mkSQL("select * from doctor where last_name  = %Q",
 				$last_name
 			);
-		if (!$this->_query($sql, "Error in selecting from table doctor")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectMobile($mobile) {
 		$sql = $this->mkSQL("select * from doctor where mobile  = %Q",
 				$mobile
 			);
-		if (!$this->_query($sql, "Error in selecting from table doctor")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectGender($gender) {
 		$sql = $this->mkSQL("select * from doctor where gender  = %Q",
 				$gender
 			);
-		if (!$this->_query($sql, "Error in selecting from table doctor")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectAddress($address) {
 		$sql = $this->mkSQL("select * from doctor where address  = %Q",
 				$address
 			);
-		if (!$this->_query($sql, "Error in selecting from table doctor")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectState($state) {
 		$sql = $this->mkSQL("select * from doctor where state  = %Q",
 				$state
 			);
-		if (!$this->_query($sql, "Error in selecting from table doctor")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectCountry($country) {
 		$sql = $this->mkSQL("select * from doctor where country  = %Q",
 				$country
 			);
-		if (!$this->_query($sql, "Error in selecting from table doctor")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectCurrent_hospital($current_hospital) {
 		$sql = $this->mkSQL("select * from doctor where current_hospital  = %Q",
 				$current_hospital
 			);
-		if (!$this->_query($sql, "Error in selecting from table doctor")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectExperience($experience) {
 		$sql = $this->mkSQL("select * from doctor where experience  = %Q",
 				$experience
 			);
-		if (!$this->_query($sql, "Error in selecting from table doctor")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectDate_of_birth($date_of_birth) {
 		$sql = $this->mkSQL("select * from doctor where date_of_birth  = %Q",
 				$date_of_birth
 			);
-		if (!$this->_query($sql, "Error in selecting from table doctor")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectAge($age) {
 		$sql = $this->mkSQL("select * from doctor where age  = %N",
 				$age
 			);
-		if (!$this->_query($sql, "Error in selecting from table doctor")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectCity_id($city_id) {
 		$sql = $this->mkSQL("select * from doctor where city_id  = %N",
 				$city_id
 			);
-		if (!$this->_query($sql, "Error in selecting from table doctor")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectSpeciality_Sub_Speciality_link_id($speciality_Sub_Speciality_link_id) {
 		$sql = $this->mkSQL("select * from doctor where speciality_Sub_Speciality_link_id  = %N",
 				$speciality_Sub_Speciality_link_id
 			);
-		if (!$this->_query($sql, "Error in selecting from table doctor")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function insert($doctor) {
 		$sql = $this->mkSQL("insert into doctor values (%N, %Q, %Q, %Q, %Q, %Q, %Q, %Q, %Q, %Q, %Q, %N, %N, %N)",

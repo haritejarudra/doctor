@@ -4,6 +4,7 @@ $thispage="more";
 require_once ("shared/global_constants.php");
 require_once ("classes/cityQuery.php");
 require_once ("classes/city.php");
+require_once ("classes/locationQuery.php");
 require_once ("classes/specialityQuery.php");
 require_once ("classes/speciality.php");
 
@@ -87,6 +88,7 @@ else if (isset ( $_GET ['chosencity'] ) && $_GET ['chosencity'] != '') {
 	$condition = 1;
 }else if (isset ( $_GET ['locationid'] ) && $_GET ['locationid'] != '') {
 	$chosenlocationid = $_GET ['locationid'];
+	$chosencity = $_GET ['city'];
 	$condition = 1;
 } else
 	$condition = 4;
