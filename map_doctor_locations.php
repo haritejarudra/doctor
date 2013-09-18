@@ -1,8 +1,50 @@
+<?php
+
+require_once("classes/locationQuery.php");
+require_once("classes/location.php");
+
+$locq = new locationQuery();
+
+//if a city is clicked on the map its locations are shown
+//if a location is clicked this map it is refreshed
+//if a location is chosen from the search bar and submit is pressed
+if ( isset($chosencity) && ($chosencity!= '') && ($chosencity!= ' '))	{
+	$locations = $locq->getLocationsForCity($chosencity);
+} else if ( isset($chosenlocationid) && ($chosenlocationid!= '') && ($chosenlocationid!= ' '))	{
+	$locations = $locq->getLocationsInTheSameCityAs($chosenlocationid);
+	$chosencity = $locq->getCityOfLocation($chosenlocationid);
+}
+
+?>
 <script type="text/javascript"
 	src="https://maps.googleapis.com/maps/api/js?&sensor=true&region=IN">
     </script>
 <script type="text/javascript">
-	var points = [];
+	var points = [
+			<?php 	
+				$points="";
+				foreach($locations as $location) {
+				$points.="['";
+				$points.=$location->getLocation();
+				$points.="',";
+				$points.=$location->getLat();
+				$points.=",";
+				$points.=$location->getLong();
+				$points.=",";
+				$points.="5";
+				$points.=",";
+				$points.="'index.php?locationid=";
+				$points.=$location->getLocation_id();
+				$points.="&lat=";
+				$points.=$_GET['lat'];
+				$points.="&long=";
+				$points.=$_GET['long'];
+				$points.="'],";
+				}
+				$points=substr($points,0,-1);
+				echo $points;
+			?>
+		   ];
 	function setMarkers(map, locations) {
     var shape = {
         coord: [1, 1, 1, 20, 18, 20, 18, 1],
@@ -21,7 +63,7 @@
             map: map,
             icon: flag,
             shape: shape,
-            title:
+            title: "Address : " + place[0],
             zIndex: place[3],
             url: place[4]
         });
