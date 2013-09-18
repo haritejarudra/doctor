@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.5.1
+-- version 3.5.8.1deb1
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Sep 16, 2013 at 02:45 PM
--- Server version: 5.5.24-log
--- PHP Version: 5.3.13
+-- Generation Time: Sep 18, 2013 at 06:51 PM
+-- Server version: 5.5.31-0ubuntu0.13.04.1
+-- PHP Version: 5.4.9-4ubuntu2
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -39,8 +39,8 @@ CREATE TABLE IF NOT EXISTS `city` (
 --
 
 INSERT INTO `city` (`city_id`, `lat`, `long`, `city`) VALUES
-(1, '17.366000', '78.476000', 'Hyderabad'),
-(2, '12.966700', '77.566700', 'Bangalore');
+(1, 17.366000, 78.476000, 'Hyderabad'),
+(2, 12.966700, 77.566700, 'Bangalore');
 
 -- --------------------------------------------------------
 
@@ -97,8 +97,8 @@ CREATE TABLE IF NOT EXISTS `location` (
 --
 
 INSERT INTO `location` (`location_id`, `lat`, `long`, `city_id`, `location`) VALUES
-(2, '17.424438', '78.504285', 1, 'Gandhi Hospital, Padmarao Nagar, Secunderabad'),
-(3, '12.938398', '77.746890', 2, 'Varthur Government Hospital, State Highway 35, Var');
+(2, 17.424438, 78.504285, 1, 'Gandhi Hospital, Padmarao Nagar, Secunderabad'),
+(3, 17.373945, 78.474630, 1, 'Osmania Hospital, Koti, Hyderabad');
 
 -- --------------------------------------------------------
 
@@ -134,6 +134,8 @@ CREATE TABLE IF NOT EXISTS `patient_request` (
   `planned_date_consultation` date NOT NULL,
   `actual_date_of_consultation` date NOT NULL,
   `time_of_consultation` time NOT NULL,
+  `request_status` varchar(20) DEFAULT NULL,
+  `status_change_date` date NOT NULL,
   PRIMARY KEY (`request_id`),
   KEY `schedule_id` (`schedule_id`),
   KEY `patient_id` (`patient_id`)
@@ -147,21 +149,21 @@ CREATE TABLE IF NOT EXISTS `patient_request` (
 
 CREATE TABLE IF NOT EXISTS `qualification` (
   `qualification_id` int(10) NOT NULL AUTO_INCREMENT,
-  `doctor_id` int(10) NOT NULL,  
+  `doctor_id` int(10) NOT NULL,
   `degree` varchar(50) NOT NULL,
   `year` int(4) NOT NULL,
   `university` varchar(20) NOT NULL,
   PRIMARY KEY (`qualification_id`),
   KEY `doctor_id` (`doctor_id`)
- ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `qualification`
 --
 
 INSERT INTO `qualification` (`qualification_id`, `doctor_id`, `degree`, `year`, `university`) VALUES
-(1, 1,'M.B.B.S', 2012, 'Gandhi Medical College'),
-(2, 2,'M.B.B.S', 2013, 'Osmania Medical College');
+(1, 1, 'M.B.B.S', 2012, 'Gandhi Medical Colle'),
+(2, 2, 'M.B.B.S', 2013, 'Osmania Medical Coll');
 
 -- --------------------------------------------------------
 
@@ -175,7 +177,20 @@ CREATE TABLE IF NOT EXISTS `request_status_change` (
   `Status_to` varchar(20) NOT NULL,
   `Actor` varchar(20) NOT NULL,
   PRIMARY KEY (`Status_Change_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+
+--
+-- Dumping data for table `request_status_change`
+--
+
+INSERT INTO `request_status_change` (`Status_Change_id`, `Status_from`, `Status_to`, `Actor`) VALUES
+(1, 'Pending', 'Activated', 'Doctor'),
+(2, 'Pending', 'Activated', 'Admin'),
+(3, 'Pending', 'DeActivated', 'All'),
+(4, 'Activated', 'DeActivated', 'Doctor'),
+(5, 'Activated', 'DeActivated', 'Admin'),
+(6, 'Activated', 'Completed', 'Admin'),
+(7, 'Activated', 'DNA', 'Admin');
 
 -- --------------------------------------------------------
 
@@ -197,14 +212,15 @@ CREATE TABLE IF NOT EXISTS `schedule` (
   PRIMARY KEY (`schedule_id`),
   KEY `doctor_id` (`doctor_id`),
   KEY `location_id` (`location_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `schedule`
 --
 
 INSERT INTO `schedule` (`schedule_id`, `from_date`, `to_date`, `expiry_date`, `days_of_week`, `from_time`, `to_time`, `location_id`, `doctor_id`, `description`) VALUES
-(2, '2013-09-01', '2013-09-01', '0000-00-00', '', '17:00:00', '19:00:00', 2, 1, 'Pediatric consulting below 5 years');
+(2, '2013-09-01', '2013-09-01', '2999-12-31', '', '17:00:00', '19:00:00', 2, 1, 'Pediatric consulting below 5 years'),
+(3, '2013-09-20', '2013-09-20', '2999-12-31', '', '17:00:00', '18:00:00', 3, 2, 'Free Clinic in Cardiology');
 
 -- --------------------------------------------------------
 
@@ -328,12 +344,6 @@ ALTER TABLE `doctor`
   ADD CONSTRAINT `doctor_ibfk_3` FOREIGN KEY (`speciality_Sub_Speciality_link_id`) REFERENCES `speciality_sub_speciality_link` (`speciality_sub_speciality_link_id`) ON DELETE SET NULL;
 
 --
--- Constraints for table `qualification`
---
-ALTER TABLE `qualification`
-  ADD CONSTRAINT `qualification_ibfk_2` FOREIGN KEY (`doctor_id`) REFERENCES `doctor` (`doctor_id`) ON DELETE CASCADE;
-
---
 -- Constraints for table `location`
 --
 ALTER TABLE `location`
@@ -345,6 +355,12 @@ ALTER TABLE `location`
 ALTER TABLE `patient_request`
   ADD CONSTRAINT `patient_request_ibfk_1` FOREIGN KEY (`schedule_id`) REFERENCES `schedule` (`schedule_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `patient_request_ibfk_2` FOREIGN KEY (`patient_id`) REFERENCES `patient` (`patient_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `qualification`
+--
+ALTER TABLE `qualification`
+  ADD CONSTRAINT `qualification_ibfk_2` FOREIGN KEY (`doctor_id`) REFERENCES `doctor` (`doctor_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `schedule`
