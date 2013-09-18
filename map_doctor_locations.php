@@ -9,7 +9,7 @@ $locq = new locationQuery();
 //if a location is clicked this map it is refreshed
 //if a location is chosen from the search bar and submit is pressed
 if ( isset($chosencity) && ($chosencity!= '') && ($chosencity!= ' '))	{
-	$locations = $locq->getLocationsForCity($chosencity);
+	$locations = $locq->getLocationsForCriteria($chosencity,$speciality,$subspeciality);
 } else if ( isset($chosenlocationid) && ($chosenlocationid!= '') && ($chosenlocationid!= ' '))	{
 	$locations = $locq->getLocationsInTheSameCityAs($chosenlocationid);
 	$chosencity = $locq->getCityOfLocation($chosenlocationid);
@@ -35,6 +35,8 @@ if ( isset($chosencity) && ($chosencity!= '') && ($chosencity!= ' '))	{
 				$points.=",";
 				$points.="'index.php?locationid=";
 				$points.=$location->getLocation_id();
+				$points.="&city=";
+				$points.=$chosencity;
 				$points.="&lat=";
 				$points.=$_GET['lat'];
 				$points.="&long=";
