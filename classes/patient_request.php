@@ -49,5 +49,19 @@ return $this->_time_of_consultation;
 function setTime_of_consultation($time_of_consultation) {
 $this->_time_of_consultation=$time_of_consultation;
  }
+var $request_status;
+function getRequest_status() {
+return $this->_request_status;
+ }
+function setRequest_status($request_status) {
+$this->_request_status=$request_status;
+ }
+var $status_change_date;
+function getStatus_change_date() {
+return $this->_status_change_date;
+ }
+function setStatus_change_date($status_change_date) {
+$this->_status_change_date=$status_change_date;
+ }
 }
 ?>

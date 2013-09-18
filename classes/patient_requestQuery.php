@@ -25,6 +25,8 @@ class Patient_requestQuery extends Query {
 		$obj->setPlanned_date_consultation($array["planned_date_consultation"]);
 		$obj->setActual_date_of_consultation($array["actual_date_of_consultation"]);
 		$obj->setTime_of_consultation($array["time_of_consultation"]);
+		$obj->setRequest_status($array["request_status"]);
+		$obj->setStatus_change_date($array["status_change_date"]);
 		return $obj;
 	}
 	function selectAll($last,$count) {
@@ -105,60 +107,94 @@ class Patient_requestQuery extends Query {
 		$this->_rowCount = $this->_conn->numRows();
 		return true;
 	}
+	function selectRequest_status($request_status) {
+		$sql = $this->mkSQL("select * from patient_request where request_status  = %Q",
+				$request_status
+			);
+		if (!$this->_query($sql, "Error in selecting from table patient_request")) {
+			 return false;
+		}
+		$this->_rowCount = $this->_conn->numRows();
+		return true;
+	}
+	function selectStatus_change_date($status_change_date) {
+		$sql = $this->mkSQL("select * from patient_request where status_change_date  = %Q",
+				$status_change_date
+			);
+		if (!$this->_query($sql, "Error in selecting from table patient_request")) {
+			 return false;
+		}
+		$this->_rowCount = $this->_conn->numRows();
+		return true;
+	}
 	function insert($patient_request) {
-		$sql = $this->mkSQL("insert into patient_request values (%N, %N, %N, %Q, %Q, %Q, %Q)",
-				$patient_request->getRequest_id(),$patient_request->getPatient_id(),$patient_request->getSchedule_id(),$patient_request->getProblem_history(),$patient_request->getPlanned_date_consultation(),$patient_request->getActual_date_of_consultation(),$patient_request->getTime_of_consultation()
+		$sql = $this->mkSQL("insert into patient_request values (%N, %N, %N, %Q, %Q, %Q, %Q, %Q, %Q)",
+				$patient_request->getRequest_id(),$patient_request->getPatient_id(),$patient_request->getSchedule_id(),$patient_request->getProblem_history(),$patient_request->getPlanned_date_consultation(),$patient_request->getActual_date_of_consultation(),$patient_request->getTime_of_consultation(),$patient_request->getRequest_status(),$patient_request->getStatus_change_date()
 			);
 		$ret = $this->_query($sql,"Insert failed on patient_request table");
 	}
 	function updateRequest_id($patient_request) {
 		$sql = $this->mkSQL("update patient_request
-				set patient_id = %N, schedule_id = %N, problem_history = %Q, planned_date_consultation = %Q, actual_date_of_consultation = %Q, time_of_consultation = %Q where request_id = %N ",
-				$patient_request->getPatient_id(),$patient_request->getSchedule_id(),$patient_request->getProblem_history(),$patient_request->getPlanned_date_consultation(),$patient_request->getActual_date_of_consultation(),$patient_request->getTime_of_consultation(),$patient_request->get(),$patient_request->getRequest_id()
+				set patient_id = %N, schedule_id = %N, problem_history = %Q, planned_date_consultation = %Q, actual_date_of_consultation = %Q, time_of_consultation = %Q, request_status = %Q, status_change_date = %Q where request_id = %N ",
+				$patient_request->getPatient_id(),$patient_request->getSchedule_id(),$patient_request->getProblem_history(),$patient_request->getPlanned_date_consultation(),$patient_request->getActual_date_of_consultation(),$patient_request->getTime_of_consultation(),$patient_request->getRequest_status(),$patient_request->getStatus_change_date(),$patient_request->get(),$patient_request->getRequest_id()
 			);
 		$ret = $this->_query($sql,"Update using column request_id failed on patient_request table");
 	}
 	function updatePatient_id($patient_request) {
 		$sql = $this->mkSQL("update patient_request
-				set request_id = %N, schedule_id = %N, problem_history = %Q, planned_date_consultation = %Q, actual_date_of_consultation = %Q, time_of_consultation = %Q where patient_id = %N ",
-				$patient_request->getRequest_id(),$patient_request->getSchedule_id(),$patient_request->getProblem_history(),$patient_request->getPlanned_date_consultation(),$patient_request->getActual_date_of_consultation(),$patient_request->getTime_of_consultation(),$patient_request->get(),$patient_request->getPatient_id()
+				set request_id = %N, schedule_id = %N, problem_history = %Q, planned_date_consultation = %Q, actual_date_of_consultation = %Q, time_of_consultation = %Q, request_status = %Q, status_change_date = %Q where patient_id = %N ",
+				$patient_request->getRequest_id(),$patient_request->getSchedule_id(),$patient_request->getProblem_history(),$patient_request->getPlanned_date_consultation(),$patient_request->getActual_date_of_consultation(),$patient_request->getTime_of_consultation(),$patient_request->getRequest_status(),$patient_request->getStatus_change_date(),$patient_request->get(),$patient_request->getPatient_id()
 			);
 		$ret = $this->_query($sql,"Update using column patient_id failed on patient_request table");
 	}
 	function updateSchedule_id($patient_request) {
 		$sql = $this->mkSQL("update patient_request
-				set request_id = %N, patient_id = %N, problem_history = %Q, planned_date_consultation = %Q, actual_date_of_consultation = %Q, time_of_consultation = %Q where schedule_id = %N ",
-				$patient_request->getRequest_id(),$patient_request->getPatient_id(),$patient_request->getProblem_history(),$patient_request->getPlanned_date_consultation(),$patient_request->getActual_date_of_consultation(),$patient_request->getTime_of_consultation(),$patient_request->get(),$patient_request->getSchedule_id()
+				set request_id = %N, patient_id = %N, problem_history = %Q, planned_date_consultation = %Q, actual_date_of_consultation = %Q, time_of_consultation = %Q, request_status = %Q, status_change_date = %Q where schedule_id = %N ",
+				$patient_request->getRequest_id(),$patient_request->getPatient_id(),$patient_request->getProblem_history(),$patient_request->getPlanned_date_consultation(),$patient_request->getActual_date_of_consultation(),$patient_request->getTime_of_consultation(),$patient_request->getRequest_status(),$patient_request->getStatus_change_date(),$patient_request->get(),$patient_request->getSchedule_id()
 			);
 		$ret = $this->_query($sql,"Update using column schedule_id failed on patient_request table");
 	}
 	function updateProblem_history($patient_request) {
 		$sql = $this->mkSQL("update patient_request
-				set request_id = %N, patient_id = %N, schedule_id = %N, planned_date_consultation = %Q, actual_date_of_consultation = %Q, time_of_consultation = %Q where problem_history = %Q ",
-				$patient_request->getRequest_id(),$patient_request->getPatient_id(),$patient_request->getSchedule_id(),$patient_request->getPlanned_date_consultation(),$patient_request->getActual_date_of_consultation(),$patient_request->getTime_of_consultation(),$patient_request->get(),$patient_request->getProblem_history()
+				set request_id = %N, patient_id = %N, schedule_id = %N, planned_date_consultation = %Q, actual_date_of_consultation = %Q, time_of_consultation = %Q, request_status = %Q, status_change_date = %Q where problem_history = %Q ",
+				$patient_request->getRequest_id(),$patient_request->getPatient_id(),$patient_request->getSchedule_id(),$patient_request->getPlanned_date_consultation(),$patient_request->getActual_date_of_consultation(),$patient_request->getTime_of_consultation(),$patient_request->getRequest_status(),$patient_request->getStatus_change_date(),$patient_request->get(),$patient_request->getProblem_history()
 			);
 		$ret = $this->_query($sql,"Update using column problem_history failed on patient_request table");
 	}
 	function updatePlanned_date_consultation($patient_request) {
 		$sql = $this->mkSQL("update patient_request
-				set request_id = %N, patient_id = %N, schedule_id = %N, problem_history = %Q, actual_date_of_consultation = %Q, time_of_consultation = %Q where planned_date_consultation = %Q ",
-				$patient_request->getRequest_id(),$patient_request->getPatient_id(),$patient_request->getSchedule_id(),$patient_request->getProblem_history(),$patient_request->getActual_date_of_consultation(),$patient_request->getTime_of_consultation(),$patient_request->get(),$patient_request->getPlanned_date_consultation()
+				set request_id = %N, patient_id = %N, schedule_id = %N, problem_history = %Q, actual_date_of_consultation = %Q, time_of_consultation = %Q, request_status = %Q, status_change_date = %Q where planned_date_consultation = %Q ",
+				$patient_request->getRequest_id(),$patient_request->getPatient_id(),$patient_request->getSchedule_id(),$patient_request->getProblem_history(),$patient_request->getActual_date_of_consultation(),$patient_request->getTime_of_consultation(),$patient_request->getRequest_status(),$patient_request->getStatus_change_date(),$patient_request->get(),$patient_request->getPlanned_date_consultation()
 			);
 		$ret = $this->_query($sql,"Update using column planned_date_consultation failed on patient_request table");
 	}
 	function updateActual_date_of_consultation($patient_request) {
 		$sql = $this->mkSQL("update patient_request
-				set request_id = %N, patient_id = %N, schedule_id = %N, problem_history = %Q, planned_date_consultation = %Q, time_of_consultation = %Q where actual_date_of_consultation = %Q ",
-				$patient_request->getRequest_id(),$patient_request->getPatient_id(),$patient_request->getSchedule_id(),$patient_request->getProblem_history(),$patient_request->getPlanned_date_consultation(),$patient_request->getTime_of_consultation(),$patient_request->get(),$patient_request->getActual_date_of_consultation()
+				set request_id = %N, patient_id = %N, schedule_id = %N, problem_history = %Q, planned_date_consultation = %Q, time_of_consultation = %Q, request_status = %Q, status_change_date = %Q where actual_date_of_consultation = %Q ",
+				$patient_request->getRequest_id(),$patient_request->getPatient_id(),$patient_request->getSchedule_id(),$patient_request->getProblem_history(),$patient_request->getPlanned_date_consultation(),$patient_request->getTime_of_consultation(),$patient_request->getRequest_status(),$patient_request->getStatus_change_date(),$patient_request->get(),$patient_request->getActual_date_of_consultation()
 			);
 		$ret = $this->_query($sql,"Update using column actual_date_of_consultation failed on patient_request table");
 	}
 	function updateTime_of_consultation($patient_request) {
 		$sql = $this->mkSQL("update patient_request
-				set request_id = %N, patient_id = %N, schedule_id = %N, problem_history = %Q, planned_date_consultation = %Q, actual_date_of_consultation = %Q where time_of_consultation = %Q ",
-				$patient_request->getRequest_id(),$patient_request->getPatient_id(),$patient_request->getSchedule_id(),$patient_request->getProblem_history(),$patient_request->getPlanned_date_consultation(),$patient_request->getActual_date_of_consultation(),$patient_request->get(),$patient_request->getTime_of_consultation()
+				set request_id = %N, patient_id = %N, schedule_id = %N, problem_history = %Q, planned_date_consultation = %Q, actual_date_of_consultation = %Q, request_status = %Q, status_change_date = %Q where time_of_consultation = %Q ",
+				$patient_request->getRequest_id(),$patient_request->getPatient_id(),$patient_request->getSchedule_id(),$patient_request->getProblem_history(),$patient_request->getPlanned_date_consultation(),$patient_request->getActual_date_of_consultation(),$patient_request->getRequest_status(),$patient_request->getStatus_change_date(),$patient_request->get(),$patient_request->getTime_of_consultation()
 			);
 		$ret = $this->_query($sql,"Update using column time_of_consultation failed on patient_request table");
+	}
+	function updateRequest_status($patient_request) {
+		$sql = $this->mkSQL("update patient_request
+				set request_id = %N, patient_id = %N, schedule_id = %N, problem_history = %Q, planned_date_consultation = %Q, actual_date_of_consultation = %Q, time_of_consultation = %Q, status_change_date = %Q where request_status = %Q ",
+				$patient_request->getRequest_id(),$patient_request->getPatient_id(),$patient_request->getSchedule_id(),$patient_request->getProblem_history(),$patient_request->getPlanned_date_consultation(),$patient_request->getActual_date_of_consultation(),$patient_request->getTime_of_consultation(),$patient_request->getStatus_change_date(),$patient_request->get(),$patient_request->getRequest_status()
+			);
+		$ret = $this->_query($sql,"Update using column request_status failed on patient_request table");
+	}
+	function updateStatus_change_date($patient_request) {
+		$sql = $this->mkSQL("update patient_request
+				set request_id = %N, patient_id = %N, schedule_id = %N, problem_history = %Q, planned_date_consultation = %Q, actual_date_of_consultation = %Q, time_of_consultation = %Q, request_status = %Q where status_change_date = %Q ",
+				$patient_request->getRequest_id(),$patient_request->getPatient_id(),$patient_request->getSchedule_id(),$patient_request->getProblem_history(),$patient_request->getPlanned_date_consultation(),$patient_request->getActual_date_of_consultation(),$patient_request->getTime_of_consultation(),$patient_request->getRequest_status(),$patient_request->get(),$patient_request->getStatus_change_date()
+			);
+		$ret = $this->_query($sql,"Update using column status_change_date failed on patient_request table");
 	}
 	function deleteRequest_id($patient_request) {
 		$sql = $this->mkSQL("delete from patient_request where request_id = %Q ",
@@ -201,6 +237,18 @@ class Patient_requestQuery extends Query {
 				$patient_request->getTime_of_consultation()
 			);
 		$ret = $this->_query($sql,"Delete using column time_of_consultation failed on patient_request table");
+	}
+	function deleteRequest_status($patient_request) {
+		$sql = $this->mkSQL("delete from patient_request where request_status = %Q ",
+				$patient_request->getRequest_status()
+			);
+		$ret = $this->_query($sql,"Delete using column request_status failed on patient_request table");
+	}
+	function deleteStatus_change_date($patient_request) {
+		$sql = $this->mkSQL("delete from patient_request where status_change_date = %Q ",
+				$patient_request->getStatus_change_date()
+			);
+		$ret = $this->_query($sql,"Delete using column status_change_date failed on patient_request table");
 	}
 }
 ?>
