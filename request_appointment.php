@@ -53,7 +53,7 @@ $(function(){
 		if(isset($_GET['schedule'])){
 			$link = mysqli_connect(OBIB_HOST,OBIB_USERNAME,OBIB_PWD,OBIB_DATABASE);
 			$schedule_id = mysql_real_escape_string(trim($_GET['schedule']));
-			$result=$link->query("SELECT CONCAT(first_name,' ',last_name) doctor, doctor_email, description clinic,location,from_date,to_date,expiry_date,days_of_week,CONCAT(date_format(from_time,'%h:%i %p'),' to ',date_format(to_time,'%h:%i %p'))time FROM doctor JOIN schedule ON doctor.doctor_id=schedule.doctor_id JOIN location ON schedule.location_id = location.location_id WHERE schedule_id =$schedule_id");
+			$result=$link->query("SELECT CONCAT(first_name,' ',last_name) doctor, preferred_email doctor_email, description clinic,location,from_date,to_date,expiry_date,days_of_week,CONCAT(date_format(from_time,'%h:%i %p'),' to ',date_format(to_time,'%h:%i %p'))time FROM doctor JOIN donors ON doctor.donor_id=donors.donor_id JOIN schedule ON doctor.doctor_id=schedule.doctor_id JOIN location ON schedule.location_id = location.location_id WHERE schedule_id =$schedule_id");
 			while($row=mysqli_fetch_array($result)){
 				echo "
 				<table style='border:1px solid #ccc;border-radius:0.2em;width:500px;padding:10px;margin:5px;background:#eee;' cellpadding='5px'>
@@ -126,7 +126,7 @@ $(function(){
 			}
 		}
 		?>
-			<div><textarea style="width:500px;height:100px;border:1px solid #ccc;border-radius:0.2em;padding:5px;margin:5px;" placeholder="Describe your problem" name="desc" id="description" required class="patient" ></textarea></div>
+			<div><textarea style="width:500px;height:100px;border:1px solid #ccc;border-radius:0.2em;padding:5px;margin:5px;" placeholder="Describe your problem (Symptoms and medical history)" name="desc" id="description" required class="patient" ></textarea></div>
 			<div><input name="date" type="text" placeholder="Select a Date" id="appointment_date" required class="patient"/></div>			<hr>
 			<h1>Personal Info</h1>
 			<div><input type="text" name="fname" placeholder="First Name" class="patient" required /></div>
@@ -140,7 +140,7 @@ $(function(){
 			<div><textarea  style="width:500px;height:100px;border:1px solid #ccc;border-radius:0.2em;padding:5px;margin:5px;" name="address" placeholder="Address" required></textarea></div>
 			<div><input type="text" name="parent_guardian" placeholder="Parent/Guardian Name (Only for Minors)" class="patient" /></div>
 			<div><input type="text" name="schedule_id" value="<?php echo $schedule_id;?>" class="patient" hidden /></div>
-			<div><input type="submit" name="reg_app" value="Register an Appointment" style="width:200px;height:50px;padding:10px;margin:10px;border-radius:0.2em;border:1px solid #ccc;cursor:pointer;" /></div>
+			<div><input type="submit" name="reg_app" value="Request an Appointment" style="width:200px;height:50px;padding:10px;margin:10px;border-radius:0.2em;border:1px solid #ccc;cursor:pointer;" /></div>
 		</form>
 		</fieldset>
 		</div>

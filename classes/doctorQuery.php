@@ -34,6 +34,14 @@ class DoctorQuery extends Query {
 		$obj->setSpeciality_Sub_Speciality_link_id($array["speciality_Sub_Speciality_link_id"]);
 		return $obj;
 	}
+	function selected_schedule($schedule_id){
+		$sql = $this->mkSQL("SELECT CONCAT(first_name,' ',last_name) doctor,description clinic FROM doctor JOIN schedule ON doctor.doctor_id=schedule.doctor_id WHERE schedule_id = %N",
+				$schedule_id
+			);
+		$result= $this->exec($sql);
+		$this->_rowCount = $this->_conn->numRows();
+		return implode($result[0],"^");
+	}
 	function selectAll($last,$count) {
 		$sql = $this->mkSQL("select * from doctor limit %N, %N",$last, $count);
 		return array_map(array($this, '_mkObj'), $this->exec($sql));

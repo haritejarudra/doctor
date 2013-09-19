@@ -58,18 +58,16 @@ $doctors=$schedq->getDoctorsByCriteria($speciality, $subspeciality, $chosencity,
 			<tr style="background: #ccc">
 				<th class="doctor">Doctor</th>
 				<th class="speciality">Speciality</th>
-				<th class="sub speciality">Sub Speciality</th>
 				<th class="city">City</th>
-				<th class="location">Location</th>
-				<th>View and Commit</th>
+				<th class="location">Hospital/Clinic</th>
+				<th>View and Request</th>
 			</tr>
 			<?php
 			$pagedResults = new Paginated($doctors,$count,$NUMBER_OF_RECORDS_PER_PAGE, $page);
 			while($doctor = $pagedResults->fetchPagedRow()) { ?>
 			<tr align="center">
-				<td class="doctor"><?php echo $doctor["doctor"] ?></td>
-				<td class="speciality"><?php echo $doctor["speciality"] ?></td>
-				<td class="sub speciality"><?php echo $doctor["sub speciality"] ?></td>
+				<td class="doctor"><a href='getdoctor.php?doctor=<?php echo $doctor['doctor_id'];?>'><?php echo $doctor["doctor"] ?></a></td>
+				<td class="speciality"><?php echo $doctor["speciality"].", ".$doctor["sub speciality"] ?></td>
 				<td class="city"><?php echo $doctor["city"] ?></td>
 				<td class="location"><?php echo $doctor["location"] ?></td>	
 				<td><input type="button" value="View" id="view_doc" class="doctor_<?php echo $doctor['doctor_id'];?>" /></td>
@@ -87,7 +85,7 @@ $(function(){
 					<table style="border-collapse:collapse;font-size:12px;width:100%;border:1px solid #ccc;" align="center">
 						<thead>
 						<?php $i=1; ?>
-							<th>S.no</th><th>Description</th><th>Schedule</th><th>[?]</th>
+							<th>S.no</th><th>Treatment Areas</th><th>Schedule</th><th>[?]</th>
 						</thead>
 						<?php 
 						$schedules = $schedq -> getSchedulesByCriteria($doctor['doctor_id'],$chosenlocationid);
@@ -101,10 +99,17 @@ $(function(){
 								<?php echo $schedule['clinic']; ?>
 							</td>
 							<td>
-								<p><?php echo $schedule['date']; ?><br />
+								<p><?php if(preg_match("/,/i",$schedule['date'])){
+									$days=explode(",",$schedule['date']);
+									echo "Every ";
+									foreach($days as $day){
+										echo date('D',strtotime("Sunday +{$day} days")).",";
+									}
+								}
+								?><br />
 								Timings : <?php echo $schedule['from']." to ".$schedule['to'];?></p>
 							</td>
-							<td><a href="request_appointment.php?schedule=<?php echo $schedule['schedule_id'];?>">Get an appointment</a></td>
+							<td><a href="request_appointment.php?schedule=<?php echo $schedule['schedule_id'];?>">Request an appointment</a></td>
 						</tr>
 						<?php $i++; } ?>
 					</table>
