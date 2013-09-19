@@ -104,7 +104,7 @@ $(function(){
 								<p><?php echo $schedule['date']; ?><br />
 								Timings : <?php echo $schedule['from']." to ".$schedule['to'];?></p>
 							</td>
-							<td><a href="request_appointment.php">Get an appointment</a></td>
+							<td><a href="request_appointment.php?schedule=<?php echo $schedule['schedule_id'];?>">Get an appointment</a></td>
 						</tr>
 						<?php $i++; } ?>
 					</table>
