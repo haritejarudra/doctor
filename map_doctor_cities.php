@@ -65,7 +65,7 @@ function initialize() {
 
 
     var myOptions = {
-    center: new google.maps.LatLng(25.324167, 78.134766),
+    center: new google.maps.LatLng(22.324167, 78.134766),
         zoom: 4,
    mapTypeControlOptions: {
       mapTypeIds: [google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.TERRAIN, google.maps.MapTypeId.SATELLITE, google.maps.MapTypeId.HYBRID ]
@@ -80,4 +80,4 @@ function initialize() {
         google.maps.event.addDomListener(window,'load',initialize);
 </script>
 <div
-	id="map_canvas" style="width: 800px; height: 500px"></div>
+	id="map_canvas" style="width: 800px; height: 400px"></div>

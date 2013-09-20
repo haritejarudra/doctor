@@ -100,8 +100,7 @@ else if (isset ( $_GET ['chosencity'] ) && $_GET ['chosencity'] != '') {
 "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
-<TITLE>UC is an exchange platform to channel Philanthropic Resources to
-	Education, Health and Environmental services sectors</TITLE>
+<title>People's Doctors | YouSee</title>
 <meta http-equiv="content-type" content="text/ html;charset=utf-8">
 <META NAME="Description"
 	CONTENT="UC is an exchange platform to channel Philanthropic Resources to Education, Health and Environmental services sectors, in order to improve access to these services especially for the poor. These sectors need a much larger infusion of capital of various kinds including Financial, Intellectual and Social Capital.">
@@ -152,11 +151,11 @@ div#searchAllConditionsDisplayed, div#searchConditionsDisplayed {
 							?>
 						<div align="justify">
 							 <br> 
-							 <font style="font-size:15px;color:#369;font-weight:bold;font-family:Trebuchet MS;">People's Doctor</font>
-							 <p style="color:#666;font-size:12px;font-family:Trebuchet MS;"><b>People's Doctor</b> is an attempt to bring the best medical consulting services absolutely free. Doctors who wish to give some of their time towards free medical service can get registered with the exchange and schedule a free clinic based on their convenience of time and place. Patients can request to attend these clinics by registering with the exchange and searching for relevant consulting sessions. The search is map-based along with specifications for a particular speciality and sub speciality.</p><br /><br />
-							 <font>UC does not advertise or recommend any of the Doctors or Medical Institutions listed on this site. The purpose of this facility is to provide information access to people regarding Doctors and Institutions who wish to or are already offering free Health Care services. UC strongly recommends patients and their attendants to make their own evaluation while reaching out to any of these service providers and UC is not liable for any of the health care choices made by individuals. </font><br />
-							 <font style='color:#666;font-weight:normal;font-size:12px;'>To browse for free Peoples Doctor Clinics click on a city or location on the map or use the search bar on the left hand side to look for particular speciality or sub speciality at a chosen city or location.
-							</font><br><br> 
+							 <font style="font-size:15px;color:#369;font-weight:bold;font-family:Trebuchet MS;">People's Doctors</font>
+							 <p style="color:#666;font-size:12px;font-family:Trebuchet MS;"><b>People's Doctors</b> is an attempt to bring access to free medical consulting services for all people. Doctors or Medical Institutions who are giving or wish to give some of their time towards free medical service can get registered on this platform and schedule a free consulting sessions based on their convenience of time and place. Patients can request to attend these consulting sessions by searching and requesting for relevant free consulting sessions. The search is map-based along with specifications for a particular speciality and sub speciality.<br /><br />
+							 <font>UC does not advertise or recommend any of the Doctors or Medical Institutions listed on this site. The purpose of this facility is to provide information access to people regarding Doctors and Institutions who wish to, or are already offering free Health Care services. UC strongly recommends patients and their attendants to make their own evaluation while reaching out to any of the listed free services and UC is not liable for any of the health care choices made by individuals. To browse for free consultation services, click on a city or location on the map or use the search bar on the left hand side to look for particular speciality or sub speciality at a chosen city or location.</font>
+							 <font style='color:#666;font-weight:normal;font-size:12px;'>To browse for free People's Doctors consultations, click on a city or location on the map or use the search bar on the left hand side to look for particular speciality or sub speciality at a chosen city or location.
+							</font></p><br>
 						</div>
 						<div id="mapLocations">
 							<?php
@@ -168,11 +167,11 @@ div#searchAllConditionsDisplayed, div#searchConditionsDisplayed {
 							?>
 						<div align="justify">
 							 <br> 
-							 <font style="font-size:15px;color:#369;font-weight:bold;font-family:Trebuchet MS;">People's Doctor</font>
-							 <p style="color:#666;font-size:12px;font-family:Trebuchet MS;"><b>People's Doctor</b> is an attempt to bring the best medical consulting services absolutely free. Doctors who wish to give some of their time towards free medical service can get registered with the exchange and schedule a free clinic based on their convenience of time and place. Patients can request to attend these clinics by registering with the exchange and searching for relevant consulting sessions. The search is map-based along with specifications for a particular speciality and sub speciality.<br /><br />
-							  <span  style='color:#666;font-weight:normal;font-size:12px;'>UC does not advertise or recommend any of the Doctors or Medical Institutions listed on this site. The purpose of this facility is to provide information access to people regarding Doctors and Institutions who wish to or are already offering free Health Care services. UC strongly recommends patients and their attendants to make their own evaluation while reaching out to any of these service providers and UC is not liable for any of the health care choices made by individuals. </span><br /><br />
-							 <font style='color:#666;font-weight:normal;font-size:12px;'>To browse for free Peoples Doctor Clinics click on a city or location on the map or use the search bar on the left hand side to look for particular speciality or sub speciality at a chosen city or location.
-							</font></p><br><br> 
+							 <font style="font-size:15px;color:#369;font-weight:bold;font-family:Trebuchet MS;">People's Doctors</font>
+							 <p style="color:#666;font-size:12px;font-family:Trebuchet MS;"><b>People's Doctors</b> is an attempt to bring access to free medical consulting services for all people. Doctors or Medical Institutions who are giving or wish to give some of their time towards free medical service can get registered on this platform and schedule a free consulting sessions based on their convenience of time and place. Patients can request to attend these consulting sessions by searching and requesting for relevant free consulting sessions. The search is map-based along with specifications for a particular speciality and sub speciality.<br /><br />
+							  <span  style='color:#666;font-weight:normal;font-size:12px;'>UC does not advertise or recommend any of the Doctors or Medical Institutions listed on this site. The purpose of this facility is to provide information access to people regarding Doctors and Institutions who wish to, or are already offering free Health Care services. UC strongly recommends patients and their attendants to make their own evaluation while reaching out to any of the listed free services and UC is not liable for any of the health care choices made by individuals. To browse for free consultation services, click on a city or location on the map or use the search bar on the left hand side to look for particular speciality or sub speciality at a chosen city or location. </span>
+							 <font style='color:#666;font-weight:normal;font-size:12px;'>To browse for free People's Doctors consultations, click on a city or location on the map or use the search bar on the left hand side to look for particular speciality or sub speciality at a chosen city or location.
+							</font></p><br>
 						</div>
 							<div id="mapCitiesWithDoctors">
 							<?php

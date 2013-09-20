@@ -66,7 +66,7 @@ $doctors=$schedq->getDoctorsByCriteria($speciality, $subspeciality, $chosencity,
 			$pagedResults = new Paginated($doctors,$count,$NUMBER_OF_RECORDS_PER_PAGE, $page);
 			while($doctor = $pagedResults->fetchPagedRow()) { ?>
 			<tr align="center">
-				<td class="doctor"><a href='getdoctor.php?doctor=<?php echo $doctor['doctor_id'];?>'><?php echo $doctor["doctor"] ?></a></td>
+				<td class="doctor"><a href='<?php echo $doctor['doctor_id'];?>'><?php echo $doctor["doctor"] ?></a></td>
 				<td class="speciality"><?php echo $doctor["speciality"].", ".$doctor["sub speciality"] ?></td>
 				<td class="city"><?php echo $doctor["city"] ?></td>
 				<td class="location"><?php echo $doctor["location"] ?></td>	
@@ -106,6 +106,7 @@ $(function(){
 										echo date('D',strtotime("Sunday +{$day} days")).",";
 									}
 								}
+								else echo $schedule['date'];
 								?><br />
 								Timings : <?php echo $schedule['from']." to ".$schedule['to'];?></p>
 							</td>
