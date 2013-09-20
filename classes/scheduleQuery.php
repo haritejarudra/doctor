@@ -41,7 +41,7 @@ class ScheduleQuery extends Query {
 	*/
 	function getSchedulesByCriteria($doctorid, $chosenlocationid) {
 			$sqlstring  = "select b.schedule_id schedule_id, b.description as clinic,
-			IF( b.from_date = b.to_date, date_format(b.from_date,'%D %b,%Y'), IF( b.days_of_week != NULL , b.days_of_week, CONCAT			( date_format		(b.from_date,'%D %b,%Y'), ' to ', date_format(b.to_date,'%D %b,%Y') ) ) ) date, date_format(b.from_time,'%h:%i %p') as 'from', date_format(b.to_time, '%h:%i %p') as 'to' ";
+			IF( b.from_date = b.to_date AND b.from_date!='0000-00-00', date_format(b.from_date,'%D-%b-%Y'), IF( b.days_of_week != '' , b.days_of_week, CONCAT(date_format(b.from_date,'%D-%b-%Y'),' to ',date_format(b.to_date,'%D-%b-%Y')))) date, date_format(b.from_time,'%h:%i %p') as 'from', date_format(b.to_time, '%h:%i %p') as 'to' ";
 			$sqlstring .= " from doctor a, schedule b";
 			$sqlstring .= " where a.doctor_id = " . $doctorid . " and a.doctor_id = b.doctor_id";
 			if($chosenlocationid!=NULL){
@@ -59,10 +59,10 @@ class ScheduleQuery extends Query {
 	********************************************************************************
 	*/
 	function getDoctorsByCriteria($speciality, $subspeciality, $chosencity, $chosenlocationid, $last,$count) {
-		$sqlstring  = "select a.doctor_id, concat(a.first_name, ' ', a.last_name) as doctor, d.speciality as speciality, e.speciality as 'sub speciality',";
+		$sqlstring  = "select x.doctor_id, concat(a.first_name, ' ', a.last_name) as doctor, d.speciality as speciality, e.speciality as 'sub speciality',";
 		$sqlstring .= " g.city as city, f.location as location";
-		$sqlstring .= " from doctor a, schedule b, speciality_sub_speciality_link c, speciality d, sub_speciality e, location f, city g";
-		$sqlstring .= " where a.doctor_id = b.doctor_id and a.speciality_Sub_Speciality_link_id = c.speciality_Sub_Speciality_link_id";
+		$sqlstring .= " from donors a, doctor x, schedule b, speciality_sub_speciality_link c, speciality d, sub_speciality e, location f, city g";
+		$sqlstring .= " where a.donor_id = x.donor_id and x.doctor_id = b.doctor_id and x.speciality_Sub_Speciality_link_id = c.speciality_Sub_Speciality_link_id";
 		$sqlstring .= " and c.speciality_id = d.speciality_id and c.sub_speciality_id = e.sub_speciality_id";
 		$sqlstring .= " and b.location_id = f.location_id and f.city_id = g.city_id";
 

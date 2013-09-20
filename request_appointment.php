@@ -1,18 +1,17 @@
 <?php
 session_start();
 $thispage="more";
-require_once ("shared/global_constants.php");
+require_once ("../prod_conn.php");
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
-<TITLE>UC is an exchange platform to channel Philanthropic Resources to
-	Education, Health and Environmental services sectors</TITLE>
 <meta http-equiv="content-type" content="text/ html;charset=utf-8">
 <META NAME="Description"
 	CONTENT="UC is an exchange platform to channel Philanthropic Resources to Education, Health and Environmental services sectors, in order to improve access to these services especially for the poor. These sectors need a much larger infusion of capital of various kinds including Financial, Intellectual and Social Capital.">
 <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<title>People's Doctors | YouSee</title>
 <link rel="stylesheet" type="text/css" href="../css/main.css">
 <link rel="stylesheet" href="../scripts/jquery-ui.css">
 <script src="../scripts/jquery.min.js"></script>
@@ -51,10 +50,9 @@ $(function(){
 			<form action="register_appointment.php" method="POST">
 			<?php 
 		if(isset($_GET['schedule'])){
-			$link = mysqli_connect(OBIB_HOST,OBIB_USERNAME,OBIB_PWD,OBIB_DATABASE);
 			$schedule_id = mysql_real_escape_string(trim($_GET['schedule']));
-			$result=$link->query("SELECT CONCAT(first_name,' ',last_name) doctor, preferred_email doctor_email, description clinic,location,from_date,to_date,expiry_date,days_of_week,CONCAT(date_format(from_time,'%h:%i %p'),' to ',date_format(to_time,'%h:%i %p'))time FROM doctor JOIN donors ON doctor.donor_id=donors.donor_id JOIN schedule ON doctor.doctor_id=schedule.doctor_id JOIN location ON schedule.location_id = location.location_id WHERE schedule_id =$schedule_id");
-			while($row=mysqli_fetch_array($result)){
+			$result=mysql_query("SELECT CONCAT(first_name,' ',last_name) doctor, preferred_email doctor_email, description clinic,location,from_date,to_date,expiry_date,days_of_week,CONCAT(date_format(from_time,'%h:%i %p'),' to ',date_format(to_time,'%h:%i %p'))time FROM doctor JOIN donors ON doctor.donor_id=donors.donor_id JOIN schedule ON doctor.doctor_id=schedule.doctor_id JOIN location ON schedule.location_id = location.location_id WHERE schedule_id =$schedule_id");
+			while($row=mysql_fetch_array($result)){
 				echo "
 				<table style='border:1px solid #ccc;border-radius:0.2em;width:500px;padding:10px;margin:5px;background:#eee;' cellpadding='5px'>
 				<tr><td align='right'>
@@ -87,7 +85,7 @@ $(function(){
 				</script>
 				<?php
 				}
-				elseif($row['days_of_week']!=NULL){
+				elseif($row['days_of_week']!=''){
 					$days=explode(",",$row['days_of_week']);
 				?>
 				<script>

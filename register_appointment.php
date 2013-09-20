@@ -1,10 +1,9 @@
 <?php
 session_start();
 $thispage="more";
-require_once ("shared/global_constants.php");
+require_once ("../prod_conn.php");
 if(isset($_POST['reg_app'])){
 		
-			$link = mysqli_connect(OBIB_HOST,OBIB_USERNAME,OBIB_PWD,OBIB_DATABASE);
 			$_POST['dob']=date("Y-m-d",strtotime($_POST['dob']));
 			$_POST['date']=date("Y-m-d",strtotime($_POST['date']));
 			$patientquery="INSERT INTO patient (first_name,last_name,email,mobile,gender,age,date_of_birth,address,parent_guardian) VALUES ('$_POST[fname]', '$_POST[lname]', '$_POST[email]', '$_POST[mobile]', '$_POST[gender]', $_POST[age], '$_POST[dob]', '$_POST[address]', '$_POST[parent_guardian]')";
@@ -13,12 +12,11 @@ if(isset($_POST['reg_app'])){
 				"http://www.w3.org/TR/html4/loose.dtd">
 				<HTML>
 				<HEAD>
-				<TITLE>UC is an exchange platform to channel Philanthropic Resources to
-					Education, Health and Environmental services sectors</TITLE>
 				<meta http-equiv="content-type" content="text/ html;charset=utf-8">
 				<META NAME="Description"
 					CONTENT="UC is an exchange platform to channel Philanthropic Resources to Education, Health and Environmental services sectors, in order to improve access to these services especially for the poor. These sectors need a much larger infusion of capital of various kinds including Financial, Intellectual and Social Capital.">
 				<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+				<title>People's Doctors | YouSee</title>
 				<link rel="stylesheet" type="text/css" href="../css/main.css">
 				</HEAD>
 				<BODY>
@@ -29,16 +27,16 @@ if(isset($_POST['reg_app'])){
 						<!--maincontentarea begin-->
 						<div id="content-main">
 			<?php 
-			if($result=$link->query($patientquery) ){
-				$requestquery="INSERT INTO patient_request(patient_id,schedule_id,problem_history,planned_date_consultation,request_status,status_change_date) VALUES (".mysqli_insert_id($link).", $_POST[schedule_id], '$_POST[desc]', '$_POST[date]','Pending', CURDATE())";
-				if($result2=$link->query($requestquery)){
+			if($result=mysql_query($patientquery) ){
+				$requestquery="INSERT INTO patient_request(patient_id,schedule_id,problem_history,planned_date_consultation,request_status,status_change_date) VALUES (".mysql_insert_id().", $_POST[schedule_id], '$_POST[desc]', '$_POST[date]','Pending', CURDATE())";
+				if($result2=mysql_query($requestquery)){
 			?>
 			<p>Your appointment request has been registered, We have sent an email to <?php $_POST['email'];?> with the appointment details. Please use the email for any future references.  </p>
 			<h1>Appointment Details</h1>
 			<?php 
 			$details = "<div style='width:100%'>
 			<table style='border-collapse:collapse;border:1px solid #ccc;background:#eee;' cellpadding='5px' class='table'>
-			<tr><td>Appointment ID :</td><td>".mysqli_insert_id($link)."</td></tr>
+			<tr><td>Appointment ID :</td><td>".mysql_insert_id()."</td></tr>
 			<tr><td>Doctor :</td><td> $_POST[doctor]</td></tr>
 			<tr><td>Clinic :</td><td> $_POST[clinic]</td></tr>
 			<tr><td>Date :</td><td> $_POST[date]</td></tr>
