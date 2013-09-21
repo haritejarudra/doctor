@@ -9,7 +9,7 @@ $locq = new locationQuery();
 //if a location is clicked this map it is refreshed
 //if a location is chosen from the search bar and submit is pressed
 if ( isset($chosencity) && ($chosencity!= '') && ($chosencity!= ' '))	{
-	$locations = $locq->getLocationsForCity($chosencity);
+	$locations = $locq->getLocationsForCriteria($chosencity,$speciality,$subspeciality);
 } else if ( isset($chosenlocationid) && ($chosenlocationid!= '') && ($chosenlocationid!= ' '))	{
 	$locations = $locq->getLocationsInTheSameCityAs($chosenlocationid);
 	$chosencity = $locq->getCityOfLocation($chosenlocationid);
@@ -35,6 +35,8 @@ if ( isset($chosencity) && ($chosencity!= '') && ($chosencity!= ' '))	{
 				$points.=",";
 				$points.="'index.php?locationid=";
 				$points.=$location->getLocation_id();
+				$points.="&city=";
+				$points.=$chosencity;
 				$points.="&lat=";
 				$points.=$_GET['lat'];
 				$points.="&long=";
@@ -55,7 +57,7 @@ if ( isset($chosencity) && ($chosencity!= '') && ($chosencity!= ' '))	{
             'http://googlemaps.googlermania.com/google_maps_api_v3/en/Google_Maps_Marker.png',
         new google.maps.Size(37, 34),
         new google.maps.Point(0, 0),
-        new google.maps.Point(0, 19));
+        new google.maps.Point(10,34));
         var place = locations[i];
         var myLatLng = new google.maps.LatLng(place[1], place[2]);
         var marker = new google.maps.Marker({
@@ -89,4 +91,4 @@ var long= <?php echo $_GET['long'];?>;
 }
         google.maps.event.addDomListener(window,'load',initialize);
 </script>
-	<div id="map_locations" style="width: 800px; height: 500px"></div>
+	<div id="map_locations" style="width: 800px; height: 400px"></div>

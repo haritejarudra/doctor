@@ -72,7 +72,7 @@ define("DB_TABLENAME_PREFIX", "");
  *********************************************************************************
  */
 define("OBIB_HOST",     "localhost");
-define("OBIB_DATABASE", "peoples_doctor");
+define("OBIB_DATABASE", "ucdblive");
 define("OBIB_USERNAME", "root");
 define("OBIB_PWD",      "root");
 

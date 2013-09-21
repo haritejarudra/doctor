@@ -25,41 +25,31 @@ class Speciality_sub_speciality_linkQuery extends Query {
 	}
 	function selectAll($last,$count) {
 		$sql = $this->mkSQL("select * from speciality_sub_speciality_link limit %N, %N",$last, $count);
-		if (!$this->_query($sql, "Error in selecting from table speciality_sub_speciality_link")) {
-			 return false;
-		}
-		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return array_map(array($this, '_mkObj'), $this->exec($sql));
 	}
 	function selectSpeciality_sub_speciality_link_id($speciality_sub_speciality_link_id) {
 		$sql = $this->mkSQL("select * from speciality_sub_speciality_link where speciality_sub_speciality_link_id  = %N",
 				$speciality_sub_speciality_link_id
 			);
-		if (!$this->_query($sql, "Error in selecting from table speciality_sub_speciality_link")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectSub_speciality_id($sub_speciality_id) {
 		$sql = $this->mkSQL("select * from speciality_sub_speciality_link where sub_speciality_id  = %N",
 				$sub_speciality_id
 			);
-		if (!$this->_query($sql, "Error in selecting from table speciality_sub_speciality_link")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectSpeciality_id($speciality_id) {
 		$sql = $this->mkSQL("select * from speciality_sub_speciality_link where speciality_id  = %N",
 				$speciality_id
 			);
-		if (!$this->_query($sql, "Error in selecting from table speciality_sub_speciality_link")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function insert($speciality_sub_speciality_link) {
 		$sql = $this->mkSQL("insert into speciality_sub_speciality_link values (%N, %N, %N)",

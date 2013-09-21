@@ -43,7 +43,7 @@ function setMarkers(map, cities) {
             'http://googlemaps.googlermania.com/google_maps_api_v3/en/Google_Maps_Marker.png',
         new google.maps.Size(37, 34),
         new google.maps.Point(0, 0),
-        new google.maps.Point(0, 19));
+        new google.maps.Point(10,34));
         var place = cities[i];
         var myLatLng = new google.maps.LatLng(place[1], place[2]);
         var marker = new google.maps.Marker({
@@ -65,7 +65,7 @@ function initialize() {
 
 
     var myOptions = {
-    center: new google.maps.LatLng(25.324167, 78.134766),
+    center: new google.maps.LatLng(22.324167, 78.134766),
         zoom: 4,
    mapTypeControlOptions: {
       mapTypeIds: [google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.TERRAIN, google.maps.MapTypeId.SATELLITE, google.maps.MapTypeId.HYBRID ]
@@ -80,4 +80,4 @@ function initialize() {
         google.maps.event.addDomListener(window,'load',initialize);
 </script>
 <div
-	id="map_canvas" style="width: 800px; height: 500px"></div>
+	id="map_canvas" style="width: 800px; height: 400px"></div>

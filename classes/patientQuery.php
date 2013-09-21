@@ -32,111 +32,87 @@ class PatientQuery extends Query {
 	}
 	function selectAll($last,$count) {
 		$sql = $this->mkSQL("select * from patient limit %N, %N",$last, $count);
-		if (!$this->_query($sql, "Error in selecting from table patient")) {
-			 return false;
-		}
-		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return array_map(array($this, '_mkObj'), $this->exec($sql));
 	}
 	function selectPatient_id($patient_id) {
 		$sql = $this->mkSQL("select * from patient where patient_id  = %N",
 				$patient_id
 			);
-		if (!$this->_query($sql, "Error in selecting from table patient")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectFirst_name($first_name) {
 		$sql = $this->mkSQL("select * from patient where first_name  = %Q",
 				$first_name
 			);
-		if (!$this->_query($sql, "Error in selecting from table patient")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectLast_name($last_name) {
 		$sql = $this->mkSQL("select * from patient where last_name  = %Q",
 				$last_name
 			);
-		if (!$this->_query($sql, "Error in selecting from table patient")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectEmail($email) {
 		$sql = $this->mkSQL("select * from patient where email  = %Q",
 				$email
 			);
-		if (!$this->_query($sql, "Error in selecting from table patient")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectMobile($mobile) {
 		$sql = $this->mkSQL("select * from patient where mobile  = %Q",
 				$mobile
 			);
-		if (!$this->_query($sql, "Error in selecting from table patient")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectGender($gender) {
 		$sql = $this->mkSQL("select * from patient where gender  = %Q",
 				$gender
 			);
-		if (!$this->_query($sql, "Error in selecting from table patient")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectAge($age) {
 		$sql = $this->mkSQL("select * from patient where age  = %N",
 				$age
 			);
-		if (!$this->_query($sql, "Error in selecting from table patient")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectDate_of_birth($date_of_birth) {
 		$sql = $this->mkSQL("select * from patient where date_of_birth  = %Q",
 				$date_of_birth
 			);
-		if (!$this->_query($sql, "Error in selecting from table patient")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectAddress($address) {
 		$sql = $this->mkSQL("select * from patient where address  = %Q",
 				$address
 			);
-		if (!$this->_query($sql, "Error in selecting from table patient")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectParent_guardian($parent_guardian) {
 		$sql = $this->mkSQL("select * from patient where parent_guardian  = %Q",
 				$parent_guardian
 			);
-		if (!$this->_query($sql, "Error in selecting from table patient")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function insert($patient) {
 		$sql = $this->mkSQL("insert into patient values (%N, %Q, %Q, %Q, %Q, %Q, %N, %Q, %Q, %Q)",
