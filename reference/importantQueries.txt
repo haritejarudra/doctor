@@ -1,0 +1,15 @@
+select a.doctor_id, concat(a.first_name, ' ', a.last_name) as doctor, d.speciality as speciality, e.speciality as 'sub speciality', g.city as city, f.location as location 
+from doctor a, schedule b, speciality_sub_speciality_link c, speciality d, sub_speciality e, location f, city g
+where a.doctor_id = b.doctor_id and a.speciality_Sub_Speciality_link_id = c.speciality_Sub_Speciality_link_id
+and c.speciality_id = d.speciality_id and c.sub_speciality_id = e.sub_speciality_id
+and b.location_id = f.location_id and f.city_id = g.city_id
+
+--------------------------------- Get Locations with Criteria ---------------------------
+
+select a.* from location a, schedule b, doctor c, speciality_sub_speciality_link d, speciality e, sub_speciality f
+where a.city_id in (select city_id from city where city = 'Hyderabad')
+and a.location_id = b.location_id and b.doctor_id = c.doctor_id
+and c.speciality_sub_speciality_link_id = d.speciality_sub_speciality_link_id
+and d.speciality_id = e.speciality_id and d.sub_speciality_id = f.sub_speciality_id
+
+

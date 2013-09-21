@@ -26,51 +26,39 @@ class Request_status_changeQuery extends Query {
 	}
 	function selectAll($last,$count) {
 		$sql = $this->mkSQL("select * from request_status_change limit %N, %N",$last, $count);
-		if (!$this->_query($sql, "Error in selecting from table request_status_change")) {
-			 return false;
-		}
-		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return array_map(array($this, '_mkObj'), $this->exec($sql));
 	}
 	function selectStatus_Change_id($Status_Change_id) {
 		$sql = $this->mkSQL("select * from request_status_change where Status_Change_id  = %N",
 				$Status_Change_id
 			);
-		if (!$this->_query($sql, "Error in selecting from table request_status_change")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectStatus_from($Status_from) {
 		$sql = $this->mkSQL("select * from request_status_change where Status_from  = %Q",
 				$Status_from
 			);
-		if (!$this->_query($sql, "Error in selecting from table request_status_change")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectStatus_to($Status_to) {
 		$sql = $this->mkSQL("select * from request_status_change where Status_to  = %Q",
 				$Status_to
 			);
-		if (!$this->_query($sql, "Error in selecting from table request_status_change")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectActor($Actor) {
 		$sql = $this->mkSQL("select * from request_status_change where Actor  = %Q",
 				$Actor
 			);
-		if (!$this->_query($sql, "Error in selecting from table request_status_change")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function insert($request_status_change) {
 		$sql = $this->mkSQL("insert into request_status_change values (%N, %Q, %Q, %Q)",

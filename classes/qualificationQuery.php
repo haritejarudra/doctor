@@ -27,61 +27,47 @@ class QualificationQuery extends Query {
 	}
 	function selectAll($last,$count) {
 		$sql = $this->mkSQL("select * from qualification limit %N, %N",$last, $count);
-		if (!$this->_query($sql, "Error in selecting from table qualification")) {
-			 return false;
-		}
-		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return array_map(array($this, '_mkObj'), $this->exec($sql));
 	}
 	function selectQualification_id($qualification_id) {
 		$sql = $this->mkSQL("select * from qualification where qualification_id  = %N",
 				$qualification_id
 			);
-		if (!$this->_query($sql, "Error in selecting from table qualification")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectDoctor_id($doctor_id) {
 		$sql = $this->mkSQL("select * from qualification where doctor_id  = %N",
 				$doctor_id
 			);
-		if (!$this->_query($sql, "Error in selecting from table qualification")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectDegree($degree) {
 		$sql = $this->mkSQL("select * from qualification where degree  = %Q",
 				$degree
 			);
-		if (!$this->_query($sql, "Error in selecting from table qualification")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectYear($year) {
 		$sql = $this->mkSQL("select * from qualification where year  = %N",
 				$year
 			);
-		if (!$this->_query($sql, "Error in selecting from table qualification")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectUniversity($university) {
 		$sql = $this->mkSQL("select * from qualification where university  = %Q",
 				$university
 			);
-		if (!$this->_query($sql, "Error in selecting from table qualification")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function insert($qualification) {
 		$sql = $this->mkSQL("insert into qualification values (%N, %N, %Q, %N, %Q)",

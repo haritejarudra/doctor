@@ -30,31 +30,23 @@ class SpecialityQuery extends Query {
 	}
 	function selectAll($last,$count) {
 		$sql = $this->mkSQL("select * from speciality limit %N, %N",$last, $count);
-		if (!$this->_query($sql, "Error in selecting from table speciality")) {
-			 return false;
-		}
-		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return array_map(array($this, '_mkObj'), $this->exec($sql));
 	}
 	function selectSpeciality_id($speciality_id) {
 		$sql = $this->mkSQL("select * from speciality where speciality_id  = %N",
 				$speciality_id
 			);
-		if (!$this->_query($sql, "Error in selecting from table speciality")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectSpeciality($speciality) {
 		$sql = $this->mkSQL("select * from speciality where speciality  = %Q",
 				$speciality
 			);
-		if (!$this->_query($sql, "Error in selecting from table speciality")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function insert($speciality) {
 		$sql = $this->mkSQL("insert into speciality values (%N, %Q)",

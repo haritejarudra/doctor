@@ -40,14 +40,15 @@ class ScheduleQuery extends Query {
 	********************************************************************************
 	*/
 	function getSchedulesByCriteria($doctorid, $chosenlocationid) {
-		$sqlstring  = "select a.description as clinic, a.from_date as 'Date From', a.to_date as 'Date To', a.from_time as From, a.to_time as To ";
-		$sqlstring .= " from doctor a, schedule b";
-		$sqlstring .= " where a.doctor_id = " . $doctorid . " and a.doctor_id = b.doctor_id";
-		$sqlstring .= " and b.location_id = " . $chosenlocationid;
-
-		return $this->exec($sqlstring);
-	}
-
+			$sqlstring  = "select b.schedule_id schedule_id, b.description as clinic,
+			IF( b.from_date = b.to_date AND b.from_date!='0000-00-00', date_format(b.from_date,'%D-%b-%Y'), IF( b.days_of_week != '' , b.days_of_week, CONCAT(date_format(b.from_date,'%D-%b-%Y'),' to ',date_format(b.to_date,'%D-%b-%Y')))) date, date_format(b.from_time,'%h:%i %p') as 'from', date_format(b.to_time, '%h:%i %p') as 'to' ";
+			$sqlstring .= " from doctor a, schedule b";
+			$sqlstring .= " where a.doctor_id = " . $doctorid . " and a.doctor_id = b.doctor_id";
+			if($chosenlocationid!=NULL){
+			    $sqlstring .= " and b.location_id = " . $chosenlocationid;
+			}
+			return $this->exec($sqlstring);
+    	}	
 	/********************************************************************************
 	*  this query returns all doctors who have a free clinic at a given location
 	*
@@ -58,10 +59,10 @@ class ScheduleQuery extends Query {
 	********************************************************************************
 	*/
 	function getDoctorsByCriteria($speciality, $subspeciality, $chosencity, $chosenlocationid, $last,$count) {
-		$sqlstring  = "select a.doctor_id, concat(a.first_name, ' ', a.last_name) as doctor, d.speciality as speciality, e.speciality as 'sub speciality',";
+		$sqlstring  = "select x.doctor_id, concat(a.first_name, ' ', a.last_name) as doctor, d.speciality as speciality, e.speciality as 'sub speciality',";
 		$sqlstring .= " g.city as city, f.location as location";
-		$sqlstring .= " from doctor a, schedule b, speciality_sub_speciality_link c, speciality d, sub_speciality e, location f, city g";
-		$sqlstring .= " where a.doctor_id = b.doctor_id and a.speciality_Sub_Speciality_link_id = c.speciality_Sub_Speciality_link_id";
+		$sqlstring .= " from donors a, doctor x, schedule b, speciality_sub_speciality_link c, speciality d, sub_speciality e, location f, city g";
+		$sqlstring .= " where a.donor_id = x.donor_id and x.doctor_id = b.doctor_id and x.speciality_Sub_Speciality_link_id = c.speciality_Sub_Speciality_link_id";
 		$sqlstring .= " and c.speciality_id = d.speciality_id and c.sub_speciality_id = e.sub_speciality_id";
 		$sqlstring .= " and b.location_id = f.location_id and f.city_id = g.city_id";
 
@@ -71,11 +72,11 @@ class ScheduleQuery extends Query {
 		if ( !(empty($subspeciality)) && (strlen($subspeciality) > 0) )
 			$sqlstring .= " and e.speciality = '" . $subspeciality . "'";
 
-		if ( !(empty($city)) && (strlen($city) > 0) )
-			$sqlstring .= " and g.city = '". $city . "'";
+		if ( !(empty($chosencity)) && (strlen($chosencity) > 0) )
+			$sqlstring .= " and g.city = '". $chosencity . "'";
 
-		if ( !(empty($location)) && (strlen($location) > 0) )
-			$sqlstring .= " and f.location_id = ". $location;
+		if ( !(empty($chosenlocationid)) && (strlen($chosenlocationid) > 0) )
+			$sqlstring .= " and f.location_id = ". $chosenlocationid;
 		
 		$sqlstring .= " group by doctor_id, doctor, Speciality, 'Sub Speciality', city, location";
 		$sqlstring .= " limit  ". $last. ",". $count;
@@ -106,11 +107,11 @@ class ScheduleQuery extends Query {
 		if ( !(empty($subspeciality)) && (strlen($subspeciality) > 0) )
 			$sqlstring .= " and e.speciality = '" . $subspeciality . "'";
 
-		if ( !(empty($city)) && (strlen($city) > 0) )
-			$sqlstring .= " and g.city = '". $city . "'";
+		if ( !(empty($chosencity)) && (strlen($chosencity) > 0) )
+			$sqlstring .= " and g.city = '". $chosencity . "'";
 
-		if ( !(empty($location)) && (strlen($location) > 0) )
-			$sqlstring .= " and f.location_id = ". $location;
+		if ( !(empty($chosenlocationid)) && (strlen($chosenlocationid) > 0) )
+			$sqlstring .= " and f.location_id = ". $chosenlocationid;
 		
 		$result=$this->exec($sqlstring);
 		
@@ -120,41 +121,31 @@ class ScheduleQuery extends Query {
 	
 	function selectAll($last,$count) {
 		$sql = $this->mkSQL("select * from schedule limit %N, %N",$last, $count);
-		if (!$this->_query($sql, "Error in selecting from table schedule")) {
-			 return false;
-		}
-		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return array_map(array($this, '_mkObj'), $this->exec($sql));
 	}
 	function selectSchedule_id($schedule_id) {
 		$sql = $this->mkSQL("select * from schedule where schedule_id  = %N",
 				$schedule_id
 			);
-		if (!$this->_query($sql, "Error in selecting from table schedule")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectFrom_date($from_date) {
 		$sql = $this->mkSQL("select * from schedule where from_date  = %Q",
 				$from_date
 			);
-		if (!$this->_query($sql, "Error in selecting from table schedule")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectTo_date($to_date) {
 		$sql = $this->mkSQL("select * from schedule where to_date  = %Q",
 				$to_date
 			);
-		if (!$this->_query($sql, "Error in selecting from table schedule")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectExpiry_date($expiry_date) {
 		$sql = $this->mkSQL("select * from schedule where expiry_date  = %Q",
@@ -170,61 +161,49 @@ class ScheduleQuery extends Query {
 		$sql = $this->mkSQL("select * from schedule where days_of_week  = %Q",
 				$days_of_week
 			);
-		if (!$this->_query($sql, "Error in selecting from table schedule")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectFrom_time($from_time) {
 		$sql = $this->mkSQL("select * from schedule where from_time  = %Q",
 				$from_time
 			);
-		if (!$this->_query($sql, "Error in selecting from table schedule")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectTo_time($to_time) {
 		$sql = $this->mkSQL("select * from schedule where to_time  = %Q",
 				$to_time
 			);
-		if (!$this->_query($sql, "Error in selecting from table schedule")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectLocation_id($location_id) {
 		$sql = $this->mkSQL("select * from schedule where location_id  = %N",
 				$location_id
 			);
-		if (!$this->_query($sql, "Error in selecting from table schedule")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectDoctor_id($doctor_id) {
 		$sql = $this->mkSQL("select * from schedule where doctor_id  = %N",
 				$doctor_id
 			);
-		if (!$this->_query($sql, "Error in selecting from table schedule")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function selectDescription($description) {
 		$sql = $this->mkSQL("select * from schedule where description  = %Q",
 				$description
 			);
-		if (!$this->_query($sql, "Error in selecting from table schedule")) {
-			 return false;
-		}
+		$result= $this->exec($sql);
 		$this->_rowCount = $this->_conn->numRows();
-		return true;
+		return $this->_mkObj($result[0]);
 	}
 	function insert($schedule) {
 		$sql = $this->mkSQL("insert into schedule values (%N, %Q, %Q, %Q, %Q, %Q, %Q, %N, %N, %Q)",
@@ -332,6 +311,7 @@ class ScheduleQuery extends Query {
 			);
 		$ret = $this->_query($sql,"Delete using column days_of_week failed on schedule table");
 	}
+
 	function deleteFrom_time($schedule) {
 		$sql = $this->mkSQL("delete from schedule where from_time = %Q ",
 				$schedule->getFrom_time()
